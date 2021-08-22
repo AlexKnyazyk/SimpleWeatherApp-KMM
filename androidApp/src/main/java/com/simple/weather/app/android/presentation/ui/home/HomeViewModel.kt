@@ -1,13 +1,33 @@
 package com.simple.weather.app.android.presentation.ui.home
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
+import com.simple.weather.app.android.data.model.CurrentWeatherData
+import com.simple.weather.app.android.data.repository.weather.WeatherRepository
+import com.simple.weather.app.android.presentation.model.UiState
+import kotlinx.coroutines.launch
 
-class HomeViewModel : ViewModel() {
+class HomeViewModel(
+    private val weatherRepository: WeatherRepository
+) : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
+    private val _uiState = MutableLiveData<UiState<CurrentWeatherData>>()
+    val uiState: LiveData<UiState<CurrentWeatherData>> = _uiState
+
+    init {
+        getWeather()
     }
-    val text: LiveData<String> = _text
+
+    fun getWeather() = viewModelScope.launch {
+        _uiState.value = UiState.loading()
+        _uiState.value = weatherRepository.getCurrentWeather().fold(
+            onSuccess = { UiState.Data(it) },
+            onFailure = { UiState.error(it) }
+        )
+    }
+
+    class Factory(private val weatherRepository: WeatherRepository) : ViewModelProvider.Factory {
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+            return HomeViewModel(weatherRepository) as T
+        }
+    }
 }

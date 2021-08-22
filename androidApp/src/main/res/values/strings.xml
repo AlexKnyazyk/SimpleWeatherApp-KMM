@@ -2,4 +2,8 @@
     <string name="app_title">Simple Weather App</string>
     <string name="title_home">Home</string>
     <string name="title_search">Search</string>
+
+    <string name="last_update_format">Last update: %s</string>
+    <string name="location_name_format">%1$s, %2$s</string>
+    <string name="temperature_c_format">%d°</string>
 </resources>
