@@ -1,38 +1,35 @@
 package com.simple.weather.app.android.di
 
-import com.simple.weather.app.android.presentation.ui.home.HomeViewModel
-import io.ktor.client.*
-import io.ktor.client.engine.android.*
-import io.ktor.client.features.*
-import io.ktor.client.features.json.*
-import io.ktor.client.features.json.serializer.*
-import io.ktor.client.features.logging.*
-import io.ktor.client.request.*
+import io.ktor.client.HttpClient
+import io.ktor.client.engine.android.Android
+import io.ktor.client.features.defaultRequest
+import io.ktor.client.features.json.JsonFeature
+import io.ktor.client.features.json.serializer.KotlinxSerializer
+import io.ktor.client.features.logging.LogLevel
+import io.ktor.client.features.logging.Logging
+import io.ktor.client.request.parameter
 import org.kodein.di.DI
-import org.kodein.di.bindProvider
 import org.kodein.di.bindSingleton
-import org.kodein.di.instance
 
-val networkModule: DI.Module get() = DI.Module("networkModule") {
-
-    bindSingleton { httpClient }
-
-    bindProvider { HomeViewModel.Factory(instance()) }
-}
-
-private val httpClient: HttpClient get() = HttpClient(Android) {
-    install(Logging) {
-        level = LogLevel.ALL
+val networkModule: DI.Module
+    get() = DI.Module("networkModule") {
+        bindSingleton { httpClient }
     }
-    install(JsonFeature) {
-        val json = kotlinx.serialization.json.Json {
-            ignoreUnknownKeys = true
-            coerceInputValues = true
+
+private val httpClient: HttpClient
+    get() = HttpClient(Android) {
+        install(Logging) {
+            level = LogLevel.ALL
         }
-        serializer = KotlinxSerializer(json)
-    }
+        install(JsonFeature) {
+            val json = kotlinx.serialization.json.Json {
+                ignoreUnknownKeys = true
+                coerceInputValues = true
+            }
+            serializer = KotlinxSerializer(json)
+        }
 
-    defaultRequest {
-        parameter("key", "55e572ab7a5c4e0e908163124212208")
+        defaultRequest {
+            parameter("key", "55e572ab7a5c4e0e908163124212208")
+        }
     }
-}

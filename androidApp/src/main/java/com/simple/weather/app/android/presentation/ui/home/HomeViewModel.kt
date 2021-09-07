@@ -20,12 +20,13 @@ class HomeViewModel(
     fun getWeather() = viewModelScope.launch {
         _uiState.value = UiState.loading()
         _uiState.value = weatherRepository.getCurrentWeather().fold(
-            onSuccess = { UiState.Data(it) },
+            onSuccess = { UiState.data(it) },
             onFailure = { UiState.error(it) }
         )
     }
 
     class Factory(private val weatherRepository: WeatherRepository) : ViewModelProvider.Factory {
+        @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             return HomeViewModel(weatherRepository) as T
         }

@@ -9,6 +9,8 @@ sealed class UiState<T> {
 
         fun <T> loading(pullToRefresh: Boolean = false) = Loading<T>(pullToRefresh)
 
+        fun <T> data(value: T) = Data(value)
+
         fun <T> error(uiError: Throwable) = Error<T>(uiError)
     }
 }
