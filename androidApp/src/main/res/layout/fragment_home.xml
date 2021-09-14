@@ -38,6 +38,15 @@
                     android:layout_margin="16dp" />
 
                 <include
+                    android:id="@+id/weatherForecastCard"
+                    layout="@layout/layout_forecast_weather"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="16dp" />
+
+                <include
                     android:id="@+id/currentWeatherDetailedCard"
                     layout="@layout/layout_current_weather_detailed"
                     android:layout_width="match_parent"

@@ -48,7 +48,6 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textAppearance="?textAppearanceBody2"
-            android:textColor="?colorPrimaryDark"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/temperatureValue"
             tools:text="Feels like 12" />

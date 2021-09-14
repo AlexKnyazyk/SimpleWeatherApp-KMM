@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class ForecastDayHourData(
     @SerialName("time_epoch")
-    val timeEpoch: Int, // 1631566800
+    val timeEpoch: Long, // 1631566800
     @SerialName("time")
     val time: String, // 2021-09-14 00:00
     @SerialName("temp_c")

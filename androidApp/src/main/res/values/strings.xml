@@ -12,6 +12,9 @@
     <string name="km_format">%.1f km</string>
     <string name="pressure_mbar_format">%.1f mbar</string>
 
+    <string name="hourly">Hourly</string>
+    <string name="daily">Daily</string>
+
     <string name="wind">Wind</string>
     <string name="humidity">Humidity</string>
     <string name="pressure">Pressure</string>
@@ -21,4 +24,5 @@
     <string name="error_network">Please check your internet connection or enable WiFi/mobile data.</string>
     <string name="error_generic_format">An error has occurred for the following reason:\n%s</string>
     <string name="action_try_again">Try Again</string>
+    <string name="today">Today</string>
 </resources>

@@ -18,7 +18,7 @@ data class WeatherLocation(
     @SerialName("tz_id")
     val tzId: String, // Europe/Minsk
     @SerialName("localtime_epoch")
-    val localtimeEpoch: Int, // 1631612195
+    val localtimeEpoch: Long, // 1631612195
     @SerialName("localtime")
     val localtime: String // 2021-09-14 12:36
 )

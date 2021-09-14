@@ -13,8 +13,10 @@ import com.simple.weather.app.android.data.model.WeatherData
 import com.simple.weather.app.android.databinding.FragmentHomeBinding
 import com.simple.weather.app.android.databinding.LayoutCurrentWeatherBinding
 import com.simple.weather.app.android.databinding.LayoutCurrentWeatherDetailedBinding
+import com.simple.weather.app.android.domain.model.ForecastItemMode
 import com.simple.weather.app.android.presentation.model.UiState
 import com.simple.weather.app.android.presentation.ui.base.BaseFragment
+import com.simple.weather.app.android.presentation.ui.home.forecast.ForecastAdapter
 import org.kodein.di.instance
 import kotlin.math.round
 
@@ -28,13 +30,40 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        observeLiveData()
+        initViews()
+    }
 
+    private fun observeLiveData() {
         viewModel.uiState.observe(viewLifecycleOwner, ::bindUiState)
-        binding.content.setOnRefreshListener {
+        viewModel.forecastMode.observe(viewLifecycleOwner) { mode ->
+            binding.weatherForecastCard.toggleGroup.check(
+                when (mode!!) {
+                    ForecastItemMode.HOURLY -> R.id.hourlyToggleButton
+                    ForecastItemMode.DAILY -> R.id.daysToggleButton
+                }
+            )
+        }
+        viewModel.forecastData.observe(viewLifecycleOwner) {
+            (binding.weatherForecastCard.forecastList.adapter as ForecastAdapter).submitList(it)
+        }
+    }
+
+    private fun initViews() = with(binding) {
+        content.setOnRefreshListener {
             viewModel.getWeather(pullToRefresh = true)
         }
-        binding.errorLayout.tryAgainButton.setOnClickListener {
+        errorLayout.tryAgainButton.setOnClickListener {
             viewModel.getWeather(pullToRefresh = false)
+        }
+        weatherForecastCard.forecastList.apply {
+            adapter = ForecastAdapter()
+        }
+        weatherForecastCard.hourlyToggleButton.setOnClickListener {
+            viewModel.setForecastMode(ForecastItemMode.HOURLY)
+        }
+        weatherForecastCard.daysToggleButton.setOnClickListener {
+            viewModel.setForecastMode(ForecastItemMode.DAILY)
         }
     }
 
@@ -49,7 +78,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             currentWeatherDetailedCard.bindData(state.value)
         }
         if (state is UiState.Error) {
-            errorLayout.errorMessage.text = getString(R.string.error_generic_format, state.uiError.message)
+            errorLayout.errorMessage.text =
+                getString(R.string.error_generic_format, state.uiError.message)
         }
     }
 
@@ -59,7 +89,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             getString(R.string.location_name_format, location.name, location.country)
         val weather = data.current
         lastUpdate.text = getString(R.string.last_update_format, weather.lastUpdated)
-        temperatureValue.text = getString(R.string.temperature_c_format, round(weather.tempC).toInt())
+        temperatureValue.text =
+            getString(R.string.temperature_c_format, round(weather.tempC).toInt())
         temperatureFeelsValue.text = getString(
             R.string.feels_like_format,
             getString(R.string.temperature_c_format, round(weather.feelslikeC).toInt())
@@ -71,7 +102,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     private fun LayoutCurrentWeatherDetailedBinding.bindData(data: WeatherData) {
-        wind.text = "${getString(R.string.kmh_format, data.current.windKph)} (${data.current.windDir})"
+        wind.text =
+            "${getString(R.string.kmh_format, data.current.windKph)} (${data.current.windDir})"
         humidity.text = getString(R.string.percent_format, data.current.humidity)
         pressure.text = getString(R.string.pressure_mbar_format, data.current.pressureMb)
         visibility.text = getString(R.string.km_format, data.current.visKm)
