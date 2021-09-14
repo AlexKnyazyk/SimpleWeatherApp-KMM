@@ -1,23 +1,22 @@
 package com.simple.weather.app.android.data.repository.weather
 
-import com.simple.weather.app.android.data.model.CurrentWeatherData
-import io.ktor.client.*
-import io.ktor.client.request.*
-import java.lang.Exception
+import com.simple.weather.app.android.data.model.WeatherData
+import io.ktor.client.HttpClient
+import io.ktor.client.request.get
+import io.ktor.client.request.parameter
+import io.ktor.client.request.url
 
 class WeatherRepositoryImpl(
     private val httpClient: HttpClient
 ) : WeatherRepository {
 
-    override suspend fun getCurrentWeather(): Result<CurrentWeatherData> {
-        return try {
-            val response = httpClient.get<CurrentWeatherData> {
-                url("https://api.weatherapi.com/v1/current.json")
-                parameter("q", "Minsk")
-            }
-            Result.success(response)
-        } catch (e: Exception) {
-            Result.failure(e)
+    override suspend fun getCurrentWeather(): Result<WeatherData> = runCatching {
+        httpClient.get<WeatherData> {
+            url("https://api.weatherapi.com/v1/forecast.json")
+            parameter("q", "Minsk")
+            parameter("days", 5)
+            parameter("alerts", "no")
+            parameter("aqi", "no")
         }
     }
 }

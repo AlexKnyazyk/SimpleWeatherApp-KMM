@@ -1,7 +1,7 @@
 package com.simple.weather.app.android.presentation.ui.home
 
 import androidx.lifecycle.*
-import com.simple.weather.app.android.data.model.CurrentWeatherData
+import com.simple.weather.app.android.data.model.WeatherData
 import com.simple.weather.app.android.data.repository.weather.WeatherRepository
 import com.simple.weather.app.android.presentation.model.UiState
 import kotlinx.coroutines.launch
@@ -10,8 +10,8 @@ class HomeViewModel(
     private val weatherRepository: WeatherRepository
 ) : ViewModel() {
 
-    private val _uiState = MutableLiveData<UiState<CurrentWeatherData>>()
-    val uiState: LiveData<UiState<CurrentWeatherData>> = _uiState
+    private val _uiState = MutableLiveData<UiState<WeatherData>>()
+    val uiState: LiveData<UiState<WeatherData>> = _uiState
 
     init {
         getWeather()

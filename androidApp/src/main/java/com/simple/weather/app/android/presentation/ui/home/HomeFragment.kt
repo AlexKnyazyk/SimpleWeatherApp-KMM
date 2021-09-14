@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.simple.weather.app.android.R
-import com.simple.weather.app.android.data.model.CurrentWeatherData
+import com.simple.weather.app.android.data.model.WeatherData
 import com.simple.weather.app.android.databinding.FragmentHomeBinding
 import com.simple.weather.app.android.presentation.model.UiState
 import com.simple.weather.app.android.presentation.ui.base.BaseFragment
@@ -31,7 +31,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         }
     }
 
-    private fun bindUiState(state: UiState<CurrentWeatherData>?) = with(binding) {
+    private fun bindUiState(state: UiState<WeatherData>?) = with(binding) {
         state ?: return
         root.isRefreshing = state is UiState.Loading
         if (state is UiState.Data) {
