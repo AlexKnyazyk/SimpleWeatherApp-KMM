@@ -14,11 +14,11 @@ class HomeViewModel(
     val uiState: LiveData<UiState<WeatherData>> = _uiState
 
     init {
-        getWeather()
+        getWeather(pullToRefresh = false)
     }
 
-    fun getWeather() = viewModelScope.launch {
-        _uiState.value = UiState.loading()
+    fun getWeather(pullToRefresh: Boolean) = viewModelScope.launch {
+        _uiState.value = UiState.loading(pullToRefresh)
         _uiState.value = weatherRepository.getCurrentWeather().fold(
             onSuccess = { UiState.data(it) },
             onFailure = { UiState.error(it) }

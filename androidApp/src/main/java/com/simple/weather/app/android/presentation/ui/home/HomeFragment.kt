@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.simple.weather.app.android.R
@@ -29,17 +30,26 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.uiState.observe(viewLifecycleOwner, ::bindUiState)
-        binding.root.setOnRefreshListener {
-            viewModel.getWeather()
+        binding.content.setOnRefreshListener {
+            viewModel.getWeather(pullToRefresh = true)
+        }
+        binding.errorLayout.tryAgainButton.setOnClickListener {
+            viewModel.getWeather(pullToRefresh = false)
         }
     }
 
     private fun bindUiState(state: UiState<WeatherData>?) = with(binding) {
         state ?: return
-        root.isRefreshing = state is UiState.Loading
+        loadingProgress.isVisible = state is UiState.Loading && !state.pullToRefresh
+        content.isRefreshing = state is UiState.Loading && state.pullToRefresh
+        content.isVisible = state is UiState.Data || content.isRefreshing
+        errorLayout.root.isVisible = state is UiState.Error
         if (state is UiState.Data) {
             currentWeatherCard.bindData(state.value)
             currentWeatherDetailedCard.bindData(state.value)
+        }
+        if (state is UiState.Error) {
+            errorLayout.errorMessage.text = getString(R.string.error_generic_format, state.uiError.message)
         }
     }
 

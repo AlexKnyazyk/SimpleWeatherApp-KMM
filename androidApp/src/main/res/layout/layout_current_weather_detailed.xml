@@ -16,15 +16,19 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:gravity="center"
+                android:drawablePadding="8dp"
+                android:drawableTint="?colorControlNormal"
+                android:gravity="center_vertical"
                 android:text="@string/wind"
                 android:textAppearance="?textAppearanceBody1"
+                app:drawableStartCompat="@drawable/ic_wind"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -51,15 +55,19 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:gravity="center"
+                android:drawablePadding="8dp"
+                android:drawableTint="?colorControlNormal"
+                android:gravity="center_vertical"
                 android:text="@string/humidity"
                 android:textAppearance="?textAppearanceBody1"
+                app:drawableStartCompat="@drawable/ic_humidity"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -86,15 +94,19 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:gravity="center"
+                android:drawablePadding="8dp"
+                android:drawableTint="?colorControlNormal"
+                android:gravity="center_vertical"
                 android:text="@string/pressure"
                 android:textAppearance="?textAppearanceBody1"
+                app:drawableStartCompat="@drawable/ic_barometer"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -121,15 +133,19 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:gravity="center"
+                android:drawablePadding="8dp"
+                android:drawableTint="?colorControlNormal"
+                android:gravity="center_vertical"
                 android:text="@string/visibility"
                 android:textAppearance="?textAppearanceBody1"
+                app:drawableStartCompat="@drawable/ic_witness"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -156,15 +172,19 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:gravity="center"
+                android:drawablePadding="8dp"
+                android:drawableTint="?colorControlNormal"
+                android:gravity="center_vertical"
                 android:text="@string/index_uv"
                 android:textAppearance="?textAppearanceBody1"
+                app:drawableStartCompat="@drawable/ic_sun"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 

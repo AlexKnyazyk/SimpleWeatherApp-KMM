@@ -17,4 +17,8 @@
     <string name="pressure">Pressure</string>
     <string name="visibility">Visibility</string>
     <string name="index_uv">Index UV</string>
+
+    <string name="error_network">Please check your internet connection or enable WiFi/mobile data.</string>
+    <string name="error_generic_format">An error has occurred for the following reason:\n%s</string>
+    <string name="action_try_again">Try Again</string>
 </resources>
