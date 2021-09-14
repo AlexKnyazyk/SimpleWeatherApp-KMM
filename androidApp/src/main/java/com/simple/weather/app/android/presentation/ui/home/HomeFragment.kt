@@ -10,9 +10,12 @@ import com.bumptech.glide.Glide
 import com.simple.weather.app.android.R
 import com.simple.weather.app.android.data.model.WeatherData
 import com.simple.weather.app.android.databinding.FragmentHomeBinding
+import com.simple.weather.app.android.databinding.LayoutCurrentWeatherBinding
+import com.simple.weather.app.android.databinding.LayoutCurrentWeatherDetailedBinding
 import com.simple.weather.app.android.presentation.model.UiState
 import com.simple.weather.app.android.presentation.ui.base.BaseFragment
 import org.kodein.di.instance
+import kotlin.math.round
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
@@ -35,16 +38,33 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         state ?: return
         root.isRefreshing = state is UiState.Loading
         if (state is UiState.Data) {
-            val location = state.value.name
-            locationName.text =
-                getString(R.string.location_name_format, location.name, location.country)
-            val weather = state.value.current
-            lastUpdate.text = getString(R.string.last_update_format, weather.lastUpdated)
-            temperatureValue.text = getString(R.string.temperature_c_format, weather.tempC.toInt())
-            currentWeather.text = weather.condition.text
-            Glide.with(requireContext())
-                .load(Uri.parse("https:${weather.condition.icon}"))
-                .into(currentWeatherImage)
+            currentWeatherCard.bindData(state.value)
+            currentWeatherDetailedCard.bindData(state.value)
         }
+    }
+
+    private fun LayoutCurrentWeatherBinding.bindData(data: WeatherData) {
+        val location = data.name
+        locationName.text =
+            getString(R.string.location_name_format, location.name, location.country)
+        val weather = data.current
+        lastUpdate.text = getString(R.string.last_update_format, weather.lastUpdated)
+        temperatureValue.text = getString(R.string.temperature_c_format, round(weather.tempC).toInt())
+        temperatureFeelsValue.text = getString(
+            R.string.feels_like_format,
+            getString(R.string.temperature_c_format, round(weather.feelslikeC).toInt())
+        )
+        currentWeather.text = weather.condition.text
+        Glide.with(requireContext())
+            .load(Uri.parse("https:${weather.condition.icon}"))
+            .into(currentWeatherImage)
+    }
+
+    private fun LayoutCurrentWeatherDetailedBinding.bindData(data: WeatherData) {
+        wind.text = "${getString(R.string.kmh_format, data.current.windKph)} (${data.current.windDir})"
+        humidity.text = getString(R.string.percent_format, data.current.humidity)
+        pressure.text = getString(R.string.pressure_mbar_format, data.current.pressureMb)
+        visibility.text = getString(R.string.km_format, data.current.visKm)
+        indexUv.text = data.current.uv.toInt().toString()
     }
 }

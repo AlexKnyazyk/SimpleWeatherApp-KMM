@@ -13,7 +13,8 @@ abstract class BaseFragment<B : ViewBinding> : Fragment(), DIAware {
     override val di by lazy { (requireContext().applicationContext as DIAware).di }
 
     private var _binding: B? = null
-    protected val binding: B get() = requireNotNull(_binding)
+    protected val binding: B
+        get() = requireNotNull(_binding)
 
     abstract fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?): B
 

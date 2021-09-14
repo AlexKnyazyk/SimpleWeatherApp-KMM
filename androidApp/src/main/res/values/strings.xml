@@ -5,5 +5,16 @@
 
     <string name="last_update_format">Last update: %s</string>
     <string name="location_name_format">%1$s, %2$s</string>
+    <string name="feels_like_format">Feels like %s</string>
     <string name="temperature_c_format">%d°</string>
+    <string name="percent_format">%d\%%</string>
+    <string name="kmh_format">%.1f km/h</string>
+    <string name="km_format">%.1f km</string>
+    <string name="pressure_mbar_format">%.1f mbar</string>
+
+    <string name="wind">Wind</string>
+    <string name="humidity">Humidity</string>
+    <string name="pressure">Pressure</string>
+    <string name="visibility">Visibility</string>
+    <string name="index_uv">Index UV</string>
 </resources>
