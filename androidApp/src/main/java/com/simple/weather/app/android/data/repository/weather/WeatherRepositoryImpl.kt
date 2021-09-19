@@ -10,10 +10,20 @@ class WeatherRepositoryImpl(
     private val httpClient: HttpClient
 ) : WeatherRepository {
 
-    override suspend fun getCurrentWeather(): Result<WeatherData> = runCatching {
+    override suspend fun getCurrentWeather(lat: Double, lon: Double): Result<WeatherData> = runCatching {
         httpClient.get<WeatherData> {
             url("https://api.weatherapi.com/v1/forecast.json")
-            parameter("q", "Minsk")
+            parameter("q", "$lat,$lon")
+            parameter("days", 5)
+            parameter("alerts", "no")
+            parameter("aqi", "no")
+        }
+    }
+
+    override suspend fun getCurrentWeather(ipv6: String): Result<WeatherData> = runCatching {
+        httpClient.get<WeatherData> {
+            url("https://api.weatherapi.com/v1/forecast.json")
+            parameter("q", ipv6)
             parameter("days", 5)
             parameter("alerts", "no")
             parameter("aqi", "no")

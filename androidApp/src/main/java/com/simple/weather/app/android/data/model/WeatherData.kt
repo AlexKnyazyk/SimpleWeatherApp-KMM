@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class WeatherData(
     @SerialName("location")
-    val name: WeatherLocation,
+    val location: WeatherLocation,
     @SerialName("current")
     val current: CurrentWeather,
     @SerialName("forecast")

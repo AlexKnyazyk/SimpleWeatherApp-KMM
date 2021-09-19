@@ -2,12 +2,16 @@ package com.simple.weather.app.android.presentation.ui.home.forecast
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.simple.weather.app.android.databinding.ItemForecastBinding
-import com.simple.weather.app.android.domain.model.ForecastItem
+import com.simple.weather.app.android.domain.model.ForecastModel
+import kotlin.properties.Delegates
 
-class ForecastAdapter : ListAdapter<ForecastItem, ForecastViewHolder>(ITEMS_DIFF) {
+class ForecastAdapter : RecyclerView.Adapter<ForecastViewHolder>() {
+
+    var itemModels: List<ForecastModel> by Delegates.observable(emptyList()) { _, _, _ ->
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ForecastViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -17,18 +21,8 @@ class ForecastAdapter : ListAdapter<ForecastItem, ForecastViewHolder>(ITEMS_DIFF
     }
 
     override fun onBindViewHolder(holder: ForecastViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(itemModels[position])
     }
 
-    companion object {
-        private val ITEMS_DIFF = object : DiffUtil.ItemCallback<ForecastItem>() {
-            override fun areItemsTheSame(oldItem: ForecastItem, newItem: ForecastItem): Boolean {
-                return oldItem == oldItem
-            }
-
-            override fun areContentsTheSame(oldItem: ForecastItem, newItem: ForecastItem): Boolean {
-                return oldItem == oldItem
-            }
-        }
-    }
+    override fun getItemCount(): Int = itemModels.size
 }
