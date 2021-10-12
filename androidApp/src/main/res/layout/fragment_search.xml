@@ -34,10 +34,29 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/searchList"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="1">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/searchList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_search_location" />
+
+        <TextView
+            android:id="@+id/errorMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textAppearance="?textAppearanceBody1"
+            android:visibility="gone"
+            tools:text="@string/no_search_results"
+            tools:visibility="visible" />
+
+    </FrameLayout>
 
 </LinearLayout>
