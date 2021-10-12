@@ -1,20 +1,23 @@
 package com.simple.weather.app.android.presentation.ui.search
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.simple.weather.app.android.domain.model.SearchLocationModel
+import com.simple.weather.app.android.domain.usecase.SearchLocationUseCase
 import com.simple.weather.app.android.presentation.model.SearchLocationResult
 import com.simple.weather.app.android.presentation.model.UiState
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 
-class SearchViewModel : ViewModel() {
+class SearchViewModel(
+    private val searchLocationUseCase: SearchLocationUseCase
+) : ViewModel() {
 
     private val searchQueryFlow = MutableSharedFlow<String>(
         extraBufferCapacity = 1
@@ -27,31 +30,34 @@ class SearchViewModel : ViewModel() {
         viewModelScope.launch {
             searchQueryFlow
                 .debounce(SEARCH_DEBOUNCE)
-                .collect {
-                    Log.i("SearchViewModel", "collect=$it")
-                    _uiState.value = UiState.data(
-                        SearchLocationResult(
-                            itemModels = listOf(
-                                SearchLocationModel(1, 0.0, 0.0, "London", "London Region", "UK"),
-                                SearchLocationModel(2, 0.0, 0.0, "London2", "London Region2", "UK")
-                            ),
-                            hasSearchQuery = it.isNotBlank()
-                        )
-                    )
+                .flatMapLatest { query ->
+                    searchLocationUiStateFlow(query)
+                }
+                .collect { state ->
+                    _uiState.value = state
                 }
         }
     }
 
     fun setSearchQuery(query: String) {
-        Log.d("SearchViewModel", "setSearchQuery=$query")
         searchQueryFlow.tryEmit(query)
     }
 
+    private fun searchLocationUiStateFlow(query: String) = flow {
+        emit(UiState.loading())
+        val result = searchLocationUseCase(query)
+        emit(result.fold(
+            onSuccess = { UiState.data(SearchLocationResult(it, query.isNotBlank())) },
+            onFailure = { UiState.error(it) }
+        ))
+    }
+
     class Factory(
+        private val searchLocationUseCase: SearchLocationUseCase
     ) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return SearchViewModel() as T
+            return SearchViewModel(searchLocationUseCase) as T
         }
     }
 

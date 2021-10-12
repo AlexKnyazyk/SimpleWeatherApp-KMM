@@ -9,5 +9,5 @@ import org.kodein.di.instance
 val viewModelsModule: DI.Module
     get() = DI.Module("viewModelsModule") {
         bindProvider { HomeViewModel.Factory(instance(), instance()) }
-        bindProvider { SearchViewModel.Factory() }
+        bindProvider { SearchViewModel.Factory(instance()) }
     }

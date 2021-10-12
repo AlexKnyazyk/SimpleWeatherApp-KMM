@@ -23,7 +23,7 @@ import org.kodein.di.provider
 class SearchFragment : BaseFragment<FragmentSearchBinding>(), SearchItemClickListener {
 
     private val viewModelFactory by provider<SearchViewModel.Factory>()
-    private val viewModel: SearchViewModel by viewModels { viewModelFactory.invoke() }
+    private val viewModel: SearchViewModel by viewModels { viewModelFactory() }
 
     override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentSearchBinding.inflate(inflater, container, false)
