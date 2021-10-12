@@ -25,4 +25,9 @@
     <string name="error_generic_format">An error has occurred for the following reason:\n%s</string>
     <string name="action_try_again">Try Again</string>
     <string name="today">Today</string>
+
+    <string name="search_hint">Search</string>
+    <string name="favorites_header">Favorites</string>
+    <string name="search_results_header">Search Results</string>
+    <string name="no_search_results">No Search Results</string>
 </resources>

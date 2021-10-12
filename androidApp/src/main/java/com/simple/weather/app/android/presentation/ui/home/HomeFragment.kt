@@ -19,12 +19,12 @@ import com.simple.weather.app.android.presentation.model.ForecastMode
 import com.simple.weather.app.android.presentation.model.UiState
 import com.simple.weather.app.android.presentation.ui.base.BaseFragment
 import com.simple.weather.app.android.presentation.ui.home.forecast.ForecastAdapter
-import org.kodein.di.instance
+import org.kodein.di.provider
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
-    private val viewModelFactory: HomeViewModel.Factory by instance()
-    private val viewModel: HomeViewModel by viewModels { viewModelFactory }
+    private val viewModelFactory by provider<HomeViewModel.Factory>()
+    private val viewModel: HomeViewModel by viewModels { viewModelFactory() }
 
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) {
