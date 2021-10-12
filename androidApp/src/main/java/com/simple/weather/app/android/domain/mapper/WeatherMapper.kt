@@ -1,7 +1,7 @@
 package com.simple.weather.app.android.domain.mapper
 
-import com.simple.weather.app.android.data.model.Forecast
-import com.simple.weather.app.android.data.model.WeatherData
+import com.simple.weather.app.android.data.model.response.Forecast
+import com.simple.weather.app.android.data.model.response.WeatherData
 import com.simple.weather.app.android.domain.model.ForecastModel
 import com.simple.weather.app.android.domain.model.WeatherModel
 import kotlin.math.round

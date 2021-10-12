@@ -1,4 +1,4 @@
-package com.simple.weather.app.android.data.model
+package com.simple.weather.app.android.data.model.response
 
 
 import kotlinx.serialization.SerialName
