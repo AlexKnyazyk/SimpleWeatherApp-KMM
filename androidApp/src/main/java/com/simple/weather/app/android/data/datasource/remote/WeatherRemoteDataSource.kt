@@ -1,9 +1,9 @@
-package com.simple.weather.app.android.data.repository.weather
+package com.simple.weather.app.android.data.datasource.remote
 
 import com.simple.weather.app.android.data.model.response.SearchLocation
 import com.simple.weather.app.android.data.model.response.WeatherData
 
-interface WeatherRepository {
+interface WeatherRemoteDataSource {
 
     suspend fun getCurrentWeather(lat: Double, lon: Double): Result<WeatherData>
 

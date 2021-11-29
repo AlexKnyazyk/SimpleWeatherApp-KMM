@@ -1,11 +1,13 @@
 package com.simple.weather.app.android.presentation.ui.home
 
-import androidx.lifecycle.*
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.simple.weather.app.android.data.model.LocationResult
 import com.simple.weather.app.android.data.model.request.WeatherRequest
-import com.simple.weather.app.android.data.repository.location.LocationRepository
 import com.simple.weather.app.android.domain.model.WeatherModel
-import com.simple.weather.app.android.domain.usecase.GetWeatherUseCase
+import com.simple.weather.app.android.domain.repository.LocationRepository
+import com.simple.weather.app.android.domain.usecase.IGetWeatherUseCase
 import com.simple.weather.app.android.presentation.model.ForecastMode
 import com.simple.weather.app.android.presentation.model.UiState
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -16,7 +18,7 @@ import kotlinx.coroutines.launch
 
 class HomeViewModel(
     private val locationRepository: LocationRepository,
-    private val getWeatherUseCase: GetWeatherUseCase
+    private val getWeatherUseCase: IGetWeatherUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<UiState<WeatherModel>>(UiState.loading(pullToRefresh = false))
@@ -75,7 +77,7 @@ class HomeViewModel(
 
     class Factory(
         private val locationRepository: LocationRepository,
-        private val getWeatherUseCase: GetWeatherUseCase
+        private val getWeatherUseCase: IGetWeatherUseCase
     ) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T {

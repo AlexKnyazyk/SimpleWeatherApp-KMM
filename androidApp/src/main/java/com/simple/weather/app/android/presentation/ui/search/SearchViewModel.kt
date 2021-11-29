@@ -3,14 +3,14 @@ package com.simple.weather.app.android.presentation.ui.search
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.simple.weather.app.android.domain.usecase.SearchLocationUseCase
+import com.simple.weather.app.android.domain.usecase.ISearchLocationUseCase
 import com.simple.weather.app.android.presentation.model.SearchLocationResult
 import com.simple.weather.app.android.presentation.model.UiState
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class SearchViewModel(
-    private val searchLocationUseCase: SearchLocationUseCase
+    private val searchLocationUseCase: ISearchLocationUseCase
 ) : ViewModel() {
 
     private val searchQueryFlow = MutableSharedFlow<String>(extraBufferCapacity = 1)
@@ -38,7 +38,7 @@ class SearchViewModel(
     }
 
     class Factory(
-        private val searchLocationUseCase: SearchLocationUseCase
+        private val searchLocationUseCase: ISearchLocationUseCase
     ) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T {

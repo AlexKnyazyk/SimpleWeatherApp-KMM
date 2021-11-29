@@ -7,9 +7,10 @@ import android.location.Criteria
 import android.location.Location
 import android.location.LocationManager
 import com.simple.weather.app.android.data.model.LocationResult
+import com.simple.weather.app.android.domain.repository.LocationRepository
 import com.simple.weather.app.android.utils.isPermissionGranted
 
-class LocationRepositoryImpl(
+internal class LocationRepositoryImpl(
     private val context: Context
 ) : LocationRepository {
 

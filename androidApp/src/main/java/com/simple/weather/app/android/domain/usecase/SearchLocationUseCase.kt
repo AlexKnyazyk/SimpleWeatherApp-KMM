@@ -1,18 +1,19 @@
 package com.simple.weather.app.android.domain.usecase
 
-import com.simple.weather.app.android.data.repository.weather.WeatherRepository
-import com.simple.weather.app.android.domain.mapper.SearchLocationMapper
 import com.simple.weather.app.android.domain.model.SearchLocationModel
+import com.simple.weather.app.android.domain.repository.WeatherRepository
 
-class SearchLocationUseCase(
-    private val weatherRepository: WeatherRepository,
-    private val searchLocationMapper: SearchLocationMapper,
-) {
+interface ISearchLocationUseCase {
+    suspend operator fun invoke(query: String): Result<List<SearchLocationModel>>
+}
 
-    suspend operator fun invoke(query: String) : Result<List<SearchLocationModel>> {
+internal class SearchLocationUseCase(
+    private val weatherRepository: WeatherRepository
+) : ISearchLocationUseCase {
+
+    override suspend operator fun invoke(query: String): Result<List<SearchLocationModel>> {
         return if (query.isNotBlank()) {
             weatherRepository.searchLocation(query)
-                .map { list -> list.map(searchLocationMapper::map) }
         } else {
             Result.success(emptyList())
         }
