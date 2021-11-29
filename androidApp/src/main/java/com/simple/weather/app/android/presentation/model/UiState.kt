@@ -14,3 +14,5 @@ sealed class UiState<T> {
         fun <T> error(uiError: Throwable) = Error<T>(uiError)
     }
 }
+
+fun <T> UiState<T>.asData() = this as? UiState.Data<T>

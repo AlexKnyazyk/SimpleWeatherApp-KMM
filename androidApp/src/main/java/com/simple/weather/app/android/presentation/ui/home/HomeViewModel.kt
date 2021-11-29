@@ -8,6 +8,10 @@ import com.simple.weather.app.android.domain.model.WeatherModel
 import com.simple.weather.app.android.domain.usecase.GetWeatherUseCase
 import com.simple.weather.app.android.presentation.model.ForecastMode
 import com.simple.weather.app.android.presentation.model.UiState
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
@@ -15,15 +19,14 @@ class HomeViewModel(
     private val getWeatherUseCase: GetWeatherUseCase
 ) : ViewModel() {
 
-    private val _uiState =
-        MutableLiveData<UiState<WeatherModel>>(UiState.loading(pullToRefresh = false))
-    val uiState: LiveData<UiState<WeatherModel>> = _uiState
+    private val _uiState = MutableStateFlow<UiState<WeatherModel>>(UiState.loading(pullToRefresh = false))
+    val uiState = _uiState.asStateFlow()
 
-    private val _locationPermissionsEvent = MutableLiveData<Unit>()
-    val locationPermissionsEvent: LiveData<Unit> = _locationPermissionsEvent
+    private val _locationPermissionsEvent = MutableSharedFlow<Unit>()
+    val locationPermissionsEvent = _locationPermissionsEvent.asSharedFlow()
 
-    private val _forecastMode = MutableLiveData(ForecastMode.HOURLY)
-    val forecastMode: LiveData<ForecastMode> = _forecastMode
+    private val _forecastMode = MutableStateFlow(ForecastMode.HOURLY)
+    val forecastMode = _forecastMode.asStateFlow()
 
     private var locationPermissionAsked: Boolean = false
 
@@ -41,7 +44,9 @@ class HomeViewModel(
                     getWeatherWithoutLocation(pullToRefresh)
                 } else {
                     locationPermissionAsked = true
-                    _locationPermissionsEvent.value = Unit
+                    viewModelScope.launch {
+                        _locationPermissionsEvent.emit(Unit)
+                    }
                 }
             }
         }
@@ -73,7 +78,7 @@ class HomeViewModel(
         private val getWeatherUseCase: GetWeatherUseCase
     ) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
             return HomeViewModel(locationRepository, getWeatherUseCase) as T
         }
     }

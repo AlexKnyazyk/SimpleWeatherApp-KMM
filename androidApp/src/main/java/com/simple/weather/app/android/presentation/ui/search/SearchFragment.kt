@@ -17,7 +17,9 @@ import com.simple.weather.app.android.presentation.ui.base.BaseFragment
 import com.simple.weather.app.android.presentation.ui.search.adapter.SearchItemClickListener
 import com.simple.weather.app.android.presentation.ui.search.adapter.SearchLocationAdapter
 import com.simple.weather.app.android.utils.hideKeyboard
+import com.simple.weather.app.android.utils.launchRepeatOnViewLifecycleScope
 import com.simple.weather.app.android.utils.view.setOnEditorActionListener
+import kotlinx.coroutines.flow.collect
 import org.kodein.di.provider
 
 class SearchFragment : BaseFragment<FragmentSearchBinding>(), SearchItemClickListener {
@@ -32,7 +34,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(), SearchItemClickLis
         super.onViewCreated(view, savedInstanceState)
         setupSearchResultsList()
         setupInputListeners()
-        observeLiveData()
+        collectViewModelFlows()
     }
 
     private fun setupSearchResultsList() {
@@ -41,13 +43,22 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(), SearchItemClickLis
         }
     }
 
-    private fun observeLiveData() {
-        viewModel.uiState.observe(viewLifecycleOwner, ::bindUiState)
+    private fun setupInputListeners() = with(binding) {
+        searchInput.doOnTextChanged { text, _, _, _ ->
+            viewModel.setSearchQuery(text?.toString().orEmpty())
+        }
+        searchInput.setOnEditorActionListener(EditorInfo.IME_ACTION_SEARCH) {
+            activity?.hideKeyboard()
+        }
     }
 
-    private fun bindUiState(state: UiState<SearchLocationResult>?) = with(binding) {
-        state ?: return
+    private fun collectViewModelFlows() = launchRepeatOnViewLifecycleScope {
+        viewModel.uiState.collect {
+            bindUiState(it)
+        }
+    }
 
+    private fun bindUiState(state: UiState<SearchLocationResult>) = with(binding) {
         loadingProgress.isVisible = state is UiState.Loading
 
         var isNoSearchResults = false
@@ -64,15 +75,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(), SearchItemClickLis
         }
 
         errorMessage.isVisible = state is UiState.Error || isNoSearchResults
-    }
-
-    private fun setupInputListeners() = with(binding) {
-        searchInput.doOnTextChanged { text, _, _, _ ->
-            viewModel.setSearchQuery(text?.toString().orEmpty())
-        }
-        searchInput.setOnEditorActionListener(EditorInfo.IME_ACTION_SEARCH) {
-            activity?.hideKeyboard()
-        }
     }
 
     override fun onItemClick(itemModel: SearchLocationModel) {

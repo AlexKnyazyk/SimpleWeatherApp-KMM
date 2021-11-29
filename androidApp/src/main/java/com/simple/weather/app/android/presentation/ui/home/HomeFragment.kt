@@ -17,8 +17,12 @@ import com.simple.weather.app.android.databinding.LayoutCurrentWeatherDetailedBi
 import com.simple.weather.app.android.domain.model.WeatherModel
 import com.simple.weather.app.android.presentation.model.ForecastMode
 import com.simple.weather.app.android.presentation.model.UiState
+import com.simple.weather.app.android.presentation.model.asData
 import com.simple.weather.app.android.presentation.ui.base.BaseFragment
 import com.simple.weather.app.android.presentation.ui.home.forecast.ForecastAdapter
+import com.simple.weather.app.android.utils.launchRepeatOnViewLifecycleScope
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import org.kodein.di.provider
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
@@ -36,24 +40,21 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        observeLiveData()
+        collectViewModelFlows()
         initViews()
     }
 
-    private fun observeLiveData() {
-        viewModel.uiState.observe(viewLifecycleOwner, ::bindUiState)
-        viewModel.locationPermissionsEvent.observe(viewLifecycleOwner) {
-            requestPermissionLauncher.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
+    private fun collectViewModelFlows() = launchRepeatOnViewLifecycleScope {
+        launch {
+            viewModel.uiState.collect { bindUiState(it) }
         }
-        viewModel.forecastMode.observe(viewLifecycleOwner) { mode ->
-            binding.weatherForecastCard.toggleGroup.check(
-                when (mode!!) {
-                    ForecastMode.HOURLY -> R.id.hourlyToggleButton
-                    ForecastMode.DAILY -> R.id.daysToggleButton
-                }
-            )
-            val weatherModel = (viewModel.uiState.value as? UiState.Data)?.value ?: return@observe
-            bindForecast(mode, weatherModel)
+        launch {
+            viewModel.locationPermissionsEvent.collect {
+                requestPermissionLauncher.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
+            }
+        }
+        launch {
+            viewModel.forecastMode.collect { bindForecastMode(it) }
         }
     }
 
@@ -75,8 +76,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         }
     }
 
-    private fun bindUiState(state: UiState<WeatherModel>?) = with(binding) {
-        state ?: return
+    private fun bindUiState(state: UiState<WeatherModel>): Unit = with(binding) {
         loadingProgress.isVisible = state is UiState.Loading && !state.pullToRefresh
         content.isRefreshing = state is UiState.Loading && state.pullToRefresh
         content.isVisible = state is UiState.Data || content.isRefreshing
@@ -85,11 +85,23 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             currentWeatherCard.bindModel(state.value)
             currentWeatherDetailedCard.bindModel(state.value)
             val mode = viewModel.forecastMode.value
-            bindForecast(mode!!, state.value)
+            bindForecast(mode, state.value)
         }
         if (state is UiState.Error) {
             errorLayout.errorMessage.text =
                 getString(R.string.error_generic_format, state.uiError.message)
+        }
+    }
+
+    private fun bindForecastMode(mode: ForecastMode) {
+        binding.weatherForecastCard.toggleGroup.check(
+            when (mode) {
+                ForecastMode.HOURLY -> R.id.hourlyToggleButton
+                ForecastMode.DAILY -> R.id.daysToggleButton
+            }
+        )
+        viewModel.uiState.value.asData()?.value?.let { weatherModel ->
+            bindForecast(mode, weatherModel)
         }
     }
 
