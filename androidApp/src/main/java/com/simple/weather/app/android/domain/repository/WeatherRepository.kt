@@ -7,7 +7,7 @@ interface WeatherRepository {
 
     suspend fun getCurrentWeather(lat: Double, lon: Double): Result<WeatherModel>
 
-    suspend fun getCurrentWeather(ipv6: String): Result<WeatherModel>
+    suspend fun getCurrentWeatherByAutoIp(): Result<WeatherModel>
 
     suspend fun searchLocation(query: String): Result<List<SearchLocationModel>>
 

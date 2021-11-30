@@ -55,7 +55,7 @@ class HomeViewModel(
     }
 
     private fun getWeatherWithoutLocation(pullToRefresh: Boolean) {
-        //TODO
+        getWeather(pullToRefresh, WeatherRequest.AutoIPAddress)
     }
 
     private fun getWeather(pullToRefresh: Boolean, weatherRequest: WeatherRequest) =

@@ -14,8 +14,8 @@ internal class WeatherRepositoryImpl(
         return weatherRemoteDataSource.getCurrentWeather(lat, lon).map { it.toDomain() }
     }
 
-    override suspend fun getCurrentWeather(ipv6: String): Result<WeatherModel> {
-        return weatherRemoteDataSource.getCurrentWeather(ipv6).map { it.toDomain() }
+    override suspend fun getCurrentWeatherByAutoIp(): Result<WeatherModel> {
+        return weatherRemoteDataSource.getCurrentWeatherByAutoIp().map { it.toDomain() }
     }
 
     override suspend fun searchLocation(query: String): Result<List<SearchLocationModel>> {

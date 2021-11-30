@@ -19,10 +19,10 @@ internal class WeatherRemoteDataSourceImpl(
         }
     }
 
-    override suspend fun getCurrentWeather(ipv6: String): Result<WeatherData> = runCatching {
+    override suspend fun getCurrentWeatherByAutoIp(): Result<WeatherData> = runCatching {
         httpClient.get {
             url(FORECAST_URL)
-            parameter("q", ipv6)
+            parameter("q", "auto:ip")
             parameter("days", FORECAST_DAYS)
             parameter("alerts", "no")
             parameter("aqi", "no")
