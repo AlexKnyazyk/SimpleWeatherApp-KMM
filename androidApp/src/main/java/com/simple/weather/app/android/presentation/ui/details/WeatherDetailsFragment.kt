@@ -1,14 +1,13 @@
 package com.simple.weather.app.android.presentation.ui.details
 
-import androidx.fragment.app.viewModels
 import com.simple.weather.app.android.presentation.ui.base.BaseWeatherFragment
-import org.kodein.di.provider
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 class WeatherDetailsFragment : BaseWeatherFragment() {
 
-    private val viewModelFactory by provider<WeatherDetailsViewModel.Factory>()
-    override val viewModel: WeatherDetailsViewModel by viewModels {
-        viewModelFactory().create(requireArguments().getString(ARG_KEY_NAME).orEmpty())
+    override val viewModel: WeatherDetailsViewModel by viewModel {
+        parametersOf(requireArguments().getString(ARG_KEY_NAME).orEmpty())
     }
 
     companion object {

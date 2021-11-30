@@ -1,7 +1,6 @@
 package com.simple.weather.app.android.presentation.ui.search
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.simple.weather.app.android.domain.usecase.ISearchLocationUseCase
 import com.simple.weather.app.android.presentation.model.SearchLocationResult
@@ -36,15 +35,6 @@ class SearchViewModel(
             onSuccess = { UiState.data(SearchLocationResult(it, query.isNotBlank())) },
             onFailure = { UiState.error(it) }
         ))
-    }
-
-    class Factory(
-        private val searchLocationUseCase: ISearchLocationUseCase
-    ) : ViewModelProvider.Factory {
-        @Suppress("UNCHECKED_CAST")
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return SearchViewModel(searchLocationUseCase) as T
-        }
     }
 
     companion object {

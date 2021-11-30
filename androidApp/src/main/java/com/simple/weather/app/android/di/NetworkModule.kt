@@ -8,14 +8,12 @@ import io.ktor.client.features.json.JsonFeature
 import io.ktor.client.features.json.serializer.KotlinxSerializer
 import io.ktor.client.features.logging.*
 import io.ktor.client.request.parameter
-import org.kodein.di.DI
-import org.kodein.di.bindSingleton
+import org.koin.dsl.module
 import java.util.concurrent.TimeUnit
 
-val networkModule: DI.Module
-    get() = DI.Module("networkModule") {
-        bindSingleton { httpClient }
-    }
+val networkModule = module {
+    single { httpClient }
+}
 
 private val httpClient: HttpClient
     get() = HttpClient(Android) {

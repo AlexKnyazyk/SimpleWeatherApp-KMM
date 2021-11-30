@@ -8,7 +8,6 @@ import android.view.inputmethod.EditorInfo
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.simple.weather.app.android.R
 import com.simple.weather.app.android.databinding.FragmentSearchBinding
@@ -23,12 +22,11 @@ import com.simple.weather.app.android.utils.hideKeyboard
 import com.simple.weather.app.android.utils.launchRepeatOnViewLifecycleScope
 import com.simple.weather.app.android.utils.view.setOnEditorActionListener
 import kotlinx.coroutines.flow.collect
-import org.kodein.di.provider
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SearchFragment : BaseFragment<FragmentSearchBinding>(), SearchItemClickListener {
 
-    private val viewModelFactory by provider<SearchViewModel.Factory>()
-    private val viewModel: SearchViewModel by viewModels { viewModelFactory() }
+    private val viewModel: SearchViewModel by viewModel()
 
     override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentSearchBinding.inflate(inflater, container, false)

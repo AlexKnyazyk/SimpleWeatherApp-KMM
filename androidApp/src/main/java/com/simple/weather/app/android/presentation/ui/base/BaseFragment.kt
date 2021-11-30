@@ -6,11 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
-import org.kodein.di.DIAware
+import org.koin.core.component.KoinComponent
 
-abstract class BaseFragment<B : ViewBinding> : Fragment(), DIAware {
-
-    override val di by lazy { (requireContext().applicationContext as DIAware).di }
+abstract class BaseFragment<B : ViewBinding> : Fragment(), KoinComponent {
 
     private var _binding: B? = null
     protected val binding: B

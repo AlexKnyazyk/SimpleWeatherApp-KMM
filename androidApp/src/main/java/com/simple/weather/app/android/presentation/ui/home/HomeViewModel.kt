@@ -1,7 +1,5 @@
 package com.simple.weather.app.android.presentation.ui.home
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.simple.weather.app.android.data.model.LocationResult
 import com.simple.weather.app.android.data.model.request.WeatherRequest
@@ -50,15 +48,5 @@ class HomeViewModel(
 
     private fun getWeatherWithoutLocation(pullToRefresh: Boolean) {
         getWeather(pullToRefresh, WeatherRequest.AutoIPAddress)
-    }
-
-    class Factory(
-        private val locationRepository: LocationRepository,
-        private val getWeatherUseCase: IGetWeatherUseCase
-    ) : ViewModelProvider.Factory {
-        @Suppress("UNCHECKED_CAST")
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return HomeViewModel(locationRepository, getWeatherUseCase) as T
-        }
     }
 }

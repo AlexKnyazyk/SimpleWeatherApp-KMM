@@ -48,7 +48,7 @@ dependencies {
     implementation("io.ktor:ktor-client-serialization:$ktorVersion")
     implementation("io.ktor:ktor-client-logging:$ktorVersion")
 
-    implementation("org.kodein.di:kodein-di-framework-android-core:7.6.0")
+    implementation("io.insert-koin:koin-android:3.0.2")
 
     implementation("com.google.android.material:material:1.5.0-beta01")
     implementation("androidx.appcompat:appcompat:1.4.0")
