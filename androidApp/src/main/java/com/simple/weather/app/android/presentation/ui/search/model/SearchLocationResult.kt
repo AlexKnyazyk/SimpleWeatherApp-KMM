@@ -1,9 +1,7 @@
-package com.simple.weather.app.android.presentation.model
-
-import com.simple.weather.app.android.domain.model.SearchLocationModel
+package com.simple.weather.app.android.presentation.ui.search.model
 
 data class SearchLocationResult(
-    val itemModels: List<SearchLocationModel>,
+    val itemModels: List<SearchItemUi>,
     val hasSearchQuery: Boolean
 ) {
 

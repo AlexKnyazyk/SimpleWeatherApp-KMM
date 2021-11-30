@@ -12,12 +12,12 @@ import androidx.navigation.fragment.findNavController
 import com.simple.weather.app.android.R
 import com.simple.weather.app.android.databinding.FragmentSearchBinding
 import com.simple.weather.app.android.domain.model.SearchLocationModel
-import com.simple.weather.app.android.presentation.model.SearchLocationResult
+import com.simple.weather.app.android.presentation.ui.search.model.SearchLocationResult
 import com.simple.weather.app.android.presentation.model.UiState
 import com.simple.weather.app.android.presentation.ui.base.BaseFragment
 import com.simple.weather.app.android.presentation.ui.details.WeatherDetailsFragment
 import com.simple.weather.app.android.presentation.ui.search.adapter.SearchItemClickListener
-import com.simple.weather.app.android.presentation.ui.search.adapter.SearchLocationAdapter
+import com.simple.weather.app.android.presentation.ui.search.adapter.SearchAdapter
 import com.simple.weather.app.android.utils.hideKeyboard
 import com.simple.weather.app.android.utils.launchRepeatOnViewLifecycleScope
 import com.simple.weather.app.android.utils.view.setOnEditorActionListener
@@ -40,7 +40,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(), SearchItemClickLis
 
     private fun setupSearchResultsList() {
         binding.searchList.apply {
-            adapter = SearchLocationAdapter(this@SearchFragment)
+            adapter = SearchAdapter(this@SearchFragment)
         }
     }
 
@@ -65,7 +65,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(), SearchItemClickLis
         var isNoSearchResults = false
         if (state is UiState.Data) {
             val result = state.value
-            (searchList.adapter as SearchLocationAdapter).submitList(result.itemModels)
+            (searchList.adapter as SearchAdapter).submitList(result.itemModels)
             if (result.hasSearchQuery && result.itemModels.isEmpty()) {
                 isNoSearchResults = true
                 errorMessage.setText(R.string.no_search_results)
