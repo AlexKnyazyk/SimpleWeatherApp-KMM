@@ -17,6 +17,9 @@ internal class GetWeatherUseCase(
             is WeatherRequest.Location -> {
                 weatherRepository.getCurrentWeather(request.lat, request.lon)
             }
+            is WeatherRequest.Name -> {
+                weatherRepository.getCurrentWeather(request.name)
+            }
             is WeatherRequest.AutoIPAddress -> {
                 weatherRepository.getCurrentWeatherByAutoIp()
             }

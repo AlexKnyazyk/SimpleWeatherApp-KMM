@@ -5,15 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.simple.weather.app.android.R
 import com.simple.weather.app.android.databinding.FragmentSearchBinding
 import com.simple.weather.app.android.domain.model.SearchLocationModel
 import com.simple.weather.app.android.presentation.model.SearchLocationResult
 import com.simple.weather.app.android.presentation.model.UiState
 import com.simple.weather.app.android.presentation.ui.base.BaseFragment
+import com.simple.weather.app.android.presentation.ui.details.WeatherDetailsFragment
 import com.simple.weather.app.android.presentation.ui.search.adapter.SearchItemClickListener
 import com.simple.weather.app.android.presentation.ui.search.adapter.SearchLocationAdapter
 import com.simple.weather.app.android.utils.hideKeyboard
@@ -78,7 +81,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(), SearchItemClickLis
     }
 
     override fun onItemClick(itemModel: SearchLocationModel) {
-        // TODO
+        findNavController().navigate(R.id.navigate_to_weather_details, bundleOf(WeatherDetailsFragment.ARG_KEY_NAME to itemModel.name))
     }
 
     override fun onDestroyView() {

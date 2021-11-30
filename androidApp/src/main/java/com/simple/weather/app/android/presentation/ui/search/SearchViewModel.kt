@@ -16,6 +16,7 @@ class SearchViewModel(
     private val searchQueryFlow = MutableSharedFlow<String>(extraBufferCapacity = 1)
 
     val uiState = searchQueryFlow
+        .distinctUntilChanged()
         .debounce(SEARCH_DEBOUNCE)
         .flatMapLatest { query ->
             searchLocationUiStateFlow(query)

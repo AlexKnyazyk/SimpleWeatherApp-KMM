@@ -5,30 +5,21 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.simple.weather.app.android.data.model.LocationResult
 import com.simple.weather.app.android.data.model.request.WeatherRequest
-import com.simple.weather.app.android.domain.model.WeatherModel
 import com.simple.weather.app.android.domain.repository.LocationRepository
 import com.simple.weather.app.android.domain.usecase.IGetWeatherUseCase
-import com.simple.weather.app.android.presentation.model.ForecastMode
-import com.simple.weather.app.android.presentation.model.UiState
+import com.simple.weather.app.android.presentation.ui.base.BaseWeatherViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
     private val locationRepository: LocationRepository,
-    private val getWeatherUseCase: IGetWeatherUseCase
-) : ViewModel() {
+    getWeatherUseCase: IGetWeatherUseCase
+) : BaseWeatherViewModel(getWeatherUseCase) {
 
-    private val _uiState = MutableStateFlow<UiState<WeatherModel>>(UiState.loading(pullToRefresh = false))
-    val uiState = _uiState.asStateFlow()
-
-    private val _locationPermissionsEvent = MutableSharedFlow<Unit>()
-    val locationPermissionsEvent = _locationPermissionsEvent.asSharedFlow()
-
-    private val _forecastMode = MutableStateFlow(ForecastMode.HOURLY)
-    val forecastMode = _forecastMode.asStateFlow()
+    private val _locationPermissionsEvent = MutableSharedFlow<Unit?>(replay = 1, extraBufferCapacity = 1)
+    val locationPermissionsEvent = _locationPermissionsEvent.asSharedFlow().filterNotNull()
 
     private var locationPermissionAsked: Boolean = false
 
@@ -36,7 +27,10 @@ class HomeViewModel(
         getWeather(pullToRefresh = false)
     }
 
-    fun getWeather(pullToRefresh: Boolean) {
+    override fun getWeather(pullToRefresh: Boolean) {
+        viewModelScope.launch {
+            _locationPermissionsEvent.emit(null)
+        }
         when (val result = locationRepository.getLocation()) {
             is LocationResult.Success ->
                 getWeather(pullToRefresh, WeatherRequest.Location(result.lat, result.lon))
@@ -56,23 +50,6 @@ class HomeViewModel(
 
     private fun getWeatherWithoutLocation(pullToRefresh: Boolean) {
         getWeather(pullToRefresh, WeatherRequest.AutoIPAddress)
-    }
-
-    private fun getWeather(pullToRefresh: Boolean, weatherRequest: WeatherRequest) =
-        viewModelScope.launch {
-            _uiState.value = UiState.loading(pullToRefresh)
-            _uiState.value = getWeatherUseCase(weatherRequest).fold(
-                onSuccess = { UiState.data(it) },
-                onFailure = { UiState.error(it) }
-            )
-            _forecastMode.value = _forecastMode.value
-        }
-
-    fun setForecastMode(mode: ForecastMode) {
-        val uiState = _uiState.value
-        if (_forecastMode.value != mode && uiState is UiState.Data) {
-            _forecastMode.value = mode
-        }
     }
 
     class Factory(

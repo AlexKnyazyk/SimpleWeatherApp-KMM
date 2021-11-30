@@ -1,5 +1,6 @@
 package com.simple.weather.app.android.di
 
+import com.simple.weather.app.android.presentation.ui.details.WeatherDetailsViewModel
 import com.simple.weather.app.android.presentation.ui.home.HomeViewModel
 import com.simple.weather.app.android.presentation.ui.search.SearchViewModel
 import org.kodein.di.DI
@@ -10,4 +11,5 @@ val viewModelsModule: DI.Module
     get() = DI.Module("viewModelsModule") {
         bindProvider { HomeViewModel.Factory(instance(), instance()) }
         bindProvider { SearchViewModel.Factory(instance()) }
+        bindProvider { WeatherDetailsViewModel.Factory(instance()) }
     }

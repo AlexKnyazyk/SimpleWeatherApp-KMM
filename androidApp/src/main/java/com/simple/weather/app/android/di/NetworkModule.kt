@@ -3,13 +3,14 @@ package com.simple.weather.app.android.di
 import android.util.Log
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.android.Android
-import io.ktor.client.features.defaultRequest
+import io.ktor.client.features.*
 import io.ktor.client.features.json.JsonFeature
 import io.ktor.client.features.json.serializer.KotlinxSerializer
 import io.ktor.client.features.logging.*
 import io.ktor.client.request.parameter
 import org.kodein.di.DI
 import org.kodein.di.bindSingleton
+import java.util.concurrent.TimeUnit
 
 val networkModule: DI.Module
     get() = DI.Module("networkModule") {
@@ -18,6 +19,10 @@ val networkModule: DI.Module
 
 private val httpClient: HttpClient
     get() = HttpClient(Android) {
+        install(HttpTimeout) {
+            requestTimeoutMillis = TimeUnit.SECONDS.toMillis(20)
+        }
+
         install(Logging) {
             logger = CustomAndroidHttpLogger
             level = LogLevel.ALL

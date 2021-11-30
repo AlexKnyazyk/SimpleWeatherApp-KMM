@@ -14,6 +14,10 @@ internal class WeatherRepositoryImpl(
         return weatherRemoteDataSource.getCurrentWeather(lat, lon).map { it.toDomain() }
     }
 
+    override suspend fun getCurrentWeather(locationName: String): Result<WeatherModel> {
+        return weatherRemoteDataSource.getCurrentWeather(locationName).map { it.toDomain() }
+    }
+
     override suspend fun getCurrentWeatherByAutoIp(): Result<WeatherModel> {
         return weatherRemoteDataSource.getCurrentWeatherByAutoIp().map { it.toDomain() }
     }

@@ -9,12 +9,24 @@
         android:id="@+id/fragment_home"
         android:name="com.simple.weather.app.android.presentation.ui.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_weather" />
 
     <fragment
         android:id="@+id/fragment_search"
         android:name="com.simple.weather.app.android.presentation.ui.search.SearchFragment"
         android:label="@string/title_search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+
+        <action
+            android:id="@+id/navigate_to_weather_details"
+            app:destination="@id/weatherDetailsFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/weatherDetailsFragment"
+        android:name="com.simple.weather.app.android.presentation.ui.details.WeatherDetailsFragment"
+        android:label="@string/title_weather_details"
+        tools:layout="@layout/fragment_weather"/>
 
 </navigation>
