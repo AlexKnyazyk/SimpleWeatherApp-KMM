@@ -20,4 +20,8 @@ internal class FavoriteLocationsLocalDataSourceImpl(
     override suspend fun insertOrReplace(data: FavoriteLocationDb) = suspendCoroutine<Unit> {
         database.favoriteLocationsQueries.insertOrReplace(data)
     }
+
+    override suspend fun delete(id: Int) = suspendCoroutine<Unit> {
+        database.favoriteLocationsQueries.delete(id)
+    }
 }

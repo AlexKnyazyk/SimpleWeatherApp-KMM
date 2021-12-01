@@ -8,4 +8,6 @@ interface FavoriteLocationsRepository {
     fun allFavoriteLocations(): Flow<List<FavoriteLocationModel>>
 
     suspend fun addOrUpdate(model: FavoriteLocationModel)
+
+    suspend fun delete(model: FavoriteLocationModel)
 }

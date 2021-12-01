@@ -1,5 +1,7 @@
 package com.simple.weather.app.android.domain.model
 
+import java.util.Calendar
+
 data class FavoriteLocationModel(
     val id: Int,
     val name: String,
@@ -8,4 +10,5 @@ data class FavoriteLocationModel(
     val tempC: Int?,
     val tempF: Int?,
     val weatherConditionIconUrl: String?,
+    val updateTimestamp: Calendar?,
 )

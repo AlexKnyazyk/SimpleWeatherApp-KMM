@@ -5,7 +5,8 @@ CREATE TABLE FavoriteLocationDb (
     country TEXT NOT NULL,
     condition_icon_url TEXT,
     temp_c REAL AS Float,
-    temp_f REAL AS Float
+    temp_f REAL AS Float,
+    weather_update_timestamp INTEGER AS Long
 );
 
 selectAll:
@@ -13,5 +14,9 @@ SELECT *
 FROM FavoriteLocationDb;
 
 insertOrReplace:
-INSERT OR REPLACE INTO FavoriteLocationDb(id, name, region, country, condition_icon_url, temp_c, temp_f)
+INSERT OR REPLACE INTO FavoriteLocationDb(id, name, region, country, condition_icon_url, temp_c, temp_f, weather_update_timestamp)
 VALUES ?;
+
+delete:
+DELETE FROM FavoriteLocationDb
+WHERE id = ?;
