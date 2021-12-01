@@ -5,8 +5,6 @@ import com.simple.weather.app.android.domain.model.SearchLocationModel
 
 internal fun SearchLocation.toDomain() = SearchLocationModel(
     id = id,
-    lat = lat,
-    lon = lon,
     name = name,
     region = region,
     country = country
