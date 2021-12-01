@@ -1,7 +1,7 @@
 <resources>
     <string name="app_title">Simple Weather App</string>
     <string name="title_home">Home</string>
-    <string name="title_search">Search</string>
+    <string name="title_favorites">Favorites</string>
     <string name="title_weather_details">Weather Details</string>
 
     <string name="last_update_format">Last update: %s</string>
@@ -27,8 +27,13 @@
     <string name="action_try_again">Try Again</string>
     <string name="today">Today</string>
 
+    <string name="favorites_empty_hint">No added favorites.\nPress + to search and add new one</string>
+
     <string name="search_hint">Search</string>
     <string name="favorites_header">Favorites</string>
     <string name="search_results_header">Search Results</string>
     <string name="no_search_results">No Search Results</string>
+
+    <string name="title_settings">Settings</string>
+
 </resources>

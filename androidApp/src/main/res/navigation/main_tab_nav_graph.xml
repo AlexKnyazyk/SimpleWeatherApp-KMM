@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/fragment_home">
+
+    <fragment
+        android:id="@+id/fragment_home"
+        android:name="com.simple.weather.app.android.presentation.ui.home.HomeFragment"
+        tools:layout="@layout/fragment_weather" />
+
+    <fragment
+        android:id="@+id/fragment_favorites"
+        android:name="com.simple.weather.app.android.presentation.ui.favorites.FavoritesFragment"
+        tools:layout="@layout/fragment_favorites" >
+
+        <action
+            android:id="@+id/navigate_to_weather_details"
+            app:destination="@id/fragment_weather_details" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_weather_details"
+        android:name="com.simple.weather.app.android.presentation.ui.details.WeatherDetailsFragment"
+        tools:layout="@layout/fragment_weather"/>
+
+</navigation>

@@ -33,18 +33,18 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(), SearchItemClickLis
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupSearchResultsList()
-        setupInputListeners()
+        initSearchResultsList()
+        initInputListeners()
         collectViewModelFlows()
     }
 
-    private fun setupSearchResultsList() {
+    private fun initSearchResultsList() {
         binding.searchList.apply {
             adapter = SearchAdapter(this@SearchFragment)
         }
     }
 
-    private fun setupInputListeners() = with(binding) {
+    private fun initInputListeners() = with(binding) {
         searchInput.doOnTextChanged { text, _, _, _ ->
             viewModel.setSearchQuery(text?.toString().orEmpty())
         }
@@ -79,7 +79,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(), SearchItemClickLis
     }
 
     override fun onItemClick(itemModel: SearchLocationModel) {
-        findNavController().navigate(R.id.navigate_to_weather_details, bundleOf(WeatherDetailsFragment.ARG_KEY_NAME to itemModel.name))
+        viewModel.onItemClick(itemModel)
     }
 
     override fun onDestroyView() {
