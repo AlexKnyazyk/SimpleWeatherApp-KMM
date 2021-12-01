@@ -1,0 +1,17 @@
+CREATE TABLE FavoriteLocationDb (
+    id INTEGER AS Int NOT NULL PRIMARY KEY,
+    name TEXT NOT NULL,
+    region TEXT NOT NULL,
+    country TEXT NOT NULL,
+    condition_icon_url TEXT,
+    temp_c REAL AS Float,
+    temp_f REAL AS Float
+);
+
+selectAll:
+SELECT *
+FROM FavoriteLocationDb;
+
+insertOrReplace:
+INSERT OR REPLACE INTO FavoriteLocationDb(id, name, region, country, condition_icon_url, temp_c, temp_f)
+VALUES ?;

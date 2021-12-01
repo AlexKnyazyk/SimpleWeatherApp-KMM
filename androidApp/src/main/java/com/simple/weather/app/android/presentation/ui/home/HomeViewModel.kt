@@ -3,7 +3,7 @@ package com.simple.weather.app.android.presentation.ui.home
 import androidx.lifecycle.viewModelScope
 import com.simple.weather.app.android.data.model.LocationResult
 import com.simple.weather.app.android.data.model.request.WeatherRequest
-import com.simple.weather.app.android.domain.repository.LocationRepository
+import com.simple.weather.app.android.domain.repository.DeviceLocationRepository
 import com.simple.weather.app.android.domain.usecase.IGetWeatherUseCase
 import com.simple.weather.app.android.presentation.ui.base.BaseWeatherViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
-    private val locationRepository: LocationRepository,
+    private val deviceLocationRepository: DeviceLocationRepository,
     getWeatherUseCase: IGetWeatherUseCase
 ) : BaseWeatherViewModel(getWeatherUseCase) {
 
@@ -29,7 +29,7 @@ class HomeViewModel(
         viewModelScope.launch {
             _locationPermissionsEvent.emit(null)
         }
-        when (val result = locationRepository.getLocation()) {
+        when (val result = deviceLocationRepository.getLocation()) {
             is LocationResult.Success ->
                 getWeather(pullToRefresh, WeatherRequest.Location(result.lat, result.lon))
             LocationResult.NoLocation -> getWeatherWithoutLocation(pullToRefresh)

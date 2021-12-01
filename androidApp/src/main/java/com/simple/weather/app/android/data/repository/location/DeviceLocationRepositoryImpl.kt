@@ -7,12 +7,12 @@ import android.location.Criteria
 import android.location.Location
 import android.location.LocationManager
 import com.simple.weather.app.android.data.model.LocationResult
-import com.simple.weather.app.android.domain.repository.LocationRepository
+import com.simple.weather.app.android.domain.repository.DeviceLocationRepository
 import com.simple.weather.app.android.utils.isPermissionGranted
 
-internal class LocationRepositoryImpl(
+internal class DeviceLocationRepositoryImpl(
     private val context: Context
-) : LocationRepository {
+) : DeviceLocationRepository {
 
     override fun getLocation(): LocationResult {
         return if (context.isPermissionGranted(Manifest.permission.ACCESS_COARSE_LOCATION)) {

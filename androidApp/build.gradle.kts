@@ -3,6 +3,7 @@ plugins {
     kotlin("android")
     kotlin("plugin.serialization") version "1.5.21"
     kotlin("kapt")
+    id("com.squareup.sqldelight")
 }
 
 android {
@@ -47,6 +48,9 @@ dependencies {
     implementation("io.ktor:ktor-client-android:$ktorVersion")
     implementation("io.ktor:ktor-client-serialization:$ktorVersion")
     implementation("io.ktor:ktor-client-logging:$ktorVersion")
+
+    implementation("com.squareup.sqldelight:android-driver:1.5.3")
+    implementation("com.squareup.sqldelight:coroutines-extensions-jvm:1.5.3")
 
     implementation("io.insert-koin:koin-android:3.0.2")
 

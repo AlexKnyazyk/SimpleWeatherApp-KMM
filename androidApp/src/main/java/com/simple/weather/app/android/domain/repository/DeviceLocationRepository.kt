@@ -2,7 +2,7 @@ package com.simple.weather.app.android.domain.repository
 
 import com.simple.weather.app.android.data.model.LocationResult
 
-interface LocationRepository {
+interface DeviceLocationRepository {
 
     fun getLocation(): LocationResult
 
