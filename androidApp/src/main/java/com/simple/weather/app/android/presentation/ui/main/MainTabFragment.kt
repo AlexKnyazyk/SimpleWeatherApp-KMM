@@ -5,6 +5,7 @@ import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.transition.MaterialFadeThrough
 import com.simple.weather.app.android.R
 import com.simple.weather.app.android.databinding.FragmentMainBinding
 import com.simple.weather.app.android.presentation.ui.base.BaseFragment
@@ -33,6 +34,7 @@ class MainTabFragment : BaseFragment<FragmentMainBinding>() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return if (item.itemId == R.id.settings) {
+            exitTransition = MaterialFadeThrough()
             findMainNavController().navigate(R.id.navigate_to_settings)
             true
         } else {
