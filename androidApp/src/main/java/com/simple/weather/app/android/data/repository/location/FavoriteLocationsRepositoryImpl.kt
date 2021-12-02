@@ -21,6 +21,10 @@ internal class FavoriteLocationsRepositoryImpl(
             }
     }
 
+    override suspend fun getById(id: Int): FavoriteLocationModel? = withContext(Dispatchers.IO) {
+        favoriteLocationsLocalDataSource.getById(id)?.toDomain()
+    }
+
     override suspend fun addOrUpdate(model: FavoriteLocationModel) = withContext(Dispatchers.IO) {
         favoriteLocationsLocalDataSource.insertOrReplace(model.toDb())
     }

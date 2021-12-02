@@ -51,8 +51,11 @@ class SearchViewModel(
 
     fun onItemClick(itemModel: SearchLocationModel) {
         viewModelScope.launch {
-            addSearchLocationToFavoritesUseCase(itemModel)
-            _events.emit(SearchScreenEvents.NavigateBack)
+            val event = addSearchLocationToFavoritesUseCase(itemModel).fold(
+                onSuccess = { SearchScreenEvents.NavigateBack },
+                onFailure = { SearchScreenEvents.ExistedFavoriteMessage }
+            )
+            _events.emit(event)
         }
     }
 

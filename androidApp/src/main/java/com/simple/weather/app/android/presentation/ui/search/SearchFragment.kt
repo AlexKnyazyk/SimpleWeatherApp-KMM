@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.navigation.fragment.findNavController
@@ -61,6 +62,9 @@ class SearchFragment : BaseListFragment<SearchAdapter, FragmentSearchBinding>(),
             viewModel.events.collect { event ->
                 when (event) {
                     SearchScreenEvents.NavigateBack -> findNavController().popBackStack()
+                    SearchScreenEvents.ExistedFavoriteMessage -> {
+                        Toast.makeText(requireContext(), R.string.location_already_added_to_favorites, Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         }

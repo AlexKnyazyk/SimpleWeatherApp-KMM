@@ -30,6 +30,7 @@
     <string name="favorites_empty_hint">No added favorites.\nPress + to search and add new one</string>
 
     <string name="search_hint">Search</string>
+    <string name="location_already_added_to_favorites">This location has already added to favorites</string>
     <string name="favorites_header">Favorites</string>
     <string name="search_results_header">Search Results</string>
     <string name="no_search_results">No Search Results</string>

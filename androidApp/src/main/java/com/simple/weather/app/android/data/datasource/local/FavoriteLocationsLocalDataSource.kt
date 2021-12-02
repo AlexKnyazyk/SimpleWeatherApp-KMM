@@ -7,6 +7,8 @@ internal interface FavoriteLocationsLocalDataSource {
 
     fun allFavoriteLocations(): Flow<List<FavoriteLocationDb>>
 
+    suspend fun getById(id: Int): FavoriteLocationDb?
+
     suspend fun insertOrReplace(data: FavoriteLocationDb)
 
     suspend fun delete(id: Int)

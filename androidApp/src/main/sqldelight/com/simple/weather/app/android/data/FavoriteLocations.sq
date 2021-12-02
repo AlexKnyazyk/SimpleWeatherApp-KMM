@@ -13,6 +13,11 @@ selectAll:
 SELECT *
 FROM FavoriteLocationDb;
 
+getById:
+SELECT *
+FROM FavoriteLocationDb
+WHERE id = ?;
+
 insertOrReplace:
 INSERT OR REPLACE INTO FavoriteLocationDb(id, name, region, country, condition_icon_url, temp_c, temp_f, weather_update_timestamp)
 VALUES ?;
