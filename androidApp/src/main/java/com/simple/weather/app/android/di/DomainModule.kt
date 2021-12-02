@@ -13,7 +13,7 @@ import com.simple.weather.app.android.domain.usecase.search.IAddSearchLocationTo
 import org.koin.dsl.module
 
 val domainModule = module {
-    factory<IGetWeatherUseCase> { GetWeatherUseCase(get()) }
+    factory<IGetWeatherUseCase> { GetWeatherUseCase(get(), get(), get()) }
     factory<ISearchLocationUseCase> { SearchLocationUseCase(get()) }
     factory<ISyncFavoriteLocationsWeatherUseCase> { SyncFavoriteLocationsWeatherUseCase(get(), get(), get()) }
     factory<IUpdateFavoriteLocationWeatherUseCase> { UpdateFavoriteLocationWeatherUseCase(get()) }

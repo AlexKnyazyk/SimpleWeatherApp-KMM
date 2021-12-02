@@ -5,7 +5,7 @@ import com.simple.weather.app.android.domain.usecase.weather.IGetWeatherUseCase
 import com.simple.weather.app.android.presentation.ui.base.BaseWeatherViewModel
 
 class WeatherDetailsViewModel(
-    private val name: String,
+    private val id: Int,
     getWeatherUseCase: IGetWeatherUseCase
 ) : BaseWeatherViewModel(getWeatherUseCase) {
 
@@ -14,6 +14,6 @@ class WeatherDetailsViewModel(
     }
 
     override fun getWeather(pullToRefresh: Boolean) {
-        getWeather(pullToRefresh, WeatherRequest.Name(name))
+        getWeather(pullToRefresh, WeatherRequest.FavoriteId(id))
     }
 }

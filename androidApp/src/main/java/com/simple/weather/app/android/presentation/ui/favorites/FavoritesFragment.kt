@@ -69,7 +69,7 @@ class FavoritesFragment : BaseListFragment<FavoritesAdapter, FragmentFavoritesBi
     override fun onItemClick(itemModel: FavoriteLocationModel) {
         findNavController().navigate(
             R.id.navigate_to_weather_details,
-            bundleOf(WeatherDetailsFragment.ARG_KEY_NAME to itemModel.name)
+            bundleOf(WeatherDetailsFragment.ARG_KEY_ID to itemModel.id)
         )
     }
 }

@@ -12,6 +12,6 @@ val viewModelsModule = module {
     viewModel { HomeViewModel(get(), get()) }
     viewModel { FavoritesViewModel(get(), get()) }
     viewModel { SearchViewModel(get(), get()) }
-    viewModel { (name: String) -> WeatherDetailsViewModel(name, get()) }
+    viewModel { (id: Int) -> WeatherDetailsViewModel(id, get()) }
     viewModel { SettingsViewModel() }
 }

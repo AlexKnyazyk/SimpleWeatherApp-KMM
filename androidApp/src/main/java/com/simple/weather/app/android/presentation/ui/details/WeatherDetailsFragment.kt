@@ -7,10 +7,10 @@ import org.koin.core.parameter.parametersOf
 class WeatherDetailsFragment : BaseWeatherFragment() {
 
     override val viewModel: WeatherDetailsViewModel by viewModel {
-        parametersOf(requireArguments().getString(ARG_KEY_NAME).orEmpty())
+        parametersOf(requireArguments().getInt(ARG_KEY_ID))
     }
 
     companion object {
-        const val ARG_KEY_NAME = "KEY_NAME"
+        const val ARG_KEY_ID = "id"
     }
 }
