@@ -1,4 +1,4 @@
-package com.simple.weather.app.android.presentation.ui.home.forecast
+package com.simple.weather.app.android.presentation.ui.base.forecast
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

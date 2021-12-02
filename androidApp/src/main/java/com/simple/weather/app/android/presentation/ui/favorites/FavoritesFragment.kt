@@ -7,10 +7,11 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import com.simple.weather.app.android.R
 import com.simple.weather.app.android.databinding.FragmentFavoritesBinding
 import com.simple.weather.app.android.domain.model.FavoriteLocationModel
-import com.simple.weather.app.android.presentation.ui.base.BaseFragment
+import com.simple.weather.app.android.presentation.ui.base.BaseListFragment
 import com.simple.weather.app.android.presentation.ui.details.WeatherDetailsFragment
 import com.simple.weather.app.android.presentation.ui.favorites.adapter.FavoriteItemClickListener
 import com.simple.weather.app.android.presentation.ui.favorites.adapter.FavoritesAdapter
@@ -20,12 +21,17 @@ import com.simple.weather.app.android.utils.view.recycler.SpacesItemDecoration
 import kotlinx.coroutines.flow.collect
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class FavoritesFragment : BaseFragment<FragmentFavoritesBinding>(), FavoriteItemClickListener {
+class FavoritesFragment : BaseListFragment<FavoritesAdapter, FragmentFavoritesBinding>(), FavoriteItemClickListener {
 
     private val viewModel: FavoritesViewModel by viewModel()
 
+    override val recyclerView: RecyclerView
+        get() = binding.favoriteLocationsList
+
     override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentFavoritesBinding.inflate(inflater, container, false)
+
+    override fun createAdapter() = FavoritesAdapter(this)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -35,7 +41,6 @@ class FavoritesFragment : BaseFragment<FragmentFavoritesBinding>(), FavoriteItem
 
     private fun initViews() = with(binding) {
         binding.favoriteLocationsList.apply {
-            adapter = FavoritesAdapter(this@FavoritesFragment)
             addItemDecoration(
                 SpacesItemDecoration(resources.getDimensionPixelSize(R.dimen.default_margin))
             )
@@ -52,7 +57,7 @@ class FavoritesFragment : BaseFragment<FragmentFavoritesBinding>(), FavoriteItem
     }
 
     private fun bindFavoriteLocations(itemModels: List<FavoriteLocationModel>) = with(binding) {
-        (favoriteLocationsList.adapter as FavoritesAdapter).submitList(itemModels)
+        adapter.submitList(itemModels)
         hintMessage.isVisible = itemModels.isEmpty()
     }
 

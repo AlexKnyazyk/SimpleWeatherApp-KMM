@@ -7,24 +7,32 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.CallSuper
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.simple.weather.app.android.R
-import com.simple.weather.app.android.databinding.*
+import com.simple.weather.app.android.databinding.FragmentWeatherBinding
+import com.simple.weather.app.android.databinding.LayoutCurrentWeatherBinding
+import com.simple.weather.app.android.databinding.LayoutCurrentWeatherDetailedBinding
 import com.simple.weather.app.android.domain.model.WeatherModel
 import com.simple.weather.app.android.presentation.model.ForecastMode
 import com.simple.weather.app.android.presentation.model.UiState
 import com.simple.weather.app.android.presentation.model.asData
-import com.simple.weather.app.android.presentation.ui.home.forecast.ForecastAdapter
+import com.simple.weather.app.android.presentation.ui.base.forecast.ForecastAdapter
 import com.simple.weather.app.android.utils.launchRepeatOnViewLifecycleScope
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-abstract class BaseWeatherFragment : BaseFragment<FragmentWeatherBinding>() {
+abstract class BaseWeatherFragment : BaseListFragment<ForecastAdapter, FragmentWeatherBinding>() {
 
     protected abstract val viewModel: BaseWeatherViewModel
 
+    override val recyclerView: RecyclerView
+        get() = binding.weatherForecastCard.forecastList
+
     override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentWeatherBinding.inflate(inflater, container, false)
+
+    override fun createAdapter() = ForecastAdapter()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -39,9 +47,6 @@ abstract class BaseWeatherFragment : BaseFragment<FragmentWeatherBinding>() {
         }
         errorLayout.tryAgainButton.setOnClickListener {
             viewModel.getWeather(pullToRefresh = false)
-        }
-        weatherForecastCard.forecastList.apply {
-            adapter = ForecastAdapter()
         }
         weatherForecastCard.hourlyToggleButton.setOnClickListener {
             viewModel.setForecastMode(ForecastMode.HOURLY)
@@ -118,10 +123,9 @@ abstract class BaseWeatherFragment : BaseFragment<FragmentWeatherBinding>() {
     }
 
     private fun bindForecast(mode: ForecastMode, weatherModel: WeatherModel) {
-        (binding.weatherForecastCard.forecastList.adapter as ForecastAdapter).itemModels =
-            when (mode) {
-                ForecastMode.HOURLY -> weatherModel.forecastHourly
-                ForecastMode.DAILY -> weatherModel.forecastDaily
-            }
+        adapter.itemModels = when (mode) {
+            ForecastMode.HOURLY -> weatherModel.forecastHourly
+            ForecastMode.DAILY -> weatherModel.forecastDaily
+        }
     }
 }

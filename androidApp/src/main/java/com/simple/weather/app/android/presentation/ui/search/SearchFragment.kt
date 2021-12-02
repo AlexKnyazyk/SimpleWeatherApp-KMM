@@ -5,43 +5,39 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
-import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import com.simple.weather.app.android.R
 import com.simple.weather.app.android.databinding.FragmentSearchBinding
 import com.simple.weather.app.android.domain.model.SearchLocationModel
-import com.simple.weather.app.android.presentation.ui.search.model.SearchLocationResult
 import com.simple.weather.app.android.presentation.model.UiState
-import com.simple.weather.app.android.presentation.ui.base.BaseFragment
-import com.simple.weather.app.android.presentation.ui.details.WeatherDetailsFragment
-import com.simple.weather.app.android.presentation.ui.search.adapter.SearchItemClickListener
+import com.simple.weather.app.android.presentation.ui.base.BaseListFragment
 import com.simple.weather.app.android.presentation.ui.search.adapter.SearchAdapter
+import com.simple.weather.app.android.presentation.ui.search.adapter.SearchItemClickListener
+import com.simple.weather.app.android.presentation.ui.search.model.SearchLocationResult
 import com.simple.weather.app.android.utils.hideKeyboard
 import com.simple.weather.app.android.utils.launchRepeatOnViewLifecycleScope
 import com.simple.weather.app.android.utils.view.setOnEditorActionListener
 import kotlinx.coroutines.flow.collect
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class SearchFragment : BaseFragment<FragmentSearchBinding>(), SearchItemClickListener {
+class SearchFragment : BaseListFragment<SearchAdapter, FragmentSearchBinding>(), SearchItemClickListener {
 
     private val viewModel: SearchViewModel by viewModel()
+
+    override val recyclerView: RecyclerView
+        get() = binding.searchList
 
     override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentSearchBinding.inflate(inflater, container, false)
 
+    override fun createAdapter() = SearchAdapter(this)
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initSearchResultsList()
         initInputListeners()
         collectViewModelFlows()
-    }
-
-    private fun initSearchResultsList() {
-        binding.searchList.apply {
-            adapter = SearchAdapter(this@SearchFragment)
-        }
     }
 
     private fun initInputListeners() = with(binding) {
@@ -65,7 +61,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(), SearchItemClickLis
         var isNoSearchResults = false
         if (state is UiState.Data) {
             val result = state.value
-            (searchList.adapter as SearchAdapter).submitList(result.itemModels)
+            adapter.submitList(result.itemModels)
             if (result.hasSearchQuery && result.itemModels.isEmpty()) {
                 isNoSearchResults = true
                 errorMessage.setText(R.string.no_search_results)
@@ -80,10 +76,5 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(), SearchItemClickLis
 
     override fun onItemClick(itemModel: SearchLocationModel) {
         viewModel.onItemClick(itemModel)
-    }
-
-    override fun onDestroyView() {
-        binding.searchList.adapter = null
-        super.onDestroyView()
     }
 }
