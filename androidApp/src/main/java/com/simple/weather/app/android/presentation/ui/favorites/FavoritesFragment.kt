@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.transition.MaterialContainerTransform
+import com.google.android.material.transition.MaterialSharedAxis
 import com.simple.weather.app.android.R
 import com.simple.weather.app.android.databinding.FragmentFavoritesBinding
 import com.simple.weather.app.android.domain.model.FavoriteLocationModel
@@ -73,6 +74,8 @@ class FavoritesFragment : BaseListFragment<FavoritesAdapter, FragmentFavoritesBi
     }
 
     override fun onItemClick(itemModel: FavoriteLocationModel) {
+        exitTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
+        reenterTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
         findNavController().navigate(
             R.id.navigate_to_weather_details,
             bundleOf(WeatherDetailsFragment.ARG_KEY_ID to itemModel.id)
