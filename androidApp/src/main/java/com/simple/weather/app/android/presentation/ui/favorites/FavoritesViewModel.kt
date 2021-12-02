@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.simple.weather.app.android.domain.model.FavoriteLocationModel
 import com.simple.weather.app.android.domain.repository.FavoriteLocationsRepository
-import com.simple.weather.app.android.domain.usecase.ISyncFavoriteLocationsWeatherUseCase
+import com.simple.weather.app.android.domain.usecase.favorites.ISyncFavoriteLocationsWeatherUseCase
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
@@ -22,6 +22,12 @@ class FavoritesViewModel(
     init {
         viewModelScope.launch {
             syncFavoriteLocationsWeatherUseCase()
+        }
+    }
+
+    fun deleteFavorite(model: FavoriteLocationModel) {
+        viewModelScope.launch {
+            favoriteLocationsRepository.delete(model)
         }
     }
 }

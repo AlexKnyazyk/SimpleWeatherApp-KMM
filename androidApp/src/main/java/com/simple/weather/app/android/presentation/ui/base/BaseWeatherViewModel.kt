@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.simple.weather.app.android.data.model.request.WeatherRequest
 import com.simple.weather.app.android.domain.model.WeatherModel
-import com.simple.weather.app.android.domain.usecase.IGetWeatherUseCase
+import com.simple.weather.app.android.domain.usecase.weather.IGetWeatherUseCase
 import com.simple.weather.app.android.presentation.model.ForecastMode
 import com.simple.weather.app.android.presentation.model.UiState
 import kotlinx.coroutines.flow.MutableStateFlow

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.simple.weather.app.android.R
 import com.simple.weather.app.android.databinding.FragmentFavoritesBinding
@@ -18,6 +19,7 @@ import com.simple.weather.app.android.presentation.ui.favorites.adapter.Favorite
 import com.simple.weather.app.android.utils.findMainNavController
 import com.simple.weather.app.android.utils.launchRepeatOnViewLifecycleScope
 import com.simple.weather.app.android.utils.view.recycler.SpacesItemDecoration
+import com.simple.weather.app.android.utils.view.recycler.SwipeToDeleteItemCallback
 import kotlinx.coroutines.flow.collect
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -44,6 +46,9 @@ class FavoritesFragment : BaseListFragment<FavoritesAdapter, FragmentFavoritesBi
             addItemDecoration(
                 SpacesItemDecoration(resources.getDimensionPixelSize(R.dimen.default_margin))
             )
+            SwipeToDeleteItemCallback(this@FavoritesFragment.adapter) { model ->
+                viewModel.deleteFavorite(model)
+            }.let { ItemTouchHelper(it).attachToRecyclerView(this) }
         }
         addFavoriteButton.setOnClickListener {
             findMainNavController().navigate(R.id.navigate_to_search)

@@ -1,4 +1,4 @@
-package com.simple.weather.app.android.domain.usecase
+package com.simple.weather.app.android.domain.usecase.favorites
 
 import com.simple.weather.app.android.domain.model.FavoriteLocationModel
 import com.simple.weather.app.android.domain.model.WeatherModel

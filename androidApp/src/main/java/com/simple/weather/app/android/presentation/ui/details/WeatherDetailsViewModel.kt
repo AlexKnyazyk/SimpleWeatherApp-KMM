@@ -1,7 +1,7 @@
 package com.simple.weather.app.android.presentation.ui.details
 
 import com.simple.weather.app.android.data.model.request.WeatherRequest
-import com.simple.weather.app.android.domain.usecase.IGetWeatherUseCase
+import com.simple.weather.app.android.domain.usecase.weather.IGetWeatherUseCase
 import com.simple.weather.app.android.presentation.ui.base.BaseWeatherViewModel
 
 class WeatherDetailsViewModel(

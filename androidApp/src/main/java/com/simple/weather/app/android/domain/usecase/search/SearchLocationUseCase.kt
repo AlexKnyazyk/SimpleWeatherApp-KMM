@@ -1,4 +1,4 @@
-package com.simple.weather.app.android.domain.usecase
+package com.simple.weather.app.android.domain.usecase.search
 
 import com.simple.weather.app.android.domain.model.SearchLocationModel
 import com.simple.weather.app.android.domain.repository.WeatherRepository

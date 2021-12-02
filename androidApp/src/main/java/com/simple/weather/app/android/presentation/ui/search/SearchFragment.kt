@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.simple.weather.app.android.R
 import com.simple.weather.app.android.databinding.FragmentSearchBinding
@@ -20,6 +21,7 @@ import com.simple.weather.app.android.utils.hideKeyboard
 import com.simple.weather.app.android.utils.launchRepeatOnViewLifecycleScope
 import com.simple.weather.app.android.utils.view.setOnEditorActionListener
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SearchFragment : BaseListFragment<SearchAdapter, FragmentSearchBinding>(), SearchItemClickListener {
@@ -50,8 +52,17 @@ class SearchFragment : BaseListFragment<SearchAdapter, FragmentSearchBinding>(),
     }
 
     private fun collectViewModelFlows() = launchRepeatOnViewLifecycleScope {
-        viewModel.uiState.collect {
-            bindUiState(it)
+        launch {
+            viewModel.uiState.collect {
+                bindUiState(it)
+            }
+        }
+        launch {
+            viewModel.events.collect { event ->
+                when (event) {
+                    SearchScreenEvents.NavigateBack -> findNavController().popBackStack()
+                }
+            }
         }
     }
 

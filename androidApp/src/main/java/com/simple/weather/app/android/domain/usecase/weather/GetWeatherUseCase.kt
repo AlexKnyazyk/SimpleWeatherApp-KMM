@@ -1,4 +1,4 @@
-package com.simple.weather.app.android.domain.usecase
+package com.simple.weather.app.android.domain.usecase.weather
 
 import com.simple.weather.app.android.data.model.request.WeatherRequest
 import com.simple.weather.app.android.domain.model.WeatherModel
