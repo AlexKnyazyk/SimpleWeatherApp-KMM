@@ -18,6 +18,7 @@ import com.simple.weather.app.android.presentation.ui.favorites.adapter.Favorite
 import com.simple.weather.app.android.presentation.ui.favorites.adapter.FavoritesAdapter
 import com.simple.weather.app.android.utils.findMainNavController
 import com.simple.weather.app.android.utils.launchRepeatOnViewLifecycleScope
+import com.simple.weather.app.android.utils.view.recycler.FabHiddenScrollListener
 import com.simple.weather.app.android.utils.view.recycler.SpacesItemDecoration
 import com.simple.weather.app.android.utils.view.recycler.SwipeToDeleteItemCallback
 import kotlinx.coroutines.flow.collect
@@ -42,13 +43,14 @@ class FavoritesFragment : BaseListFragment<FavoritesAdapter, FragmentFavoritesBi
     }
 
     private fun initViews() = with(binding) {
-        binding.favoriteLocationsList.apply {
+        favoriteLocationsList.apply {
             addItemDecoration(
                 SpacesItemDecoration(resources.getDimensionPixelSize(R.dimen.default_margin))
             )
             SwipeToDeleteItemCallback(this@FavoritesFragment.adapter) { model ->
                 viewModel.deleteFavorite(model)
             }.let { ItemTouchHelper(it).attachToRecyclerView(this) }
+            addOnScrollListener(FabHiddenScrollListener(addFavoriteButton))
         }
         addFavoriteButton.setOnClickListener {
             findMainNavController().navigate(R.id.navigate_to_search)
