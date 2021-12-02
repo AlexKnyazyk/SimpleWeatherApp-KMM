@@ -54,7 +54,7 @@ dependencies {
 
     implementation("io.insert-koin:koin-android:3.0.2")
 
-    implementation("com.google.android.material:material:1.5.0-beta01")
+    implementation("com.google.android.material:material:1.6.0-alpha01")
     implementation("androidx.appcompat:appcompat:1.4.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.2")
     implementation("androidx.recyclerview:recyclerview:1.2.1")

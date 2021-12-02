@@ -10,7 +10,7 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.transition.MaterialContainerTransform
+import com.google.android.material.transition.Hold
 import com.google.android.material.transition.MaterialSharedAxis
 import com.simple.weather.app.android.R
 import com.simple.weather.app.android.databinding.FragmentFavoritesBinding
@@ -56,7 +56,7 @@ class FavoritesFragment : BaseListFragment<FavoritesAdapter, FragmentFavoritesBi
             addOnScrollListener(FabHiddenScrollListener(addFavoriteButton))
         }
         addFavoriteButton.setOnClickListener {
-            parentFragment?.sharedElementEnterTransition = MaterialContainerTransform()
+            parentFragment?.parentFragment?.exitTransition = Hold()
             val extras = FragmentNavigatorExtras(binding.addFavoriteButton to binding.addFavoriteButton.transitionName)
             findMainNavController().navigate(R.id.navigate_to_search, null, null, extras)
         }
