@@ -2,7 +2,7 @@ package com.simple.weather.app.android.presentation.ui.details
 
 import android.os.Bundle
 import com.google.android.material.transition.MaterialSharedAxis
-import com.simple.weather.app.android.presentation.ui.base.BaseWeatherFragment
+import com.simple.weather.app.android.presentation.ui.base.weather.BaseWeatherFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 

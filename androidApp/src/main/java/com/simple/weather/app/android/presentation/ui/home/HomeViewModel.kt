@@ -4,8 +4,9 @@ import androidx.lifecycle.viewModelScope
 import com.simple.weather.app.android.data.model.LocationResult
 import com.simple.weather.app.android.data.model.request.WeatherRequest
 import com.simple.weather.app.android.domain.repository.DeviceLocationRepository
+import com.simple.weather.app.android.domain.repository.SettingsRepository
 import com.simple.weather.app.android.domain.usecase.weather.IGetWeatherUseCase
-import com.simple.weather.app.android.presentation.ui.base.BaseWeatherViewModel
+import com.simple.weather.app.android.presentation.ui.base.weather.BaseWeatherViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.filterNotNull
@@ -13,8 +14,9 @@ import kotlinx.coroutines.launch
 
 class HomeViewModel(
     private val deviceLocationRepository: DeviceLocationRepository,
-    getWeatherUseCase: IGetWeatherUseCase
-) : BaseWeatherViewModel(getWeatherUseCase) {
+    getWeatherUseCase: IGetWeatherUseCase,
+    settingsRepository: SettingsRepository
+) : BaseWeatherViewModel(getWeatherUseCase, settingsRepository) {
 
     private val _locationPermissionsEvent = MutableSharedFlow<Unit?>(replay = 1, extraBufferCapacity = 1)
     val locationPermissionsEvent = _locationPermissionsEvent.asSharedFlow().filterNotNull()

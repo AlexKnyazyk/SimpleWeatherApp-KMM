@@ -11,5 +11,5 @@ interface FavoriteLocationsRepository {
 
     suspend fun addOrUpdate(model: FavoriteLocationModel)
 
-    suspend fun delete(model: FavoriteLocationModel)
+    suspend fun deleteById(id: Int)
 }

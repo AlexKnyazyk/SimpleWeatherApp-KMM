@@ -1,8 +1,8 @@
 package com.simple.weather.app.android.presentation.ui.favorites.adapter
 
-import com.simple.weather.app.android.domain.model.FavoriteLocationModel
+import com.simple.weather.app.android.presentation.ui.favorites.model.FavoriteLocationModelUi
 
 interface FavoriteItemClickListener {
 
-    fun onItemClick(itemModel: FavoriteLocationModel)
+    fun onItemClick(itemModel: FavoriteLocationModelUi)
 }

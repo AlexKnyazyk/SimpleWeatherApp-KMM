@@ -29,7 +29,7 @@ internal class FavoriteLocationsRepositoryImpl(
         favoriteLocationsLocalDataSource.insertOrReplace(model.toDb())
     }
 
-    override suspend fun delete(model: FavoriteLocationModel) = withContext(Dispatchers.IO) {
-        favoriteLocationsLocalDataSource.delete(model.id)
+    override suspend fun deleteById(id: Int) = withContext(Dispatchers.IO) {
+        favoriteLocationsLocalDataSource.delete(id)
     }
 }

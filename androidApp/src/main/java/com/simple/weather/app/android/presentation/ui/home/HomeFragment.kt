@@ -2,7 +2,7 @@ package com.simple.weather.app.android.presentation.ui.home
 
 import android.Manifest
 import androidx.activity.result.contract.ActivityResultContracts
-import com.simple.weather.app.android.presentation.ui.base.BaseWeatherFragment
+import com.simple.weather.app.android.presentation.ui.base.weather.BaseWeatherFragment
 import com.simple.weather.app.android.utils.launchRepeatOnViewLifecycleScope
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch

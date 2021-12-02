@@ -1,25 +1,36 @@
-package com.simple.weather.app.android.presentation.ui.base
+package com.simple.weather.app.android.presentation.ui.base.weather
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.simple.weather.app.android.data.model.request.WeatherRequest
+import com.simple.weather.app.android.domain.model.SettingsModel
 import com.simple.weather.app.android.domain.model.WeatherModel
+import com.simple.weather.app.android.domain.repository.SettingsRepository
 import com.simple.weather.app.android.domain.usecase.weather.IGetWeatherUseCase
 import com.simple.weather.app.android.presentation.model.ForecastMode
 import com.simple.weather.app.android.presentation.model.UiState
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import com.simple.weather.app.android.presentation.ui.base.weather.model.WeatherModelUi
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 abstract class BaseWeatherViewModel(
-    private val getWeatherUseCase: IGetWeatherUseCase
+    private val getWeatherUseCase: IGetWeatherUseCase,
+    settingsRepository: SettingsRepository
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow<UiState<WeatherModel>>(UiState.loading(pullToRefresh = false))
+    private val _uiState = MutableStateFlow<UiState<WeatherModelUi>>(UiState.loading(pullToRefresh = false))
     val uiState = _uiState.asStateFlow()
 
     private val _forecastMode = MutableStateFlow(ForecastMode.HOURLY)
     val forecastMode = _forecastMode.asStateFlow()
+
+    private val settingsModelState = settingsRepository.settingsModelFlow
+        .onEach { settings ->
+            (uiState.value as? UiState.Data)?.value?.let { weatherModelUi ->
+                _uiState.emit(getWeatherModelUiState(weatherModelUi.model, settings))
+            }
+        }
+        .stateIn(viewModelScope, SharingStarted.Eagerly, SettingsModel())
 
     fun setForecastMode(mode: ForecastMode) {
         val uiState = _uiState.value
@@ -31,11 +42,15 @@ abstract class BaseWeatherViewModel(
     protected fun getWeather(pullToRefresh: Boolean, weatherRequest: WeatherRequest) = viewModelScope.launch {
         _uiState.value = UiState.loading(pullToRefresh)
         _uiState.value = getWeatherUseCase(weatherRequest).fold(
-            onSuccess = { UiState.data(it) },
+            onSuccess = { getWeatherModelUiState(it) },
             onFailure = { UiState.error(it) }
         )
         _forecastMode.value = _forecastMode.value
     }
 
     abstract fun getWeather(pullToRefresh: Boolean)
+
+    private fun getWeatherModelUiState(weather: WeatherModel, settings: SettingsModel = settingsModelState.value) = with(settings) {
+        UiState.data(WeatherModelUi(weather, isTempMetric, isDistanceMetric))
+    }
 }

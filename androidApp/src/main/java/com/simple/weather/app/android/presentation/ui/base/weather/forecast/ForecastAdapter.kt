@@ -1,4 +1,4 @@
-package com.simple.weather.app.android.presentation.ui.base.forecast
+package com.simple.weather.app.android.presentation.ui.base.weather.forecast
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,6 +8,9 @@ import com.simple.weather.app.android.domain.model.ForecastModel
 import kotlin.properties.Delegates
 
 class ForecastAdapter : RecyclerView.Adapter<ForecastViewHolder>() {
+
+    var isTempMetric: Boolean = true
+    var isDistanceMetric: Boolean = true
 
     var itemModels: List<ForecastModel> by Delegates.observable(emptyList()) { _, _, _ ->
         notifyDataSetChanged()
@@ -21,7 +24,7 @@ class ForecastAdapter : RecyclerView.Adapter<ForecastViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ForecastViewHolder, position: Int) {
-        holder.bind(itemModels[position])
+        holder.bind(itemModels[position], isTempMetric, isDistanceMetric)
     }
 
     override fun getItemCount(): Int = itemModels.size
