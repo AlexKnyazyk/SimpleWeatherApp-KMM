@@ -7,10 +7,13 @@
     <string name="last_update_format">Last update: %s</string>
     <string name="location_name_format">%1$s, %2$s</string>
     <string name="feels_like_format">Feels like %s</string>
-    <string name="temperature_c_format">%d°</string>
+    <string name="temperature_c_format">%d°C</string>
+    <string name="temperature_f_format">%d°F</string>
     <string name="percent_format">%d\%%</string>
     <string name="kmh_format">%.1f km/h</string>
     <string name="km_format">%.1f km</string>
+    <string name="mph_format">%.1f m/h</string>
+    <string name="miles_format">%.1f miles</string>
     <string name="pressure_mbar_format">%.1f mbar</string>
 
     <string name="hourly">Hourly</string>
@@ -36,6 +39,12 @@
     <string name="no_search_results">No Search Results</string>
 
     <string name="title_settings">Settings</string>
+    <string name="settings_temperature_units">Temperature Units</string>
+    <string name="settings_speed_or_distance_units">Speed/Distance Units</string>
+    <string name="settings_temperature_c">°C</string>
+    <string name="settings_temperature_f">°F</string>
+    <string name="settings_distance_km">kilometers</string>
+    <string name="settings_distance_miles">miles</string>
 
     <!--  transition names  -->
     <string name="transition_fab_add_favorite" translatable="false">add_favorite</string>
