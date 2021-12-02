@@ -26,11 +26,11 @@ class FavoritesAdapter(
     companion object {
         private val DIFF = object : DiffUtil.ItemCallback<FavoriteLocationModel>() {
             override fun areItemsTheSame(oldItem: FavoriteLocationModel, newItem: FavoriteLocationModel): Boolean {
-                TODO("Not yet implemented")
+                return oldItem.id == newItem.id
             }
 
             override fun areContentsTheSame(oldItem: FavoriteLocationModel, newItem: FavoriteLocationModel): Boolean {
-                TODO("Not yet implemented")
+                return oldItem == newItem
             }
         }
     }
