@@ -37,4 +37,7 @@
 
     <string name="title_settings">Settings</string>
 
+    <!--  transition names  -->
+    <string name="transition_fab_add_favorite" translatable="false">add_favorite</string>
+
 </resources>

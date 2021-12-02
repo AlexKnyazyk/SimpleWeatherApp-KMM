@@ -32,6 +32,7 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:contentDescription="@null"
+        android:transitionName="@string/transition_fab_add_favorite"
         android:src="@drawable/ic_baseline_add_24" />
 
 </FrameLayout>
