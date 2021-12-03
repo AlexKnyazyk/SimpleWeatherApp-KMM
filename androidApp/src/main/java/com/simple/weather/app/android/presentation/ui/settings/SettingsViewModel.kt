@@ -15,7 +15,7 @@ class SettingsViewModel(
     private val settingsRepository: SettingsRepository
 ) : ViewModel() {
 
-    val uiState = settingsRepository.settingsModelFlow
+    val uiState = settingsRepository.settingsUnitsModelFlow
         .map {
             SettingsUiState(
                 tempUnits = if (it.isTempMetric) SettingsTemperatureUnitUi.C else SettingsTemperatureUnitUi.F,

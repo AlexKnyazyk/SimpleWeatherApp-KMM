@@ -6,7 +6,7 @@ import com.simple.weather.app.android.presentation.model.ForecastMode
 import com.simple.weather.app.android.presentation.model.UiState
 import com.simple.weather.app.android.presentation.ui.base.weather.model.WeatherModelUi
 import com.simple.weather.app.data.model.request.WeatherRequest
-import com.simple.weather.app.domain.domain.model.SettingsModel
+import com.simple.weather.app.domain.domain.model.SettingsUnitsModel
 import com.simple.weather.app.domain.domain.model.WeatherModel
 import com.simple.weather.app.domain.domain.repository.SettingsRepository
 import com.simple.weather.app.domain.domain.usecase.weather.IGetWeatherUseCase
@@ -24,13 +24,13 @@ abstract class BaseWeatherViewModel(
     private val _forecastMode = MutableStateFlow(ForecastMode.HOURLY)
     val forecastMode = _forecastMode.asStateFlow()
 
-    private val settingsModelState = settingsRepository.settingsModelFlow
+    private val settingsModelState = settingsRepository.settingsUnitsModelFlow
         .onEach { settings ->
             (uiState.value as? UiState.Data)?.value?.let { weatherModelUi ->
                 _uiState.emit(getWeatherModelUiState(weatherModelUi.model, settings))
             }
         }
-        .stateIn(viewModelScope, SharingStarted.Eagerly, SettingsModel())
+        .stateIn(viewModelScope, SharingStarted.Eagerly, SettingsUnitsModel())
 
     fun setForecastMode(mode: ForecastMode) {
         val uiState = _uiState.value
@@ -50,7 +50,7 @@ abstract class BaseWeatherViewModel(
 
     abstract fun getWeather(pullToRefresh: Boolean)
 
-    private fun getWeatherModelUiState(weather: WeatherModel, settings: SettingsModel = settingsModelState.value) = with(settings) {
+    private fun getWeatherModelUiState(weather: WeatherModel, settings: SettingsUnitsModel = settingsModelState.value) = with(settings) {
         UiState.data(WeatherModelUi(weather, isTempMetric, isDistanceMetric))
     }
 }

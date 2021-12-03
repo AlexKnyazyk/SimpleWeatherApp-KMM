@@ -20,7 +20,7 @@ class FavoritesViewModel(
 
     val favoriteLocations: StateFlow<List<FavoriteLocationModelUi>> = combine(
         favoriteLocationsRepository.allFavoriteLocations(),
-        settingsRepository.settingsModelFlow
+        settingsRepository.settingsUnitsModelFlow
     ) { favList, settings ->
         val isTempMetric = settings.isTempMetric
         favList.map {

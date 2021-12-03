@@ -1,11 +1,11 @@
 package com.simple.weather.app.domain.domain.repository
 
-import com.simple.weather.app.domain.domain.model.SettingsModel
+import com.simple.weather.app.domain.domain.model.SettingsUnitsModel
 import kotlinx.coroutines.flow.Flow
 
 interface SettingsRepository {
 
-    val settingsModelFlow: Flow<SettingsModel>
+    val settingsUnitsModelFlow: Flow<SettingsUnitsModel>
 
     suspend fun setTempMetric(isTempMetric: Boolean)
 
