@@ -1,6 +1,6 @@
 package com.simple.weather.app.domain.domain.model
 
-import java.util.Calendar
+import com.simple.weather.app.utils.DateTimestamp
 
 data class FavoriteLocationModel(
     val id: Int,
@@ -10,5 +10,5 @@ data class FavoriteLocationModel(
     val tempC: Int?,
     val tempF: Int?,
     val weatherConditionIconUrl: String?,
-    val updateTimestamp: Calendar?,
+    val updateTimestamp: DateTimestamp?,
 )
