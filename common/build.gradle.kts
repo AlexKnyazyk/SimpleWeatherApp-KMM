@@ -2,7 +2,9 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
 plugins {
     kotlin("multiplatform")
+    kotlin("plugin.serialization") version "1.5.21"
     id("com.android.library")
+    id("com.squareup.sqldelight")
 }
 
 kotlin {
@@ -20,11 +22,22 @@ kotlin {
             }
         }
     }
+
     sourceSets {
-        val ktor_version = "1.6.2"
+        val ktorVersion = "1.6.2"
+        val coroutinesVersion = "1.5.2"
+        val sqldelightVersion = "1.5.3"
+        val koinVersion = "3.0.2"
         val commonMain by getting {
             dependencies {
-//                implementation("io.ktor:ktor-client-core:$ktor_version")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2")
+                implementation("io.ktor:ktor-client-core:$ktorVersion")
+                implementation("io.ktor:ktor-client-serialization:$ktorVersion")
+                implementation("io.ktor:ktor-client-logging:$ktorVersion")
+                implementation("com.squareup.sqldelight:runtime:$sqldelightVersion")
+                implementation("com.squareup.sqldelight:coroutines-extensions:$sqldelightVersion")
+                implementation("io.insert-koin:koin-core:$koinVersion")
             }
         }
         val commonTest by getting {
@@ -35,7 +48,9 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
-//                implementation("io.ktor:ktor-client-android:$ktor_version")
+                implementation("io.ktor:ktor-client-android:$ktorVersion")
+                implementation("com.squareup.sqldelight:android-driver:$sqldelightVersion")
+                implementation("io.insert-koin:koin-android:$koinVersion")
             }
         }
         val androidTest by getting {
@@ -46,7 +61,8 @@ kotlin {
         }
         val iosMain by getting {
             dependencies {
-//                implementation("io.ktor:ktor-client-ios:$ktor_version")
+                implementation("io.ktor:ktor-client-ios:$ktorVersion")
+                implementation("com.squareup.sqldelight:native-driver:$sqldelightVersion")
             }
         }
         val iosTest by getting
@@ -59,5 +75,11 @@ android {
     defaultConfig {
         minSdk = 21
         targetSdk = 31
+    }
+}
+
+sqldelight {
+    database("AppDatabase") {
+        packageName = "com.simple.weather.app.data.db"
     }
 }

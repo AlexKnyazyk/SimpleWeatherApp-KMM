@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.transition.MaterialContainerTransform
 import com.simple.weather.app.android.R
 import com.simple.weather.app.android.databinding.FragmentSearchBinding
-import com.simple.weather.app.android.domain.model.SearchLocationModel
 import com.simple.weather.app.android.presentation.model.UiState
 import com.simple.weather.app.android.presentation.ui.base.BaseListFragment
 import com.simple.weather.app.android.presentation.ui.search.adapter.SearchAdapter
@@ -22,6 +21,7 @@ import com.simple.weather.app.android.presentation.ui.search.model.SearchLocatio
 import com.simple.weather.app.android.utils.hideKeyboard
 import com.simple.weather.app.android.utils.launchRepeatOnViewLifecycleScope
 import com.simple.weather.app.android.utils.view.setOnEditorActionListener
+import com.simple.weather.app.domain.domain.model.SearchLocationModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel

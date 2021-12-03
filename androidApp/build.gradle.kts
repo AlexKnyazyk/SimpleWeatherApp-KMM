@@ -35,22 +35,11 @@ android {
 }
 
 dependencies {
-//    implementation(project(":common"))
+    implementation(project(":common"))
 
     implementation("androidx.core:core-ktx:1.7.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.4.0")
     implementation("androidx.fragment:fragment-ktx:1.4.0")
-
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.1")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2")
-
-    val ktorVersion = "1.6.2"
-    implementation("io.ktor:ktor-client-android:$ktorVersion")
-    implementation("io.ktor:ktor-client-serialization:$ktorVersion")
-    implementation("io.ktor:ktor-client-logging:$ktorVersion")
-
-    implementation("com.squareup.sqldelight:android-driver:1.5.3")
-    implementation("com.squareup.sqldelight:coroutines-extensions-jvm:1.5.3")
 
     implementation("io.insert-koin:koin-android:3.0.2")
 

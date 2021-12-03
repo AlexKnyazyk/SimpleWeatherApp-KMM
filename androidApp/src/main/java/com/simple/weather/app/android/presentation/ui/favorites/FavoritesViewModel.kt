@@ -2,10 +2,10 @@ package com.simple.weather.app.android.presentation.ui.favorites
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.simple.weather.app.android.domain.repository.FavoriteLocationsRepository
-import com.simple.weather.app.android.domain.repository.SettingsRepository
-import com.simple.weather.app.android.domain.usecase.favorites.ISyncFavoriteLocationsWeatherUseCase
 import com.simple.weather.app.android.presentation.ui.favorites.model.FavoriteLocationModelUi
+import com.simple.weather.app.domain.domain.repository.FavoriteLocationsRepository
+import com.simple.weather.app.domain.domain.repository.SettingsRepository
+import com.simple.weather.app.domain.domain.usecase.favorites.ISyncFavoriteLocationsWeatherUseCase
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine

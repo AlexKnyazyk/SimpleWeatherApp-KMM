@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.simple.weather.app.android.databinding.ItemSearchLocationBinding
-import com.simple.weather.app.android.domain.model.SearchLocationModel
+import com.simple.weather.app.domain.domain.model.SearchLocationModel
 
 class SearchAdapter(
     private val itemClickListener: SearchItemClickListener
