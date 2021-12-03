@@ -6,7 +6,9 @@ import com.squareup.sqldelight.db.SqlDriver
 import com.squareup.sqldelight.drivers.native.NativeSqliteDriver
 import io.ktor.client.engine.*
 import io.ktor.client.engine.ios.*
+import io.ktor.client.features.logging.*
 import org.koin.dsl.module
+import platform.Foundation.NSLog
 
 internal actual val commonExpectActualModule = module {
     factory { PreferencesManager() }
@@ -16,6 +18,16 @@ internal actual val commonExpectActualModule = module {
 
 internal actual class HttpClientEngineFactoryProvider {
     actual fun getHttpClientEngineFactory(): HttpClientEngineFactory<*> = Ios
+}
+
+internal actual class HttpClientLogger : Logger {
+    override fun log(message: String) {
+        NSLog("$TAG: $message")
+    }
+
+    companion object {
+        private const val TAG = "HttpClientLogger"
+    }
 }
 
 internal actual class SqliteDriverFactory {

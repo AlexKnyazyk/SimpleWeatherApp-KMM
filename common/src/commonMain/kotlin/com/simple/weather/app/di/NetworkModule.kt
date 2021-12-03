@@ -18,6 +18,7 @@ private fun getHttpClient(factoryProvider: HttpClientEngineFactoryProvider): Htt
             requestTimeoutMillis = 20_000
         }
         install(Logging) {
+            logger = HttpClientLogger()
             level = LogLevel.BODY
         }
         install(JsonFeature) {

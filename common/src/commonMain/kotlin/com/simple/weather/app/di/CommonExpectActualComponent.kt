@@ -2,6 +2,7 @@ package com.simple.weather.app.di
 
 import com.squareup.sqldelight.db.SqlDriver
 import io.ktor.client.engine.*
+import io.ktor.client.features.logging.*
 import org.koin.core.module.Module
 
 internal expect val commonExpectActualModule: Module
@@ -13,3 +14,5 @@ internal expect class SqliteDriverFactory {
 internal expect class HttpClientEngineFactoryProvider {
     fun getHttpClientEngineFactory(): HttpClientEngineFactory<*>
 }
+
+internal expect class HttpClientLogger() : Logger
