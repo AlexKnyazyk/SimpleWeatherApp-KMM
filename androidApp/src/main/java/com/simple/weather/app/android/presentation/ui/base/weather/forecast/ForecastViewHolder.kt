@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.simple.weather.app.android.R
 import com.simple.weather.app.android.databinding.ItemForecastBinding
-import com.simple.weather.app.domain.domain.model.ForecastModel
+import com.simple.weather.app.domain.model.ForecastModel
 import java.util.Date
 
 class ForecastViewHolder(

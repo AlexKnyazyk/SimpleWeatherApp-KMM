@@ -5,7 +5,7 @@ import android.util.Log
 import com.simple.weather.app.data.PreferencesManager
 import com.simple.weather.app.data.db.AppDatabase
 import com.simple.weather.app.data.repository.location.DeviceLocationRepositoryImpl
-import com.simple.weather.app.domain.domain.repository.DeviceLocationRepository
+import com.simple.weather.app.domain.repository.DeviceLocationRepository
 import com.squareup.sqldelight.android.AndroidSqliteDriver
 import com.squareup.sqldelight.db.SqlDriver
 import io.ktor.client.engine.HttpClientEngineFactory

@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.simple.weather.app.android.presentation.ui.settings.model.SettingsDistanceUnitUi
 import com.simple.weather.app.android.presentation.ui.settings.model.SettingsTemperatureUnitUi
 import com.simple.weather.app.android.presentation.ui.settings.model.SettingsUiState
-import com.simple.weather.app.domain.domain.repository.SettingsRepository
+import com.simple.weather.app.domain.repository.SettingsRepository
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn

@@ -9,7 +9,7 @@ import android.location.Location
 import android.location.LocationManager
 import androidx.core.content.ContextCompat
 import com.simple.weather.app.data.model.LocationResult
-import com.simple.weather.app.domain.domain.repository.DeviceLocationRepository
+import com.simple.weather.app.domain.repository.DeviceLocationRepository
 
 internal actual class DeviceLocationRepositoryImpl(
     private val context: Context

@@ -2,9 +2,9 @@ package com.simple.weather.app.data.repository.weather
 
 import com.simple.weather.app.data.datasource.remote.WeatherRemoteDataSource
 import com.simple.weather.app.data.mapper.toDomain
-import com.simple.weather.app.domain.domain.model.SearchLocationModel
-import com.simple.weather.app.domain.domain.model.WeatherModel
-import com.simple.weather.app.domain.domain.repository.WeatherRepository
+import com.simple.weather.app.domain.model.SearchLocationModel
+import com.simple.weather.app.domain.model.WeatherModel
+import com.simple.weather.app.domain.repository.WeatherRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

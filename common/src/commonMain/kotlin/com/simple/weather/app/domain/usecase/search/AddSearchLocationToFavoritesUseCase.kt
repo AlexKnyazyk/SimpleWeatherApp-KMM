@@ -1,9 +1,9 @@
-package com.simple.weather.app.domain.domain.usecase.search
+package com.simple.weather.app.domain.usecase.search
 
-import com.simple.weather.app.domain.domain.model.FavoriteLocationModel
-import com.simple.weather.app.domain.domain.model.SearchLocationModel
-import com.simple.weather.app.domain.domain.model.errors.ExistedFavoriteLocationError
-import com.simple.weather.app.domain.domain.repository.FavoriteLocationsRepository
+import com.simple.weather.app.domain.model.FavoriteLocationModel
+import com.simple.weather.app.domain.model.SearchLocationModel
+import com.simple.weather.app.domain.model.errors.ExistedFavoriteLocationError
+import com.simple.weather.app.domain.repository.FavoriteLocationsRepository
 
 interface IAddSearchLocationToFavoritesUseCase {
     suspend operator fun invoke(model: SearchLocationModel): Result<Unit>

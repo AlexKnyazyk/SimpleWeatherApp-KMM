@@ -2,7 +2,7 @@ package com.simple.weather.app.android.presentation.ui.search.adapter
 
 import com.simple.weather.app.android.databinding.ItemSearchLocationBinding
 import com.simple.weather.app.android.presentation.ui.base.BaseViewHolder
-import com.simple.weather.app.domain.domain.model.SearchLocationModel
+import com.simple.weather.app.domain.model.SearchLocationModel
 
 class SearchItemViewHolder(
     private val binding: ItemSearchLocationBinding,

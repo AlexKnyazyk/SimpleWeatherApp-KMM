@@ -1,7 +1,7 @@
-package com.simple.weather.app.domain.domain.usecase.favorites
+package com.simple.weather.app.domain.usecase.favorites
 
-import com.simple.weather.app.domain.domain.repository.FavoriteLocationsRepository
-import com.simple.weather.app.domain.domain.repository.WeatherRepository
+import com.simple.weather.app.domain.repository.FavoriteLocationsRepository
+import com.simple.weather.app.domain.repository.WeatherRepository
 import com.simple.weather.app.utils.dateTimestampNow
 import com.simple.weather.app.utils.isSameDay
 import kotlinx.coroutines.flow.*

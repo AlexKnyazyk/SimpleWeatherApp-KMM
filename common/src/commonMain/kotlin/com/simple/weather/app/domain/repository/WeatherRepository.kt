@@ -1,7 +1,7 @@
-package com.simple.weather.app.domain.domain.repository
+package com.simple.weather.app.domain.repository
 
-import com.simple.weather.app.domain.domain.model.SearchLocationModel
-import com.simple.weather.app.domain.domain.model.WeatherModel
+import com.simple.weather.app.domain.model.SearchLocationModel
+import com.simple.weather.app.domain.model.WeatherModel
 
 interface WeatherRepository {
 

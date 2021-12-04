@@ -1,8 +1,8 @@
-package com.simple.weather.app.domain.domain.usecase.favorites
+package com.simple.weather.app.domain.usecase.favorites
 
-import com.simple.weather.app.domain.domain.model.FavoriteLocationModel
-import com.simple.weather.app.domain.domain.model.WeatherModel
-import com.simple.weather.app.domain.domain.repository.FavoriteLocationsRepository
+import com.simple.weather.app.domain.model.FavoriteLocationModel
+import com.simple.weather.app.domain.model.WeatherModel
+import com.simple.weather.app.domain.repository.FavoriteLocationsRepository
 import com.simple.weather.app.utils.dateTimestampNow
 
 interface IUpdateFavoriteLocationWeatherUseCase {

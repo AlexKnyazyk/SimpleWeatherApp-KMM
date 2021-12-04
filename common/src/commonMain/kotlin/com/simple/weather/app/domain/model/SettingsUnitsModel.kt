@@ -1,4 +1,4 @@
-package com.simple.weather.app.domain.domain.model
+package com.simple.weather.app.domain.model
 
 data class SettingsUnitsModel(
     val isTempMetric: Boolean = true,

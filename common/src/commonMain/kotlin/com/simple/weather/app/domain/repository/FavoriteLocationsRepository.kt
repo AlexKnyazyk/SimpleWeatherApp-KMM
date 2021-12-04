@@ -1,6 +1,6 @@
-package com.simple.weather.app.domain.domain.repository
+package com.simple.weather.app.domain.repository
 
-import com.simple.weather.app.domain.domain.model.FavoriteLocationModel
+import com.simple.weather.app.domain.model.FavoriteLocationModel
 import kotlinx.coroutines.flow.Flow
 
 interface FavoriteLocationsRepository {

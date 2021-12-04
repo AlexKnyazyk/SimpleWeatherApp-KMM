@@ -1,7 +1,7 @@
-package com.simple.weather.app.domain.domain.usecase.search
+package com.simple.weather.app.domain.usecase.search
 
-import com.simple.weather.app.domain.domain.model.SearchLocationModel
-import com.simple.weather.app.domain.domain.repository.WeatherRepository
+import com.simple.weather.app.domain.model.SearchLocationModel
+import com.simple.weather.app.domain.repository.WeatherRepository
 
 interface ISearchLocationUseCase {
     suspend operator fun invoke(query: String): Result<List<SearchLocationModel>>

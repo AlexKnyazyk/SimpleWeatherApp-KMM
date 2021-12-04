@@ -1,4 +1,4 @@
-package com.simple.weather.app.domain.domain.model
+package com.simple.weather.app.domain.model
 
 sealed class ForecastModel(
     val date: Long,

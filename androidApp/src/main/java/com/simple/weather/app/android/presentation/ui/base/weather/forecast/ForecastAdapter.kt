@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.simple.weather.app.android.databinding.ItemForecastBinding
-import com.simple.weather.app.domain.domain.model.ForecastModel
+import com.simple.weather.app.domain.model.ForecastModel
 import kotlin.properties.Delegates
 
 class ForecastAdapter : RecyclerView.Adapter<ForecastViewHolder>() {

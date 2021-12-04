@@ -6,10 +6,10 @@ import com.simple.weather.app.android.presentation.model.ForecastMode
 import com.simple.weather.app.android.presentation.model.UiState
 import com.simple.weather.app.android.presentation.ui.base.weather.model.WeatherModelUi
 import com.simple.weather.app.data.model.request.WeatherRequest
-import com.simple.weather.app.domain.domain.model.SettingsUnitsModel
-import com.simple.weather.app.domain.domain.model.WeatherModel
-import com.simple.weather.app.domain.domain.repository.SettingsRepository
-import com.simple.weather.app.domain.domain.usecase.weather.IGetWeatherUseCase
+import com.simple.weather.app.domain.model.SettingsUnitsModel
+import com.simple.weather.app.domain.model.WeatherModel
+import com.simple.weather.app.domain.repository.SettingsRepository
+import com.simple.weather.app.domain.usecase.weather.IGetWeatherUseCase
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 

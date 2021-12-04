@@ -21,7 +21,7 @@ import com.simple.weather.app.android.presentation.ui.search.model.SearchLocatio
 import com.simple.weather.app.android.utils.hideKeyboard
 import com.simple.weather.app.android.utils.launchRepeatOnViewLifecycleScope
 import com.simple.weather.app.android.utils.view.setOnEditorActionListener
-import com.simple.weather.app.domain.domain.model.SearchLocationModel
+import com.simple.weather.app.domain.model.SearchLocationModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
