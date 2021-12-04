@@ -30,7 +30,11 @@ kotlin {
         val koinVersion = "3.0.2"
         val commonMain by getting {
             dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutinesVersion}-native-mt") {
+                    version {
+                        strictly("${coroutinesVersion}-native-mt")
+                    }
+                }
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2")
                 implementation("io.ktor:ktor-client-core:$ktorVersion")
                 implementation("io.ktor:ktor-client-serialization:$ktorVersion")

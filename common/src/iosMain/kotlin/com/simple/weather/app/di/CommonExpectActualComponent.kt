@@ -12,7 +12,7 @@ import io.ktor.client.features.logging.Logger
 import org.koin.dsl.module
 import platform.Foundation.NSLog
 
-internal actual val commonExpectActualModule = module {
+actual val commonExpectActualModule = module {
     factory { PreferencesManager() }
     factory { HttpClientEngineFactoryProvider() }
     factory { SqliteDriverFactory() }

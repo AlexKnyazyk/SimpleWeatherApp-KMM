@@ -44,7 +44,7 @@ abstract class BaseWeatherViewModel(
         }
     }
 
-    protected fun getWeather(pullToRefresh: Boolean, weatherRequest: WeatherRequest) =
+    protected fun getWeather(pullToRefresh: Boolean, weatherRequest: WeatherRequest) {
         viewModelScope.launch {
             _uiState.value = UiState.loading(pullToRefresh)
             _uiState.value = getWeatherUseCase(weatherRequest).fold(
@@ -53,6 +53,7 @@ abstract class BaseWeatherViewModel(
             )
             _forecastMode.value = _forecastMode.value
         }
+    }
 
     abstract fun getWeather(pullToRefresh: Boolean)
 

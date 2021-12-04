@@ -8,7 +8,7 @@ import io.ktor.client.features.logging.*
 import io.ktor.client.request.*
 import org.koin.dsl.module
 
-internal val networkModule = module {
+val networkModule = module {
     single { getHttpClient(get()) }
 }
 
