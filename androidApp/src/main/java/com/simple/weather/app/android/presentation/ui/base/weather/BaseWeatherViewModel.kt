@@ -10,7 +10,11 @@ import com.simple.weather.app.domain.model.SettingsUnitsModel
 import com.simple.weather.app.domain.model.WeatherModel
 import com.simple.weather.app.domain.repository.SettingsRepository
 import com.simple.weather.app.domain.usecase.weather.IGetWeatherUseCase
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 abstract class BaseWeatherViewModel(
@@ -18,7 +22,8 @@ abstract class BaseWeatherViewModel(
     settingsRepository: SettingsRepository
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow<UiState<WeatherModelUi>>(UiState.loading(pullToRefresh = false))
+    private val _uiState =
+        MutableStateFlow<UiState<WeatherModelUi>>(UiState.loading(pullToRefresh = false))
     val uiState = _uiState.asStateFlow()
 
     private val _forecastMode = MutableStateFlow(ForecastMode.HOURLY)
@@ -39,18 +44,22 @@ abstract class BaseWeatherViewModel(
         }
     }
 
-    protected fun getWeather(pullToRefresh: Boolean, weatherRequest: WeatherRequest) = viewModelScope.launch {
-        _uiState.value = UiState.loading(pullToRefresh)
-        _uiState.value = getWeatherUseCase(weatherRequest).fold(
-            onSuccess = { getWeatherModelUiState(it) },
-            onFailure = { UiState.error(it) }
-        )
-        _forecastMode.value = _forecastMode.value
-    }
+    protected fun getWeather(pullToRefresh: Boolean, weatherRequest: WeatherRequest) =
+        viewModelScope.launch {
+            _uiState.value = UiState.loading(pullToRefresh)
+            _uiState.value = getWeatherUseCase(weatherRequest).fold(
+                onSuccess = { getWeatherModelUiState(it) },
+                onFailure = { UiState.error(it) }
+            )
+            _forecastMode.value = _forecastMode.value
+        }
 
     abstract fun getWeather(pullToRefresh: Boolean)
 
-    private fun getWeatherModelUiState(weather: WeatherModel, settings: SettingsUnitsModel = settingsModelState.value) = with(settings) {
+    private fun getWeatherModelUiState(
+        weather: WeatherModel,
+        settings: SettingsUnitsModel = settingsModelState.value
+    ) = with(settings) {
         UiState.data(WeatherModelUi(weather, isTempMetric, isDistanceMetric))
     }
 }

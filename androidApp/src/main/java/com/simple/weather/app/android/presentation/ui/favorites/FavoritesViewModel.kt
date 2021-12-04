@@ -24,7 +24,19 @@ class FavoritesViewModel(
     ) { favList, settings ->
         val isTempMetric = settings.isTempMetric
         favList.map {
-            with(it) { FavoriteLocationModelUi(id, name, region, country, tempC, tempF, weatherConditionIconUrl, updateTimestamp, isTempMetric)  }
+            with(it) {
+                FavoriteLocationModelUi(
+                    id,
+                    name,
+                    region,
+                    country,
+                    tempC,
+                    tempF,
+                    weatherConditionIconUrl,
+                    updateTimestamp,
+                    isTempMetric
+                )
+            }
         }
     }.stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 

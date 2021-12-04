@@ -1,22 +1,23 @@
 package com.simple.weather.app.domain.usecase.search
 
+import com.simple.weather.app.data.model.CResult
 import com.simple.weather.app.domain.model.FavoriteLocationModel
 import com.simple.weather.app.domain.model.SearchLocationModel
 import com.simple.weather.app.domain.model.errors.ExistedFavoriteLocationError
 import com.simple.weather.app.domain.repository.FavoriteLocationsRepository
 
 interface IAddSearchLocationToFavoritesUseCase {
-    suspend operator fun invoke(model: SearchLocationModel): Result<Unit>
+    suspend operator fun invoke(model: SearchLocationModel): CResult<Unit>
 }
 
 internal class AddSearchLocationToFavoritesUseCase(
     private val favoriteLocationsRepository: FavoriteLocationsRepository
 ) : IAddSearchLocationToFavoritesUseCase {
 
-    override suspend fun invoke(model: SearchLocationModel): Result<Unit> {
+    override suspend fun invoke(model: SearchLocationModel): CResult<Unit> {
         val existed = favoriteLocationsRepository.getById(model.id)
         return if (existed != null) {
-            Result.failure(ExistedFavoriteLocationError())
+            CResult.failure(ExistedFavoriteLocationError())
         } else {
             val favoriteLocationModel = FavoriteLocationModel(
                 model.id,
@@ -29,7 +30,7 @@ internal class AddSearchLocationToFavoritesUseCase(
                 updateTimestamp = null
             )
             favoriteLocationsRepository.addOrUpdate(favoriteLocationModel)
-            Result.success(Unit)
+            CResult.success(Unit)
         }
     }
 }
