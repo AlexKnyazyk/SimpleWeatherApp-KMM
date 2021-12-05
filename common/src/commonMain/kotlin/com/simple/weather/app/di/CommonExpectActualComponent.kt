@@ -5,7 +5,7 @@ import io.ktor.client.engine.HttpClientEngineFactory
 import io.ktor.client.features.logging.Logger
 import org.koin.core.module.Module
 
-expect val commonExpectActualModule: Module
+internal expect val commonExpectActualModule: Module
 
 internal expect class SqliteDriverFactory {
     fun createDriver(): SqlDriver

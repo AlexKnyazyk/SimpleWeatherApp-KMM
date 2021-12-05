@@ -12,7 +12,7 @@ import com.simple.weather.app.domain.usecase.weather.GetWeatherUseCase
 import com.simple.weather.app.domain.usecase.weather.IGetWeatherUseCase
 import org.koin.dsl.module
 
-val domainModule = module {
+internal val domainModule = module {
     factory<IGetWeatherUseCase> { GetWeatherUseCase(get(), get(), get()) }
     factory<ISearchLocationUseCase> { SearchLocationUseCase(get()) }
     factory<ISyncFavoriteLocationsWeatherUseCase> { SyncFavoriteLocationsWeatherUseCase(get(), get(), get()) }

@@ -14,7 +14,7 @@ import io.ktor.client.features.logging.Logger
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
-actual val commonExpectActualModule = module {
+internal actual val commonExpectActualModule = module {
     factory { PreferencesManager(androidContext()) }
     factory { HttpClientEngineFactoryProvider() }
     factory { SqliteDriverFactory(androidContext()) }

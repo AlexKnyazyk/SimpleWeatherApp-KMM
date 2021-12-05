@@ -8,7 +8,7 @@ import com.simple.weather.app.domain.repository.SettingsRepository
 import com.simple.weather.app.domain.repository.WeatherRepository
 import org.koin.dsl.module
 
-val repositoriesModule = module {
+internal val repositoriesModule = module {
     single<WeatherRepository> { WeatherRepositoryImpl(get()) }
     single<FavoriteLocationsRepository> { FavoriteLocationsRepositoryImpl(get()) }
     single<SettingsRepository> { SettingsRepositoryImpl(get()) }
