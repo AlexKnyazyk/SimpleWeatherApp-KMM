@@ -12,6 +12,8 @@ struct WeatherDetailsView: View {
 
     var body: some View {
         WeatherView()
+            .navigationTitle("Minsk")
+            .navigationBarTitleDisplayMode(.inline)
     }
 }
 

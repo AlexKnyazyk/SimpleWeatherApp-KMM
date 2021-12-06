@@ -9,21 +9,35 @@
 import SwiftUI
 
 struct FavoriteLocationsView: View {
+    
+    @Binding public var rootNavigation: String?
+    
     var body: some View {
         NavigationView {
             List {
-                
                 NavigationLink(destination: WeatherDetailsView()) {
-                    Text("Favorite Locations")
+                    FavoriteLocationItemView()
+                }
+                NavigationLink(destination: WeatherDetailsView()) {
+                    FavoriteLocationItemView()
+                }
+                NavigationLink(destination: WeatherDetailsView()) {
+                    FavoriteLocationItemView()
                 }
                 
-            }.navigationTitle(Text("Simple Weather App"))
-        }
-    }
-    
-    struct FavoriteLocationsView_Previews: PreviewProvider {
-        static var previews: some View {
-            FavoriteLocationsView()
+            }.navigationTitle(Text("Favorites"))
+                .navigationBarItems(
+                    trailing: Button("Add") {
+                        rootNavigation = "SearchLocation"
+                    }
+                )
         }
     }
 }
+
+
+//    struct FavoriteLocationsView_Previews: PreviewProvider {
+//        static var previews: some View {
+//            FavoriteLocationsView()
+//        }
+//    }

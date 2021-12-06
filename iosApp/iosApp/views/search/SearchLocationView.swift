@@ -9,8 +9,27 @@
 import SwiftUI
 
 struct SearchLocationView: View {
+    
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    
+    @State private var searchText: String = ""
+    
     var body: some View {
-        Text("Search locations")
+        VStack(alignment: .leading) {
+            SearchBar(text: $searchText)
+            List {
+                Button(action: {
+                    self.presentationMode.wrappedValue.dismiss()
+                }) {
+                    SearchLocationItemView()
+                }
+                Button(action: {
+                    self.presentationMode.wrappedValue.dismiss()
+                }) {
+                    SearchLocationItemView()
+                }
+            }.listStyle(PlainListStyle())
+        }.navigationBarTitleDisplayMode(.inline)
     }
 }
 

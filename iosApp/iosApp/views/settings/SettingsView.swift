@@ -9,8 +9,29 @@
 import SwiftUI
 
 struct SettingsView: View {
+    
+    private let temperatureUnits = ["C", "F"]
+    private let speedUnits = ["kilometers", "miles"]
+    
+    @State private var temperatureUnitSelection: Int = 0
+    @State private var speedUnitSelection: Int = 0
+    
     var body: some View {
-        Text("Settings")
+        Form {
+            Section(header: Text("Units")) {
+                Picker(selection: $temperatureUnitSelection, label: Text("Temperature")) {
+                    ForEach(0 ..< temperatureUnits.count) {
+                        Text(self.temperatureUnits[$0])
+                    }
+                }
+                Picker(selection: $speedUnitSelection, label: Text("Speed/Distance")) {
+                    ForEach(0 ..< speedUnits.count) {
+                        Text(self.speedUnits[$0])
+                    }
+                }
+            }
+        }.navigationTitle("Settings")
+            .navigationBarTitleDisplayMode(.inline)
     }
 }
 

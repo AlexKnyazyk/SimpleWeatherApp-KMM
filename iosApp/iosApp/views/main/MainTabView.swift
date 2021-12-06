@@ -10,18 +10,31 @@ import SwiftUI
 
 struct MainTabView: View {
     
+    @State private var rootNavigation: String? = nil
+    
     var body: some View {
-        TabView {
-            HomeWeatherView()
-                .tabItem {
-                    Image(systemName: "house.fill")
-                    Text("Home")
+        NavigationView {
+            VStack {
+                TabView {
+                    HomeWeatherView(rootNavigation: $rootNavigation)
+                        .tabItem {
+                            Image(systemName: "house.fill")
+                            Text("Home")
+                        }
+                    FavoriteLocationsView(rootNavigation: $rootNavigation)
+                        .tabItem {
+                            Image(systemName: "star.fill")
+                            Text("Favorites")
+                        }
+                }.navigationBarHidden(true)
+                
+                NavigationLink(destination: SettingsView(), tag: "Settings", selection: $rootNavigation) {
+                    EmptyView()
                 }
-            FavoriteLocationsView()
-                .tabItem {
-                    Image(systemName: "star.fill")
-                    Text("Favorites")
+                NavigationLink(destination: SearchLocationView(), tag: "SearchLocation", selection: $rootNavigation) {
+                    EmptyView()
                 }
+            }
         }
     }
 }

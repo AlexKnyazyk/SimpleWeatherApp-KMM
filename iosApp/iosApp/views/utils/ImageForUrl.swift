@@ -19,7 +19,7 @@ struct ImageForUrl<P: View>: View {
     init(
         url: URL,
         @ViewBuilder placeholder: () -> P = { EmptyView() as! P },
-        @ViewBuilder image: @escaping (UIImage) -> Image = Image.init(uiImage:)
+        @ViewBuilder image: @escaping (UIImage) -> Image = { uiImage in Image(uiImage: uiImage).resizable() }
     ) {
         self.placeholder = placeholder()
         self.image = image
