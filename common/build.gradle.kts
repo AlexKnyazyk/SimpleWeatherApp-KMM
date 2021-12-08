@@ -2,7 +2,7 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
 plugins {
     kotlin("multiplatform")
-    kotlin("plugin.serialization") version "1.5.21"
+    kotlin("plugin.serialization") version "1.5.31"
     id("com.android.library")
     id("com.squareup.sqldelight")
 }
@@ -27,7 +27,7 @@ kotlin {
         val ktorVersion = "1.6.2"
         val coroutinesVersion = "1.5.2"
         val sqldelightVersion = "1.5.3"
-        val koinVersion = "3.0.2"
+        val koinVersion = "3.1.4"
         val commonMain by getting {
             dependencies {
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
