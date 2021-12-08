@@ -34,63 +34,94 @@ fun CurrentWeatherCard(
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
-            Row {
-                Icon(painterResource(R.drawable.ic_location), contentDescription = null)
-                Text(
-                    text = stringResource(
-                        R.string.location_name_format,
-                        model.locationName,
-                        model.locationCountry
-                    ),
-                    style = MaterialTheme.typography.body1
-                )
-            }
-            Text(
-                text = stringResource(R.string.last_update_format, model.lastUpdated),
-                style = MaterialTheme.typography.caption
-            )
+            HeaderLocation(model)
+            LastUpdate(model)
             Row {
                 Column {
-                    Text(
-                        text = if (settings.isTempMetric) {
-                            stringResource(R.string.temperature_c_format, model.tempC)
-                        } else {
-                            stringResource(R.string.temperature_f_format, model.tempF)
-                        },
-                        style = MaterialTheme.typography.h2
-                    )
-                    Text(
-                        text = stringResource(
-                            R.string.feels_like_format,
-                            if (settings.isTempMetric) {
-                                stringResource(
-                                    R.string.temperature_c_format,
-                                    model.tempFeelsLikeC
-                                )
-                            } else {
-                                stringResource(
-                                    R.string.temperature_f_format,
-                                    model.tempFeelsLikeF
-                                )
-                            }
-                        ),
-                        style = MaterialTheme.typography.body2
-                    )
+                    CurrentTemperature(model, settings)
+                    FeelsLikeTemperature(model, settings)
                 }
                 Spacer(modifier = Modifier.weight(1f))
-                Image(
-                    painter = rememberImagePainter(model.weatherConditionIconUrl),
-                    contentDescription = null,
-                    modifier = Modifier.size(90.dp)
-                )
+                WeatherConditionIcon(model)
             }
-            Text(
-                text = model.weatherCondition,
-                style = MaterialTheme.typography.h5
-            )
+            WeatherCondition(model)
         }
     }
 }
+
+@Composable
+private fun HeaderLocation(model: CurrentWeatherUi) {
+    Row {
+        Icon(painterResource(R.drawable.ic_location), contentDescription = null)
+        Text(
+            text = stringResource(
+                R.string.location_name_format,
+                model.locationName,
+                model.locationCountry
+            ),
+            style = MaterialTheme.typography.body1
+        )
+    }
+}
+
+@Composable
+private fun LastUpdate(model: CurrentWeatherUi) {
+    Text(
+        text = stringResource(R.string.last_update_format, model.lastUpdated),
+        style = MaterialTheme.typography.caption
+    )
+}
+
+@Composable
+private fun CurrentTemperature(model: CurrentWeatherUi, settings: SettingsUnitsUi) {
+    Text(
+        text = if (settings.isTempMetric) {
+            stringResource(R.string.temperature_c_format, model.tempC)
+        } else {
+            stringResource(R.string.temperature_f_format, model.tempF)
+        },
+        style = MaterialTheme.typography.h2
+    )
+}
+
+@Composable
+private fun FeelsLikeTemperature(model: CurrentWeatherUi, settings: SettingsUnitsUi) {
+    Text(
+        text = stringResource(
+            R.string.feels_like_format,
+            if (settings.isTempMetric) {
+                stringResource(
+                    R.string.temperature_c_format,
+                    model.tempFeelsLikeC
+                )
+            } else {
+                stringResource(
+                    R.string.temperature_f_format,
+                    model.tempFeelsLikeF
+                )
+            }
+        ),
+        style = MaterialTheme.typography.body2
+    )
+}
+
+@Composable
+private fun WeatherConditionIcon(model: CurrentWeatherUi) {
+    Image(
+        painter = rememberImagePainter(model.weatherConditionIconUrl),
+        contentDescription = null,
+        modifier = Modifier.size(90.dp)
+    )
+}
+
+@Composable
+private fun WeatherCondition(model: CurrentWeatherUi) {
+    Text(
+        text = model.weatherCondition,
+        style = MaterialTheme.typography.h5
+    )
+}
+
 
 @Preview
 @Composable

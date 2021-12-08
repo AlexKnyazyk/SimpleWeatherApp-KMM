@@ -27,64 +27,92 @@ fun ForecastItem(item: ForecastModel, settings: SettingsUnitsUi) {
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.padding(16.dp)
     ) {
-        val date = Date(item.date)
-        val context = LocalContext.current
-        Text(
-            text = when (item) {
-                is ForecastModel.Hour -> {
-                    DateUtils.formatDateTime(context, date.time, DateUtils.FORMAT_SHOW_TIME)
-                }
-                is ForecastModel.Day -> if (DateUtils.isToday(date.time)) {
-                    context.getString(R.string.today)
-                } else {
-                    DateUtils.formatDateTime(context, date.time, DateUtils.FORMAT_ABBREV_MONTH or DateUtils.FORMAT_SHOW_DATE)
-                }
-            },
-            style = MaterialTheme.typography.caption
-        )
-        Text(
-            text = if (settings.isTempMetric) {
-                stringResource(R.string.temperature_c_format, item.temperatureC)
-            } else {
-                stringResource(R.string.temperature_f_format, item.temperatureF)
-            },
-            style = MaterialTheme.typography.h4
-        )
+        ForecastDateTime(item)
+        ForecastTemperature(item, settings)
         if (item is ForecastModel.Day) {
-            val minTemp = if (settings.isTempMetric) {
-                stringResource(R.string.temperature_c_format, item.temperatureMinC)
-            } else {
-                stringResource(R.string.temperature_f_format, item.temperatureMinF)
-            }
-            val maxTemp = if (settings.isTempMetric) {
-                stringResource(R.string.temperature_c_format, item.temperatureMaxC)
-            } else {
-                stringResource(R.string.temperature_f_format, item.temperatureMaxF)
-            }
-            Text(
-                text = "$minTemp / $maxTemp",
-                style = MaterialTheme.typography.body2
-            )
+            ForecastTemperatureMinMax(item, settings)
         }
-
-        Image(
-            painter = rememberImagePainter(item.iconUrl),
-            contentDescription = null,
-            modifier = Modifier.size(40.dp)
-        )
-
-        val windSpeed = if (settings.isDistanceMetric) {
-            stringResource(R.string.kmh_format, item.windSpeedKph)
-        } else {
-            stringResource(R.string.miles_format, item.windSpeedMph)
-        }
-        Text(
-            text = windSpeed + if (item is ForecastModel.Hour) "\n(${item.windDir})" else "",
-            style = MaterialTheme.typography.body2,
-            textAlign = TextAlign.Center
-        )
+        ForecastConditionIcon(item)
+        ForecastWind(item, settings)
     }
 }
+
+@Composable
+private fun ForecastDateTime(item: ForecastModel) {
+    val date = Date(item.date)
+    val context = LocalContext.current
+    Text(
+        text = when (item) {
+            is ForecastModel.Hour -> {
+                DateUtils.formatDateTime(context, date.time, DateUtils.FORMAT_SHOW_TIME)
+            }
+            is ForecastModel.Day -> if (DateUtils.isToday(date.time)) {
+                context.getString(R.string.today)
+            } else {
+                DateUtils.formatDateTime(
+                    context,
+                    date.time,
+                    DateUtils.FORMAT_ABBREV_MONTH or DateUtils.FORMAT_SHOW_DATE
+                )
+            }
+        },
+        style = MaterialTheme.typography.caption
+    )
+}
+
+@Composable
+private fun ForecastTemperature(item: ForecastModel, settings: SettingsUnitsUi) {
+    Text(
+        text = if (settings.isTempMetric) {
+            stringResource(R.string.temperature_c_format, item.temperatureC)
+        } else {
+            stringResource(R.string.temperature_f_format, item.temperatureF)
+        },
+        style = MaterialTheme.typography.h4
+    )
+}
+
+@Composable
+private fun ForecastTemperatureMinMax(item: ForecastModel.Day, settings: SettingsUnitsUi) {
+    val minTemp = if (settings.isTempMetric) {
+        stringResource(R.string.temperature_c_format, item.temperatureMinC)
+    } else {
+        stringResource(R.string.temperature_f_format, item.temperatureMinF)
+    }
+    val maxTemp = if (settings.isTempMetric) {
+        stringResource(R.string.temperature_c_format, item.temperatureMaxC)
+    } else {
+        stringResource(R.string.temperature_f_format, item.temperatureMaxF)
+    }
+    Text(
+        text = "$minTemp / $maxTemp",
+        style = MaterialTheme.typography.body2
+    )
+}
+
+@Composable
+private fun ForecastConditionIcon(item: ForecastModel) {
+    Image(
+        painter = rememberImagePainter(item.iconUrl),
+        contentDescription = null,
+        modifier = Modifier.size(40.dp)
+    )
+}
+
+@Composable
+private fun ForecastWind(item: ForecastModel, settings: SettingsUnitsUi) {
+    val windSpeed = if (settings.isDistanceMetric) {
+        stringResource(R.string.kmh_format, item.windSpeedKph)
+    } else {
+        stringResource(R.string.miles_format, item.windSpeedMph)
+    }
+    Text(
+        text = windSpeed + if (item is ForecastModel.Hour) "\n(${item.windDir})" else "",
+        style = MaterialTheme.typography.body2,
+        textAlign = TextAlign.Center
+    )
+}
+
 
 @Preview
 @Composable
