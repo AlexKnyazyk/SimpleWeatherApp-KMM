@@ -1,26 +1,15 @@
 package com.simple.weather.app.android.presentation.ui.base.weather
 
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.CallSuper
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.simple.weather.app.android.R
 import com.simple.weather.app.android.databinding.FragmentWeatherBinding
-import com.simple.weather.app.android.databinding.LayoutCurrentWeatherBinding
-import com.simple.weather.app.android.databinding.LayoutCurrentWeatherDetailedBinding
-import com.simple.weather.app.android.presentation.model.ForecastMode
-import com.simple.weather.app.android.presentation.model.UiState
-import com.simple.weather.app.android.presentation.model.asData
 import com.simple.weather.app.android.presentation.ui.base.BaseListFragment
 import com.simple.weather.app.android.presentation.ui.base.weather.forecast.ForecastAdapter
-import com.simple.weather.app.android.presentation.ui.base.weather.model.WeatherModelUi
 import com.simple.weather.app.android.utils.launchRepeatOnViewLifecycleScope
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 abstract class BaseWeatherFragment : BaseListFragment<ForecastAdapter, FragmentWeatherBinding>() {
@@ -43,33 +32,33 @@ abstract class BaseWeatherFragment : BaseListFragment<ForecastAdapter, FragmentW
 
     @CallSuper
     protected open fun initViews() = with(binding) {
-        content.setOnRefreshListener {
-            viewModel.getWeather(pullToRefresh = true)
-        }
-        errorLayout.tryAgainButton.setOnClickListener {
-            viewModel.getWeather(pullToRefresh = false)
-        }
-        weatherForecastCard.hourlyToggleButton.setOnClickListener {
-            viewModel.setForecastMode(ForecastMode.HOURLY)
-        }
-        weatherForecastCard.daysToggleButton.setOnClickListener {
-            viewModel.setForecastMode(ForecastMode.DAILY)
-        }
+//        content.setOnRefreshListener {
+//            viewModel.getWeather(pullToRefresh = true)
+//        }
+//        errorLayout.tryAgainButton.setOnClickListener {
+//            viewModel.getWeather(pullToRefresh = false)
+//        }
+//        weatherForecastCard.hourlyToggleButton.setOnClickListener {
+//            viewModel.setForecastMode(ForecastMode.HOURLY)
+//        }
+//        weatherForecastCard.daysToggleButton.setOnClickListener {
+//            viewModel.setForecastMode(ForecastMode.DAILY)
+//        }
     }
 
     @CallSuper
     protected open fun collectViewModelFlows() {
         launchRepeatOnViewLifecycleScope {
             launch {
-                viewModel.uiState.collect { bindUiState(it) }
+//                viewModel.uiState.collect { bindUiState(it) }
             }
             launch {
-                viewModel.forecastMode.collect { bindForecastMode(it) }
+//                viewModel.forecastMode.collect { bindForecastMode(it) }
             }
         }
     }
-
-    private fun bindUiState(state: UiState<WeatherModelUi>): Unit = with(binding) {
+/*
+    private fun bindUiState(state: UiState<WeatherUi>): Unit = with(binding) {
         loadingProgress.isVisible = state is UiState.Loading && !state.pullToRefresh
         content.isRefreshing = state is UiState.Loading && state.pullToRefresh
         content.isVisible = state is UiState.Data || content.isRefreshing
@@ -98,7 +87,7 @@ abstract class BaseWeatherFragment : BaseListFragment<ForecastAdapter, FragmentW
         }
     }
 
-    private fun LayoutCurrentWeatherBinding.bindModel(modelUi: WeatherModelUi) {
+    private fun LayoutCurrentWeatherBinding.bindModel(modelUi: WeatherUi) {
         locationName.text =
             getString(R.string.location_name_format, modelUi.model.locationName, modelUi.model.locationCountry)
         lastUpdate.text = getString(R.string.last_update_format, modelUi.model.lastUpdated)
@@ -122,7 +111,7 @@ abstract class BaseWeatherFragment : BaseListFragment<ForecastAdapter, FragmentW
             .into(currentWeatherImage)
     }
 
-    private fun LayoutCurrentWeatherDetailedBinding.bindModel(modelUi: WeatherModelUi) {
+    private fun LayoutCurrentWeatherDetailedBinding.bindModel(modelUi: CurrentWeatherUi) {
         val windSpeed = if (modelUi.isDistanceMetric) {
             getString(R.string.kmh_format, modelUi.model.windKph)
         } else {
@@ -139,7 +128,7 @@ abstract class BaseWeatherFragment : BaseListFragment<ForecastAdapter, FragmentW
         indexUv.text = modelUi.model.indexUv.toString()
     }
 
-    private fun bindForecast(mode: ForecastMode, modelUi: WeatherModelUi) {
+    private fun bindForecast(mode: ForecastMode, modelUi: ForecastWeatherUi) {
         adapter.isTempMetric = modelUi.isTempMetric
         adapter.isDistanceMetric = modelUi.isDistanceMetric
         adapter.itemModels = when (mode) {
@@ -147,4 +136,6 @@ abstract class BaseWeatherFragment : BaseListFragment<ForecastAdapter, FragmentW
             ForecastMode.DAILY -> modelUi.model.forecastDaily
         }
     }
+
+ */
 }
