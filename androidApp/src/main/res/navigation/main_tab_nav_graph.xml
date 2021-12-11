@@ -7,8 +7,8 @@
 
     <fragment
         android:id="@+id/fragment_home"
-        android:name="com.simple.weather.app.android.presentation.ui.home.HomeFragment"
-        tools:layout="@layout/fragment_weather" />
+        android:name="com.simple.weather.app.android.presentation.ui.favorites.FavoritesFragment"
+        tools:layout="@layout/fragment_favorites" />
 
     <fragment
         android:id="@+id/fragment_favorites"
