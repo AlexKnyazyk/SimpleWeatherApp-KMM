@@ -4,10 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.FragmentNavigatorExtras
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.transition.Hold
@@ -15,7 +13,6 @@ import com.google.android.material.transition.MaterialSharedAxis
 import com.simple.weather.app.android.R
 import com.simple.weather.app.android.databinding.FragmentFavoritesBinding
 import com.simple.weather.app.android.presentation.ui.base.BaseListFragment
-import com.simple.weather.app.android.presentation.ui.details.WeatherDetailsFragment
 import com.simple.weather.app.android.presentation.ui.favorites.adapter.FavoriteItemClickListener
 import com.simple.weather.app.android.presentation.ui.favorites.adapter.FavoritesAdapter
 import com.simple.weather.app.android.presentation.ui.favorites.model.FavoriteLocationModelUi
@@ -76,9 +73,9 @@ class FavoritesFragment : BaseListFragment<FavoritesAdapter, FragmentFavoritesBi
     override fun onItemClick(itemModel: FavoriteLocationModelUi) {
         exitTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
         reenterTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
-        findNavController().navigate(
-            R.id.navigate_to_weather_details,
-            bundleOf(WeatherDetailsFragment.ARG_KEY_ID to itemModel.id)
-        )
+//        findNavController().navigate(
+//            R.id.navigate_to_weather_details,
+//            bundleOf(WeatherDetailsFragment.ARG_KEY_ID to itemModel.id)
+//        )
     }
 }

@@ -7,9 +7,9 @@ import com.simple.weather.app.data.model.request.WeatherRequest
 import com.simple.weather.app.domain.domain.repository.DeviceLocationRepository
 import com.simple.weather.app.domain.domain.repository.SettingsRepository
 import com.simple.weather.app.domain.domain.usecase.weather.IGetWeatherUseCase
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
@@ -18,8 +18,8 @@ class HomeViewModel(
     settingsRepository: SettingsRepository
 ) : BaseWeatherViewModel(getWeatherUseCase, settingsRepository) {
 
-    private val _locationPermissionsEvent = MutableSharedFlow<Unit?>(replay = 1, extraBufferCapacity = 1)
-    val locationPermissionsEvent = _locationPermissionsEvent.asSharedFlow().filterNotNull()
+    private val _locationPermissionsEvent = MutableSharedFlow<Unit>()
+    val locationPermissionsEvent = _locationPermissionsEvent.asSharedFlow()
 
     private var locationPermissionAsked: Boolean = false
 
@@ -28,9 +28,6 @@ class HomeViewModel(
     }
 
     override fun getWeather(pullToRefresh: Boolean) {
-        viewModelScope.launch {
-            _locationPermissionsEvent.emit(null)
-        }
         when (val result = deviceLocationRepository.getLocation()) {
             is LocationResult.Success ->
                 getWeather(pullToRefresh, WeatherRequest.Location(result.lat, result.lon))
@@ -41,6 +38,7 @@ class HomeViewModel(
                 } else {
                     locationPermissionAsked = true
                     viewModelScope.launch {
+                        delay(1000) // need for waiting ui init
                         _locationPermissionsEvent.emit(Unit)
                     }
                 }

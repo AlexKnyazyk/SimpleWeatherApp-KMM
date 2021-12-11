@@ -1,70 +1,43 @@
 package com.simple.weather.app.android.presentation.ui.home
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.CircularProgressIndicator
+import android.Manifest
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import com.google.accompanist.swiperefresh.SwipeRefresh
-import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import com.simple.weather.app.android.presentation.model.ForecastMode
-import com.simple.weather.app.android.presentation.model.UiState
-import com.simple.weather.app.android.presentation.ui.base.weather.model.WeatherUi
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.lifecycleScope
+import com.simple.weather.app.android.presentation.ui.base.weather.BaseWeatherScreen
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun HomeWeatherScreen() {
     val viewModel = getViewModel<HomeViewModel>()
-    val uiState by viewModel.uiState.collectAsState()
 
-    SwipeRefresh(
-        state = rememberSwipeRefreshState(uiState is UiState.Loading && (uiState as UiState.Loading<WeatherUi>).pullToRefresh),
-        onRefresh = { viewModel.getWeather(pullToRefresh = true) },
+    CollectLocationPermission(viewModel)
+
+    BaseWeatherScreen(viewModel = viewModel)
+}
+
+@Composable
+private fun CollectLocationPermission(
+    viewModel: HomeViewModel
+) {
+    val requestPermissionLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestPermission()
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp)
-                .verticalScroll(rememberScrollState())
-        ) {
-            when (uiState) {
-                is UiState.Data -> {
-                    val weatherModel = (uiState as UiState.Data<WeatherUi>).value
-                    CurrentWeatherCard(weatherModel.currentWeather, weatherModel.settingsUnits)
-                    Spacer(modifier = Modifier.height(16.dp))
-                    ForecastWeatherCard(weatherModel.forecastWeather, ForecastMode.DAILY, weatherModel.settingsUnits)
-                }
-                is UiState.Error -> {
+        viewModel.getWeather(pullToRefresh = false)
+    }
 
-                }
-                is UiState.Loading -> {
-                    Box(Modifier.fillMaxSize()) {
-                        CircularProgressIndicator(Modifier.align(Alignment.Center))
-                    }
-                }
+    val lifecycleOwner: LifecycleOwner = LocalLifecycleOwner.current
+    LaunchedEffect(key1 = Unit) {
+        lifecycleOwner.lifecycleScope.launch {
+            viewModel.locationPermissionsEvent.collect {
+                requestPermissionLauncher.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
             }
         }
     }
-}
-
-
-
-@Composable
-fun WeatherForecastCard() {
-
-}
-
-@Composable
-fun WeatherDetailedCard() {
-
 }

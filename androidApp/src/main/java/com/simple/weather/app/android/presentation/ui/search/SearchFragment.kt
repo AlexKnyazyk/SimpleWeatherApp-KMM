@@ -89,7 +89,7 @@ class SearchFragment : BaseListFragment<SearchAdapter, FragmentSearchBinding>(),
             }
         }
         if (state is UiState.Error) {
-            errorMessage.text = getString(R.string.error_generic_format, state.uiError.message)
+            errorMessage.text = getString(R.string.error_generic_format, state.error.message)
         }
 
         errorMessage.isVisible = state is UiState.Error || isNoSearchResults

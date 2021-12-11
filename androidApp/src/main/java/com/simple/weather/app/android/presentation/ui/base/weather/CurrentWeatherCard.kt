@@ -1,4 +1,4 @@
-package com.simple.weather.app.android.presentation.ui.home
+package com.simple.weather.app.android.presentation.ui.base.weather
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column

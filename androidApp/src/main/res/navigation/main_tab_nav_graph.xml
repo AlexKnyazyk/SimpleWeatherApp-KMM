@@ -15,15 +15,15 @@
         android:name="com.simple.weather.app.android.presentation.ui.favorites.FavoritesFragment"
         tools:layout="@layout/fragment_favorites" >
 
-        <action
-            android:id="@+id/navigate_to_weather_details"
-            app:destination="@id/fragment_weather_details" />
+<!--        <action-->
+<!--            android:id="@+id/navigate_to_weather_details"-->
+<!--            app:destination="@id/fragment_weather_details" />-->
 
     </fragment>
 
-    <fragment
-        android:id="@+id/fragment_weather_details"
-        android:name="com.simple.weather.app.android.presentation.ui.details.WeatherDetailsFragment"
-        tools:layout="@layout/fragment_weather"/>
+<!--    <fragment-->
+<!--        android:id="@+id/fragment_weather_details"-->
+<!--        android:name="com.simple.weather.app.android.presentation.ui.details.WeatherDetailsFragment"-->
+<!--        tools:layout="@layout/fragment_weather"/>-->
 
 </navigation>

@@ -5,7 +5,7 @@ import com.simple.weather.app.data.model.request.WeatherRequest
 import com.simple.weather.app.domain.domain.repository.SettingsRepository
 import com.simple.weather.app.domain.domain.usecase.weather.IGetWeatherUseCase
 
-class WeatherDetailsViewModel(
+class LocationWeatherViewModel(
     private val id: Int,
     getWeatherUseCase: IGetWeatherUseCase,
     settingsRepository: SettingsRepository

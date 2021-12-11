@@ -14,7 +14,9 @@ fun FavoriteLocationsListScreen(rootNavController: NavHostController, navControl
         Button(onClick = { rootNavController.navigate(Routes.SEARCH_LOCATION) }) {
             Text(text = "to search")
         }
-        Button(onClick = { navController.navigate(Routes.LOCATION_WEATHER) }) {
+        Button(onClick = {
+            navController.navigate(Routes.LocationWeather.route(2))
+        }) {
             Text(text = "to details")
         }
     }

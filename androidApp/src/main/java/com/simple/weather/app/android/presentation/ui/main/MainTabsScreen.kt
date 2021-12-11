@@ -5,7 +5,13 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.*
+import androidx.compose.material.BottomNavigation
+import androidx.compose.material.BottomNavigationItem
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -15,10 +21,12 @@ import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.simple.weather.app.android.R
 import com.simple.weather.app.android.presentation.navigation.Routes
 import com.simple.weather.app.android.presentation.ui.details.LocationWeatherScreen
@@ -48,7 +56,15 @@ fun MainTabsScreen(rootNavController: NavHostController) {
         NavHost(navController, startDestination = Routes.HOME, Modifier.padding(innerPadding)) {
             composable(Routes.HOME) { HomeWeatherScreen() }
             composable(Routes.FAVORITES) { FavoriteLocationsListScreen(rootNavController, navController) }
-            composable(Routes.LOCATION_WEATHER) { LocationWeatherScreen(navController) }
+            composable(
+                Routes.LocationWeather.NAME,
+                arguments = listOf(navArgument(Routes.LocationWeather.LOCATION_ID) { type = NavType.IntType })
+            ) { backStackEntry ->
+                LocationWeatherScreen(
+                    locationId = backStackEntry.arguments?.getInt(Routes.LocationWeather.LOCATION_ID)
+                        ?: throw IllegalAccessException("Missed location id arg")
+                )
+            }
         }
     }
 }

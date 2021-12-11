@@ -1,10 +1,8 @@
 package com.simple.weather.app.android.presentation.ui.base
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
@@ -24,7 +22,7 @@ fun OutlinedButtonsGroup(
     onSelected: (index: Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Row(modifier.background(MaterialTheme.colors.surface)) {
+    Row(modifier) {
         for (index in 0..textList.lastIndex) {
             val buttonModifier = Modifier.weight(1f)
             OutlinedButton(
@@ -82,7 +80,6 @@ fun OutlinedButtonsGroup(
             ) {
                 Text(
                     text = textList[index].uppercase(),
-                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
                     style = MaterialTheme.typography.button,
                 )
             }

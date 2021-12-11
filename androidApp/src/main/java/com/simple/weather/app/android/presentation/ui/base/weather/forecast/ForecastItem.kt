@@ -1,4 +1,4 @@
-package com.simple.weather.app.android.presentation.ui.home
+package com.simple.weather.app.android.presentation.ui.base.weather.forecast
 
 import android.text.format.DateUtils
 import androidx.compose.foundation.Image
