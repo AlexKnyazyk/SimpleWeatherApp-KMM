@@ -27,12 +27,11 @@ fun FavoriteLocationItemContent(
 ) {
     RoundedCard(modifier = modifier) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Column(Modifier.padding(all = 16.dp)) {
+            Column(Modifier.padding(all = 16.dp).weight(1f)) {
                 Text(text = item.name, style = MaterialTheme.typography.body1)
                 Text(text = item.region, style = MaterialTheme.typography.body2)
                 Text(text = item.country, style = MaterialTheme.typography.caption)
             }
-            Spacer(Modifier.weight(1f))
             if (item.tempC != null && item.tempF != null) {
                 Text(
                     text = if (item.isTempMetric) {

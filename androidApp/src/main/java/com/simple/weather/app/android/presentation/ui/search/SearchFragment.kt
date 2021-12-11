@@ -60,9 +60,9 @@ class SearchFragment : BaseListFragment<SearchAdapter, FragmentSearchBinding>(),
 
     private fun collectViewModelFlows() = launchRepeatOnViewLifecycleScope {
         launch {
-            viewModel.uiState.collect {
-                bindUiState(it)
-            }
+//            viewModel.uiState.collect {
+//                bindUiState(it)
+//            }
         }
         launch {
             viewModel.events.collect { event ->
@@ -81,12 +81,12 @@ class SearchFragment : BaseListFragment<SearchAdapter, FragmentSearchBinding>(),
 
         var isNoSearchResults = false
         if (state is UiState.Data) {
-            val result = state.value
-            adapter.submitList(result.itemModels)
-            if (result.hasSearchQuery && result.itemModels.isEmpty()) {
-                isNoSearchResults = true
-                errorMessage.setText(R.string.no_search_results)
-            }
+//            val result = state.value
+//            adapter.submitList(result.itemModels)
+//            if (result.hasSearchQuery && result.itemModels.isEmpty()) {
+//                isNoSearchResults = true
+//                errorMessage.setText(R.string.no_search_results)
+//            }
         }
         if (state is UiState.Error) {
             errorMessage.text = getString(R.string.error_generic_format, state.error.message)

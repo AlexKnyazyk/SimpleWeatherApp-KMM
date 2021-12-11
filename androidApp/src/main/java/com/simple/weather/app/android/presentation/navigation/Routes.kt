@@ -12,7 +12,7 @@ object Routes {
     object LocationWeather {
         const val LOCATION_ID = "locationId"
         const val NAME = "location_weather/{$LOCATION_ID}"
-        fun route(id: Int) = "location_weather/{$id}"
+        fun route(id: Int) = "location_weather/$id"
     }
 
     const val SETTINGS = "settings"

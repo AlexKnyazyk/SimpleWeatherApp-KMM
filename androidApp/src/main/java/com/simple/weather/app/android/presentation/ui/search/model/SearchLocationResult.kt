@@ -2,12 +2,16 @@ package com.simple.weather.app.android.presentation.ui.search.model
 
 import com.simple.weather.app.domain.domain.model.SearchLocationModel
 
-data class SearchLocationResult(
-    val itemModels: List<SearchLocationModel>,
-    val hasSearchQuery: Boolean
-) {
+sealed class SearchLocationResult {
+
+    data class Data(
+        val itemModels: List<SearchLocationModel>,
+        val hasSearchQuery: Boolean
+    ) : SearchLocationResult()
+
+    data class Error(val error: Throwable) : SearchLocationResult()
 
     companion object {
-        val EMPTY = SearchLocationResult(emptyList(), hasSearchQuery = false)
+        val EMPTY = Data(emptyList(), hasSearchQuery = false)
     }
 }
