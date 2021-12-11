@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.transition.MaterialSharedAxis
 import com.simple.weather.app.android.BuildConfig
@@ -38,7 +37,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
     }
 
     private fun initViews() = with(binding) {
-        toolbar.setNavigationOnClickListener { findNavController().popBackStack() }
+//        toolbar.setNavigationOnClickListener { findNavController().popBackStack() }
         settingTempUnits.setOnClickListener { showTemperatureUnitsSelectionDialog() }
         settingDistanceUnits.setOnClickListener { showDistanceUnitsSelectionDialog() }
         buildInfo.text = BuildConfig.VERSION_NAME
