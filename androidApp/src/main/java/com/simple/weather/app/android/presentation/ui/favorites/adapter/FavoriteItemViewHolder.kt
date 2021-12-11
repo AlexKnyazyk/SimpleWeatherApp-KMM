@@ -6,14 +6,14 @@ import com.bumptech.glide.Glide
 import com.simple.weather.app.android.R
 import com.simple.weather.app.android.databinding.ItemFavoriteBinding
 import com.simple.weather.app.android.presentation.ui.base.BaseViewHolder
-import com.simple.weather.app.android.presentation.ui.favorites.model.FavoriteLocationModelUi
+import com.simple.weather.app.android.presentation.ui.favorites.model.FavoriteLocationItemUi
 
 class FavoriteItemViewHolder(
     private val binding: ItemFavoriteBinding,
     itemClickListener: FavoriteItemClickListener
-) : BaseViewHolder<FavoriteLocationModelUi>(binding) {
+) : BaseViewHolder<FavoriteLocationItemUi>(binding) {
 
-    private var itemModel: FavoriteLocationModelUi? = null
+    private var itemModel: FavoriteLocationItemUi? = null
 
     init {
         binding.root.setOnClickListener {
@@ -21,7 +21,7 @@ class FavoriteItemViewHolder(
         }
     }
 
-    override fun bind(item: FavoriteLocationModelUi) = with(binding) {
+    override fun bind(item: FavoriteLocationItemUi) = with(binding) {
         itemModel = item
         locationName.text = item.name
         locationRegion.text = item.region

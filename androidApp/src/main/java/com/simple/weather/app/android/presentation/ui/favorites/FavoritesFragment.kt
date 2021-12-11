@@ -15,7 +15,7 @@ import com.simple.weather.app.android.databinding.FragmentFavoritesBinding
 import com.simple.weather.app.android.presentation.ui.base.BaseListFragment
 import com.simple.weather.app.android.presentation.ui.favorites.adapter.FavoriteItemClickListener
 import com.simple.weather.app.android.presentation.ui.favorites.adapter.FavoritesAdapter
-import com.simple.weather.app.android.presentation.ui.favorites.model.FavoriteLocationModelUi
+import com.simple.weather.app.android.presentation.ui.favorites.model.FavoriteLocationItemUi
 import com.simple.weather.app.android.utils.findMainNavController
 import com.simple.weather.app.android.utils.launchRepeatOnViewLifecycleScope
 import com.simple.weather.app.android.utils.view.recycler.FabHiddenScrollListener
@@ -65,12 +65,12 @@ class FavoritesFragment : BaseListFragment<FavoritesAdapter, FragmentFavoritesBi
         }
     }
 
-    private fun bindFavoriteLocations(itemModels: List<FavoriteLocationModelUi>) = with(binding) {
+    private fun bindFavoriteLocations(itemModels: List<FavoriteLocationItemUi>) = with(binding) {
         adapter.submitList(itemModels)
         hintMessage.isVisible = itemModels.isEmpty()
     }
 
-    override fun onItemClick(itemModel: FavoriteLocationModelUi) {
+    override fun onItemClick(itemModel: FavoriteLocationItemUi) {
         exitTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
         reenterTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
 //        findNavController().navigate(

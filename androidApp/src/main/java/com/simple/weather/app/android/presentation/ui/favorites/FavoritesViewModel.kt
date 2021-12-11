@@ -2,7 +2,8 @@ package com.simple.weather.app.android.presentation.ui.favorites
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.simple.weather.app.android.presentation.ui.favorites.model.FavoriteLocationModelUi
+import com.simple.weather.app.android.presentation.ui.favorites.model.FavoriteLocationItemUi
+import com.simple.weather.app.android.presentation.ui.favorites.model.toUi
 import com.simple.weather.app.domain.domain.repository.FavoriteLocationsRepository
 import com.simple.weather.app.domain.domain.repository.SettingsRepository
 import com.simple.weather.app.domain.domain.usecase.favorites.ISyncFavoriteLocationsWeatherUseCase
@@ -18,14 +19,11 @@ class FavoritesViewModel(
     private val syncFavoriteLocationsWeatherUseCase: ISyncFavoriteLocationsWeatherUseCase
 ) : ViewModel() {
 
-    val favoriteLocations: StateFlow<List<FavoriteLocationModelUi>> = combine(
+    val favoriteLocations: StateFlow<List<FavoriteLocationItemUi>> = combine(
         favoriteLocationsRepository.allFavoriteLocations(),
         settingsRepository.settingsUnitsModelFlow
     ) { favList, settings ->
-        val isTempMetric = settings.isTempMetric
-        favList.map {
-            with(it) { FavoriteLocationModelUi(id, name, region, country, tempC, tempF, weatherConditionIconUrl, updateTimestamp, isTempMetric)  }
-        }
+        favList.map { it.toUi(settings.isTempMetric) }
     }.stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
     init {
@@ -34,7 +32,7 @@ class FavoritesViewModel(
         }
     }
 
-    fun deleteFavorite(model: FavoriteLocationModelUi) {
+    fun deleteFavorite(model: FavoriteLocationItemUi) {
         viewModelScope.launch {
             favoriteLocationsRepository.deleteById(model.id)
         }
