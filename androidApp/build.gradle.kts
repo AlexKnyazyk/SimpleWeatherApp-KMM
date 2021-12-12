@@ -40,10 +40,6 @@ android {
 dependencies {
     implementation(project(":common"))
 
-    implementation("androidx.core:core-ktx:1.7.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.4.0")
-    implementation("androidx.fragment:fragment-ktx:1.4.0")
-
     implementation("io.insert-koin:koin-android:3.1.4")
     implementation("io.insert-koin:koin-androidx-compose:3.1.4")
 
@@ -56,9 +52,5 @@ dependencies {
     implementation("io.coil-kt:coil-compose:1.4.0")
     implementation("com.google.accompanist:accompanist-swiperefresh:0.19.0")
 
-    implementation("com.google.android.material:material:1.6.0-alpha01")
     implementation("androidx.appcompat:appcompat:1.4.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.2")
-    implementation("androidx.recyclerview:recyclerview:1.2.1")
-    implementation("androidx.cardview:cardview:1.0.0")
 }

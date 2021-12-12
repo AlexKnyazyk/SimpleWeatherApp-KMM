@@ -2,7 +2,6 @@ package com.simple.weather.app.android.presentation.ui.main
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.BottomNavigation
@@ -10,14 +9,14 @@ import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavDestination
@@ -32,6 +31,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.simple.weather.app.android.R
 import com.simple.weather.app.android.presentation.navigation.Routes
+import com.simple.weather.app.android.presentation.ui.base.ToolbarBackIcon
 import com.simple.weather.app.android.presentation.ui.details.LocationWeatherScreen
 import com.simple.weather.app.android.presentation.ui.favorites.FavoriteLocationsListScreen
 import com.simple.weather.app.android.presentation.ui.home.HomeWeatherScreen
@@ -84,11 +84,7 @@ private fun navigationArrowIconContent(
 ): (@Composable () -> Unit)? {
     return if (currentDestination?.route !in mainTabs.map { it.route }) {
         {
-            IconButton(onClick = {
-                navController.popBackStack()
-            }) {
-                Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null)
-            }
+            ToolbarBackIcon(onBackClick = { navController.popBackStack() })
         }
     } else null
 }
@@ -100,6 +96,7 @@ private fun SettingsIconButton(navController: NavHostController) {
     }) {
         Icon(
             painter = painterResource(R.drawable.ic_baseline_settings_24),
+            tint = Color.White,
             contentDescription = null
         )
     }
@@ -111,10 +108,22 @@ private fun RowScope.MainBottomNavigationItem(
     currentDestination: NavDestination?,
     navController: NavHostController
 ) {
+    val isSelected = currentDestination?.hierarchy?.any { it.route == tab.route } == true
+    val selectionColor = if (isSelected) {
+        MaterialTheme.colors.secondary
+    } else {
+        Color.White.copy(alpha = 0.4f)
+    }
     BottomNavigationItem(
-        icon = { Image(painter = painterResource(tab.iconRes), contentDescription = null) },
-        label = { Text(stringResource(tab.titleRes)) },
-        selected = currentDestination?.hierarchy?.any { it.route == tab.route } == true,
+        icon = {
+            Icon(
+                painter = painterResource(tab.iconRes),
+                tint = selectionColor,
+                contentDescription = null
+            )
+        },
+        label = { Text(stringResource(tab.titleRes), color = selectionColor) },
+        selected = isSelected,
         onClick = {
             navController.navigate(tab.route) {
                 // Pop up to the start destination of the graph to
