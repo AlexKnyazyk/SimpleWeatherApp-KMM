@@ -47,7 +47,7 @@ fun MainTabsScreen(rootNavController: NavHostController) {
             TopAppBar(
                 title = { Text(stringResource(R.string.app_title)) },
                 actions = { SettingsIconButton(rootNavController) },
-                navigationIcon = NavigationArrowIcon(currentDestination, navController)
+                navigationIcon = navigationArrowIconContent(currentDestination, navController)
             )
         },
         bottomBar = {
@@ -78,8 +78,7 @@ fun MainTabsScreen(rootNavController: NavHostController) {
     }
 }
 
-@Composable
-private fun NavigationArrowIcon(
+private fun navigationArrowIconContent(
     currentDestination: NavDestination?,
     navController: NavHostController
 ): (@Composable () -> Unit)? {
