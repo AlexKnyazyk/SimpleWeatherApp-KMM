@@ -16,6 +16,7 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
+import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.runtime.Composable
@@ -27,6 +28,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalLifecycleOwner
@@ -53,7 +55,10 @@ fun SearchLocationScreen(navController: NavHostController) {
     CollectSearchScreenEvents(viewModel, navController)
 
     Column {
-        SearchTextField(onTextChanged = { viewModel.setSearchQuery(it) })
+        SearchTextField(
+            query = viewModel.searchQuery,
+            onTextChanged = { viewModel.searchQuery = it }
+        )
 
         when (searchLocationResult) {
             is SearchLocationResult.Data -> {
@@ -99,13 +104,13 @@ private fun CollectSearchScreenEvents(
 }
 
 @Composable
-fun SearchTextField(onTextChanged: (String) -> Unit) {
+private fun SearchTextField(query: String, onTextChanged: (String) -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp)
     ) {
-        var searchQuery by remember { mutableStateOf("") }
+        var searchQuery by remember { mutableStateOf(query) }
         val focusManager = LocalFocusManager.current
 
         OutlinedTextField(
@@ -114,6 +119,9 @@ fun SearchTextField(onTextChanged: (String) -> Unit) {
                 searchQuery = text
                 onTextChanged(text)
             },
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                textColor = MaterialTheme.colors.onSurface
+            ),
             singleLine = true,
             label = { Text(text = stringResource(R.string.search_hint)) },
             trailingIcon = (if (searchQuery.isNotEmpty()) {
@@ -122,7 +130,11 @@ fun SearchTextField(onTextChanged: (String) -> Unit) {
                         searchQuery = ""
                         onTextChanged("")
                     }) {
-                        Image(imageVector = Icons.Default.Clear, contentDescription = null)
+                        Image(
+                            imageVector = Icons.Default.Clear,
+                            contentDescription = null,
+                            colorFilter = ColorFilter.tint(MaterialTheme.colors.onSurface)
+                        )
                     }
                 }
             } else null),

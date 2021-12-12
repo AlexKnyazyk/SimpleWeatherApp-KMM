@@ -17,11 +17,18 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlin.properties.Delegates
 
 class SearchViewModel(
     private val searchLocationUseCase: ISearchLocationUseCase,
     private val addSearchLocationToFavoritesUseCase: IAddSearchLocationToFavoritesUseCase
 ) : ViewModel() {
+
+    var searchQuery: String by Delegates.observable("") { _, _, query ->
+        viewModelScope.launch {
+            searchQueryFlow.emit(query)
+        }
+    }
 
     private val searchQueryFlow = MutableSharedFlow<String>(extraBufferCapacity = 1)
 
@@ -35,16 +42,6 @@ class SearchViewModel(
 
     private val _events = MutableSharedFlow<SearchScreenEvents>()
     val events = _events.asSharedFlow()
-
-    init {
-        setSearchQuery("")
-    }
-
-    fun setSearchQuery(query: String) {
-        viewModelScope.launch {
-            searchQueryFlow.emit(query)
-        }
-    }
 
     private fun searchLocationUiStateFlow(query: String): Flow<SearchLocationResult> = flow {
         emit(
