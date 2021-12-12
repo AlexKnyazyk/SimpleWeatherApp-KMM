@@ -1,5 +1,6 @@
 package com.simple.weather.app.android.presentation.ui
 
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
@@ -10,6 +11,7 @@ import com.simple.weather.app.android.presentation.ui.main.MainTabsScreen
 import com.simple.weather.app.android.presentation.ui.search.SearchLocationScreen
 import com.simple.weather.app.android.presentation.ui.settings.SettingsScreen
 
+@ExperimentalMaterialApi
 @Composable
 fun MainContentScreen() {
     val navController = rememberNavController()
@@ -20,6 +22,7 @@ fun MainContentScreen() {
     }
 }
 
+@ExperimentalMaterialApi
 @Preview
 @Composable
 fun MainContentPreview() {

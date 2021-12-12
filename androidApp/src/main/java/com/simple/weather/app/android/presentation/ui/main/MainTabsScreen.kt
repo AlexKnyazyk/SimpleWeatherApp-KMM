@@ -7,11 +7,14 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -33,20 +36,22 @@ import com.simple.weather.app.android.presentation.ui.details.LocationWeatherScr
 import com.simple.weather.app.android.presentation.ui.favorites.FavoriteLocationsListScreen
 import com.simple.weather.app.android.presentation.ui.home.HomeWeatherScreen
 
+@ExperimentalMaterialApi
 @Composable
 fun MainTabsScreen(rootNavController: NavHostController) {
     val navController = rememberNavController()
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentDestination = navBackStackEntry?.destination
     Scaffold(
         topBar = {
             TopAppBar(
                 title = { Text(stringResource(R.string.app_title)) },
-                actions = { SettingsIconButton(rootNavController) }
+                actions = { SettingsIconButton(rootNavController) },
+                navigationIcon = NavigationArrowIcon(currentDestination, navController)
             )
         },
         bottomBar = {
             BottomNavigation {
-                val navBackStackEntry by navController.currentBackStackEntryAsState()
-                val currentDestination = navBackStackEntry?.destination
                 mainTabs.forEach { tab ->
                     MainBottomNavigationItem(tab, currentDestination, navController)
                 }
@@ -55,10 +60,14 @@ fun MainTabsScreen(rootNavController: NavHostController) {
     ) { innerPadding ->
         NavHost(navController, startDestination = Routes.HOME, Modifier.padding(innerPadding)) {
             composable(Routes.HOME) { HomeWeatherScreen() }
-            composable(Routes.FAVORITES) { FavoriteLocationsListScreen(rootNavController, navController) }
+            composable(Routes.FAVORITES) {
+                FavoriteLocationsListScreen(rootNavController, navController)
+            }
             composable(
                 Routes.LocationWeather.NAME,
-                arguments = listOf(navArgument(Routes.LocationWeather.LOCATION_ID) { type = NavType.IntType })
+                arguments = listOf(
+                    navArgument(Routes.LocationWeather.LOCATION_ID) { type = NavType.IntType }
+                )
             ) { backStackEntry ->
                 LocationWeatherScreen(
                     locationId = backStackEntry.arguments?.getInt(Routes.LocationWeather.LOCATION_ID)
@@ -70,16 +79,39 @@ fun MainTabsScreen(rootNavController: NavHostController) {
 }
 
 @Composable
+private fun NavigationArrowIcon(
+    currentDestination: NavDestination?,
+    navController: NavHostController
+): (@Composable () -> Unit)? {
+    return if (currentDestination?.route !in mainTabs.map { it.route }) {
+        {
+            IconButton(onClick = {
+                navController.popBackStack()
+            }) {
+                Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null)
+            }
+        }
+    } else null
+}
+
+@Composable
 private fun SettingsIconButton(navController: NavHostController) {
     IconButton(onClick = {
         navController.navigate(Routes.SETTINGS)
     }) {
-        Icon(painter = painterResource(R.drawable.ic_baseline_settings_24), contentDescription = null)
+        Icon(
+            painter = painterResource(R.drawable.ic_baseline_settings_24),
+            contentDescription = null
+        )
     }
 }
 
 @Composable
-private fun RowScope.MainBottomNavigationItem(tab: MainTab, currentDestination: NavDestination?, navController: NavHostController) {
+private fun RowScope.MainBottomNavigationItem(
+    tab: MainTab,
+    currentDestination: NavDestination?,
+    navController: NavHostController
+) {
     BottomNavigationItem(
         icon = { Image(painter = painterResource(tab.iconRes), contentDescription = null) },
         label = { Text(stringResource(tab.titleRes)) },
@@ -104,7 +136,12 @@ private fun RowScope.MainBottomNavigationItem(tab: MainTab, currentDestination: 
 
 private val mainTabs = listOf(MainTab.Home, MainTab.Favorites)
 
-private sealed class MainTab(val route: String, @StringRes val titleRes: Int, @DrawableRes val iconRes: Int) {
+private sealed class MainTab(
+    val route: String,
+    @StringRes val titleRes: Int,
+    @DrawableRes val iconRes: Int
+) {
     object Home : MainTab(Routes.HOME, R.string.title_home, R.drawable.ic_home_black_24dp)
-    object Favorites : MainTab(Routes.FAVORITES, R.string.title_favorites, R.drawable.ic_baseline_star_24)
+    object Favorites :
+        MainTab(Routes.FAVORITES, R.string.title_favorites, R.drawable.ic_baseline_star_24)
 }
