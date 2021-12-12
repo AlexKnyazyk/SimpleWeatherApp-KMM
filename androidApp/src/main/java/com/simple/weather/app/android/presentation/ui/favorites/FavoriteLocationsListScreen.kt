@@ -163,6 +163,7 @@ private fun FavoriteDismissBackgroundContent(direction: DismissDirection) {
         ) {
             Icon(
                 imageVector = Icons.Default.Delete,
+                tint = Color.White,
                 contentDescription = null
             )
         }
