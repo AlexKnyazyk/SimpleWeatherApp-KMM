@@ -27,7 +27,11 @@ fun FavoriteLocationItemContent(
 ) {
     RoundedCard(modifier = modifier) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Column(Modifier.padding(all = 16.dp).weight(1f)) {
+            Column(
+                modifier = Modifier
+                    .padding(all = 16.dp)
+                    .weight(1f)
+            ) {
                 Text(text = item.name, style = MaterialTheme.typography.body1)
                 Text(text = item.region, style = MaterialTheme.typography.body2)
                 Text(text = item.country, style = MaterialTheme.typography.caption)
@@ -56,7 +60,7 @@ fun FavoriteLocationItemContent(
 
 @Preview
 @Composable
-fun FavoriteLocationItemContent_Preview() {
+private fun FavoriteLocationItemContent_Preview() {
     val item = FavoriteLocationItemUi(
         0,
         "Minsk",

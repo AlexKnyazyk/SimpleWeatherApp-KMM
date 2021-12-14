@@ -1,6 +1,6 @@
 package com.simple.weather.app.android.presentation.ui.base.weather.model
 
-data class WeatherUi(
+data class WeatherModelUi(
     val currentWeather: CurrentWeatherUi,
     val forecastWeather: ForecastWeatherUi,
     val detailedWeather: DetailedWeatherUi,

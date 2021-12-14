@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -16,11 +15,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import com.simple.weather.app.android.presentation.model.ForecastMode
+import com.simple.weather.app.android.presentation.model.ForecastModeUi
 import com.simple.weather.app.android.presentation.model.UiState
-import com.simple.weather.app.android.presentation.ui.base.ErrorContentWithTryAgain
+import com.simple.weather.app.android.presentation.ui.error.ErrorContentWithTryAgain
 import com.simple.weather.app.android.presentation.ui.base.weather.forecast.ForecastWeatherCard
-import com.simple.weather.app.android.presentation.ui.base.weather.model.WeatherUi
+import com.simple.weather.app.android.presentation.ui.base.weather.model.WeatherModelUi
 
 @Composable
 fun BaseWeatherScreen(viewModel: BaseWeatherViewModel) {
@@ -34,7 +33,7 @@ fun BaseWeatherScreen(viewModel: BaseWeatherViewModel) {
     ) {
         when (uiState) {
             is UiState.Data -> {
-                val weatherModel = (uiState as UiState.Data<WeatherUi>).value
+                val weatherModel = (uiState as UiState.Data<WeatherModelUi>).value
                 WeatherContent(
                     weatherModel,
                     forecastMode,
@@ -42,7 +41,7 @@ fun BaseWeatherScreen(viewModel: BaseWeatherViewModel) {
                 )
             }
             is UiState.Error -> {
-                val error = (uiState as UiState.Error<WeatherUi>).error
+                val error = (uiState as UiState.Error<WeatherModelUi>).error
                 ErrorContentWithTryAgain(error, tryAgainAction = {
                     viewModel.getWeather(pullToRefresh = false)
                 })
@@ -57,40 +56,25 @@ fun BaseWeatherScreen(viewModel: BaseWeatherViewModel) {
 }
 
 @Composable
-fun WeatherContent(model: WeatherUi, forecastMode: ForecastMode, onModeSelected: (ForecastMode) -> Unit) {
+fun WeatherContent(model: WeatherModelUi, forecastMode: ForecastModeUi, onModeSelected: (ForecastModeUi) -> Unit) {
     LazyColumn(
         contentPadding = PaddingValues(all = 16.dp),
     ) {
-        itemsIndexed(WeatherCard.cards) { index, card ->
-            when (card) {
-                WeatherCard.CURRENT -> {
-                    CurrentWeatherCard(model.currentWeather, model.settingsUnits)
-                }
-                WeatherCard.FORECAST -> {
-                    ForecastWeatherCard(
-                        model.forecastWeather,
-                        model.settingsUnits,
-                        forecastMode,
-                        onModeSelected
-                    )
-                }
-                WeatherCard.DETAILED -> {
-                    DetailedWeatherCard(model.detailedWeather, model.settingsUnits)
-                }
-            }
-            if (index != WeatherCard.cards.lastIndex) {
-                Spacer(modifier = Modifier.height(16.dp))
-            }
+        item {
+            CurrentWeatherCard(model.currentWeather, model.settingsUnits)
+            Spacer(modifier = Modifier.height(16.dp))
         }
-    }
-}
-
-private enum class WeatherCard {
-    CURRENT,
-    FORECAST,
-    DETAILED;
-
-    companion object {
-        val cards = values()
+        item {
+            ForecastWeatherCard(
+                model.forecastWeather,
+                model.settingsUnits,
+                forecastMode,
+                onModeSelected
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+        }
+        item {
+            DetailedWeatherCard(model.detailedWeather, model.settingsUnits)
+        }
     }
 }

@@ -13,6 +13,8 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -35,6 +37,7 @@ import com.simple.weather.app.android.presentation.ui.base.ToolbarBackIcon
 import com.simple.weather.app.android.presentation.ui.details.LocationWeatherScreen
 import com.simple.weather.app.android.presentation.ui.favorites.FavoriteLocationsListScreen
 import com.simple.weather.app.android.presentation.ui.home.HomeWeatherScreen
+import java.lang.IllegalArgumentException
 
 @ExperimentalMaterialApi
 @Composable
@@ -71,7 +74,7 @@ fun MainTabsScreen(rootNavController: NavHostController) {
             ) { backStackEntry ->
                 LocationWeatherScreen(
                     locationId = backStackEntry.arguments?.getInt(Routes.LocationWeather.LOCATION_ID)
-                        ?: throw IllegalAccessException("Missed location id arg")
+                        ?: throw IllegalArgumentException("Missed location id arg")
                 )
             }
         }
@@ -95,7 +98,7 @@ private fun SettingsIconButton(navController: NavHostController) {
         navController.navigate(Routes.SETTINGS)
     }) {
         Icon(
-            painter = painterResource(R.drawable.ic_baseline_settings_24),
+            imageVector = Icons.Default.Settings,
             tint = Color.White,
             contentDescription = null
         )
@@ -149,7 +152,7 @@ private sealed class MainTab(
     @StringRes val titleRes: Int,
     @DrawableRes val iconRes: Int
 ) {
-    object Home : MainTab(Routes.HOME, R.string.title_home, R.drawable.ic_home_black_24dp)
+    object Home : MainTab(Routes.HOME, R.string.title_home, R.drawable.ic_home)
     object Favorites :
-        MainTab(Routes.FAVORITES, R.string.title_favorites, R.drawable.ic_baseline_star_24)
+        MainTab(Routes.FAVORITES, R.string.title_favorites, R.drawable.ic_favorites)
 }

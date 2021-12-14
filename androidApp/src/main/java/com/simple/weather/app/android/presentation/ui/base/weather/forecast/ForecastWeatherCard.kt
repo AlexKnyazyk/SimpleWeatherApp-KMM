@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.simple.weather.app.android.presentation.model.ForecastMode
+import com.simple.weather.app.android.presentation.model.ForecastModeUi
 import com.simple.weather.app.android.presentation.ui.base.OutlinedButtonsGroup
 import com.simple.weather.app.android.presentation.ui.base.RoundedCard
 import com.simple.weather.app.android.presentation.ui.base.weather.model.ForecastWeatherUi
@@ -23,8 +23,8 @@ import com.simple.weather.app.android.presentation.ui.base.weather.model.Setting
 fun ForecastWeatherCard(
     model: ForecastWeatherUi,
     settings: SettingsUnitsUi,
-    mode: ForecastMode,
-    onModeSelected: (ForecastMode) -> Unit,
+    mode: ForecastModeUi,
+    onModeSelected: (ForecastModeUi) -> Unit,
     modifier: Modifier = Modifier
 ) {
     RoundedCard(modifier) {
@@ -32,9 +32,9 @@ fun ForecastWeatherCard(
             modifier = Modifier.fillMaxWidth()
         ) {
             OutlinedButtonsGroup(
-                textList = ForecastMode.values().map { stringResource(it.textRes) },
+                textList = ForecastModeUi.values().map { stringResource(it.textRes) },
                 mode.ordinal,
-                onSelected = { index -> onModeSelected(ForecastMode.values()[index]) },
+                onSelected = { index -> onModeSelected(ForecastModeUi.values()[index]) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 16.dp, end = 16.dp, top = 16.dp)
@@ -42,8 +42,8 @@ fun ForecastWeatherCard(
             Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxWidth()) {
                 LazyRow {
                     val items = when (mode) {
-                        ForecastMode.HOURLY -> model.forecastHourly
-                        ForecastMode.DAILY -> model.forecastDaily
+                        ForecastModeUi.HOURLY -> model.forecastHourly
+                        ForecastModeUi.DAILY -> model.forecastDaily
                     }
                     items(count = items.size) { index ->
                         ForecastItem(items[index], settings)
@@ -56,12 +56,12 @@ fun ForecastWeatherCard(
 
 @Preview
 @Composable
-fun ForecastWeatherCard_Preview() {
+private fun ForecastWeatherCard_Preview() {
     val model = ForecastWeatherUi(
         forecastHourly = emptyList(),
         forecastDaily = emptyList()
     )
     val settings = SettingsUnitsUi()
-    val mode = remember { mutableStateOf(ForecastMode.HOURLY) }
+    val mode = remember { mutableStateOf(ForecastModeUi.HOURLY) }
     ForecastWeatherCard(model, settings, mode.value, { mode.value = it })
 }

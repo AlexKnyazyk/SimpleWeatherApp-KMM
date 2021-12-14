@@ -38,7 +38,7 @@ fun SearchLocationItemContent(
 
 @Preview
 @Composable
-fun SearchLocationItemContent_Preview() {
+private fun SearchLocationItemContent_Preview() {
     val item = SearchLocationModel(
         0,
         "Minsk",

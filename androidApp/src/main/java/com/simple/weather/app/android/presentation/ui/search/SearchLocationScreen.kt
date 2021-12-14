@@ -19,13 +19,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
@@ -40,7 +34,8 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavHostController
 import com.simple.weather.app.android.R
-import com.simple.weather.app.android.presentation.ui.search.model.SearchLocationResult
+import com.simple.weather.app.android.presentation.ui.error.toUiErrorMessage
+import com.simple.weather.app.android.presentation.ui.search.model.SearchLocationUiState
 import com.simple.weather.app.domain.domain.model.SearchLocationModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -50,7 +45,7 @@ import org.koin.androidx.compose.getViewModel
 fun SearchLocationScreen(navController: NavHostController) {
     val viewModel = getViewModel<SearchViewModel>()
 
-    val searchLocationResult by viewModel.searchLocationResult.collectAsState()
+    val searchLocationState by viewModel.searchLocationState.collectAsState()
 
     CollectSearchScreenEvents(viewModel, navController)
 
@@ -60,16 +55,19 @@ fun SearchLocationScreen(navController: NavHostController) {
             onTextChanged = { viewModel.searchQuery = it }
         )
 
-        when (searchLocationResult) {
-            is SearchLocationResult.Data -> {
-                val dataResult = (searchLocationResult as SearchLocationResult.Data)
-                SearchResultsContent(dataResult, onItemClick = { item ->
+        when (searchLocationState) {
+            SearchLocationUiState.Idle ->{
+                // no views
+            }
+            is SearchLocationUiState.Data -> {
+                val searchLocationData = (searchLocationState as SearchLocationUiState.Data)
+                SearchResultsContent(searchLocationData, onItemClick = { item ->
                     viewModel.onItemClick(item)
                 })
             }
-            is SearchLocationResult.Error -> {
+            is SearchLocationUiState.Error -> {
                 SearchErrorMessageContent(
-                    error = (searchLocationResult as SearchLocationResult.Error).error
+                    error = (searchLocationState as SearchLocationUiState.Error).error
                 )
             }
         }
@@ -151,14 +149,14 @@ private fun SearchTextField(query: String, onTextChanged: (String) -> Unit) {
 
 @Composable
 private fun SearchResultsContent(
-    dataResult: SearchLocationResult.Data,
+    searchLocationData: SearchLocationUiState.Data,
     onItemClick: (SearchLocationModel) -> Unit
 ) {
-    if (dataResult.hasSearchQuery && dataResult.itemModels.isEmpty()) {
+    if (searchLocationData.itemModels.isEmpty()) {
         EmptySearchResultsContent()
     } else {
-        val items = dataResult.itemModels
-        LazyColumn() {
+        val items = searchLocationData.itemModels
+        LazyColumn {
             itemsIndexed(items) { index, item ->
                 SearchLocationItemContent(
                     item = item,
@@ -189,7 +187,7 @@ private fun EmptySearchResultsContent() {
 private fun SearchErrorMessageContent(error: Throwable) {
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Text(
-            text = error.message ?: stringResource(R.string.error_unknown),
+            text = error.toUiErrorMessage(),
             style = MaterialTheme.typography.body1,
             textAlign = TextAlign.Center
         )

@@ -104,7 +104,7 @@ private fun ForecastWind(item: ForecastModel, settings: SettingsUnitsUi) {
     val windSpeed = if (settings.isDistanceMetric) {
         stringResource(R.string.kmh_format, item.windSpeedKph)
     } else {
-        stringResource(R.string.miles_format, item.windSpeedMph)
+        stringResource(R.string.mph_format, item.windSpeedMph)
     }
     Text(
         text = windSpeed + if (item is ForecastModel.Hour) "\n(${item.windDir})" else "",
@@ -116,7 +116,7 @@ private fun ForecastWind(item: ForecastModel, settings: SettingsUnitsUi) {
 
 @Preview
 @Composable
-fun ForecastItem_Preview() {
+private fun ForecastItem_Preview() {
     val item = ForecastModel.Day(
         date = Date().time,
         temperatureC = 8,

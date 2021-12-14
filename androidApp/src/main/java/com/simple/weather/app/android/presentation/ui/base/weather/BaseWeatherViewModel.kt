@@ -2,11 +2,11 @@ package com.simple.weather.app.android.presentation.ui.base.weather
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.simple.weather.app.android.presentation.model.ForecastMode
+import com.simple.weather.app.android.presentation.model.ForecastModeUi
 import com.simple.weather.app.android.presentation.model.UiState
 import com.simple.weather.app.android.presentation.model.asData
 import com.simple.weather.app.android.presentation.ui.base.weather.model.SettingsUnitsUi
-import com.simple.weather.app.android.presentation.ui.base.weather.model.WeatherUi
+import com.simple.weather.app.android.presentation.ui.base.weather.model.WeatherModelUi
 import com.simple.weather.app.android.presentation.ui.base.weather.model.toUi
 import com.simple.weather.app.data.model.request.WeatherRequest
 import com.simple.weather.app.domain.domain.repository.SettingsRepository
@@ -27,10 +27,10 @@ abstract class BaseWeatherViewModel(
     private val _isRefreshing = MutableStateFlow(false)
     val isRefreshing = _isRefreshing.asStateFlow()
 
-    private val _uiState = MutableStateFlow<UiState<WeatherUi>>(UiState.loading())
+    private val _uiState = MutableStateFlow<UiState<WeatherModelUi>>(UiState.loading())
     val uiState = _uiState.asStateFlow()
 
-    private val _forecastMode = MutableStateFlow(ForecastMode.HOURLY)
+    private val _forecastMode = MutableStateFlow(ForecastModeUi.HOURLY)
     val forecastMode = _forecastMode.asStateFlow()
 
     private val settingsUnitsState = settingsRepository.settingsUnitsModelFlow
@@ -38,7 +38,7 @@ abstract class BaseWeatherViewModel(
         .onEach { settings -> updateUiStateWithSettings(settings) }
         .stateIn(viewModelScope, SharingStarted.Eagerly, SettingsUnitsUi())
 
-    fun setForecastMode(mode: ForecastMode) {
+    fun setForecastMode(mode: ForecastModeUi) {
         val uiState = _uiState.value
         if (_forecastMode.value != mode && uiState is UiState.Data) {
             _forecastMode.value = mode

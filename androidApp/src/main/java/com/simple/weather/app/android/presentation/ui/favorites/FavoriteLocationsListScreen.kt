@@ -21,6 +21,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.SwipeToDismiss
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.rememberDismissState
 import androidx.compose.runtime.Composable
@@ -95,8 +96,9 @@ private fun AddFavoriteLocationFabContent(onClick: () -> Unit) {
         contentAlignment = Alignment.BottomEnd
     ) {
         FloatingActionButton(onClick = onClick) {
-            Image(
-                painter = painterResource(R.drawable.ic_baseline_add_24),
+            Icon(
+                imageVector = Icons.Default.Add,
+                tint = MaterialTheme.colors.onSecondary,
                 contentDescription = null
             )
         }

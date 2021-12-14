@@ -125,9 +125,9 @@ private fun VisibilityDetailedWeatherRow(
         iconRes = R.drawable.ic_witness,
         titleRes = R.string.visibility,
         value = if (settings.isDistanceMetric) {
-            stringResource(R.string.kmh_format, model.visibilityKm)
+            stringResource(R.string.km_format, model.visibilityKm)
         } else {
-            stringResource(R.string.mph_format, model.visibilityMiles)
+            stringResource(R.string.miles_format, model.visibilityMiles)
         }
     )
 }

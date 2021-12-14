@@ -2,7 +2,7 @@ package com.simple.weather.app.android.presentation.ui.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.simple.weather.app.android.presentation.ui.search.model.SearchLocationResult
+import com.simple.weather.app.android.presentation.ui.search.model.SearchLocationUiState
 import com.simple.weather.app.domain.domain.model.SearchLocationModel
 import com.simple.weather.app.domain.domain.usecase.search.IAddSearchLocationToFavoritesUseCase
 import com.simple.weather.app.domain.domain.usecase.search.ISearchLocationUseCase
@@ -32,24 +32,28 @@ class SearchViewModel(
 
     private val searchQueryFlow = MutableSharedFlow<String>(extraBufferCapacity = 1)
 
-    val searchLocationResult: StateFlow<SearchLocationResult> = searchQueryFlow
+    val searchLocationState: StateFlow<SearchLocationUiState> = searchQueryFlow
         .distinctUntilChanged()
         .debounce(SEARCH_DEBOUNCE)
         .flatMapLatest { query ->
             searchLocationUiStateFlow(query)
         }
-        .stateIn(viewModelScope, SharingStarted.Lazily, SearchLocationResult.EMPTY)
+        .stateIn(viewModelScope, SharingStarted.Lazily, SearchLocationUiState.Idle)
 
     private val _events = MutableSharedFlow<SearchScreenEvents>()
     val events = _events.asSharedFlow()
 
-    private fun searchLocationUiStateFlow(query: String): Flow<SearchLocationResult> = flow {
+    private fun searchLocationUiStateFlow(query: String): Flow<SearchLocationUiState> = flow {
         emit(
             searchLocationUseCase(query).fold(
                 onSuccess = { searchModels ->
-                    SearchLocationResult.Data(searchModels, query.isNotBlank())
+                    if (query.isNotBlank()) {
+                        SearchLocationUiState.Data(searchModels)
+                    } else {
+                        SearchLocationUiState.Idle
+                    }
                 },
-                onFailure = { SearchLocationResult.Error(it) }
+                onFailure = { SearchLocationUiState.Error(it) }
             )
         )
     }

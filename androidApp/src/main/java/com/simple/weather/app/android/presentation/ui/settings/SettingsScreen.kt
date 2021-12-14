@@ -44,7 +44,7 @@ fun SettingsScreen(navController: NavHostController) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(stringResource(R.string.title_settings)) },
+                title = { Text(text = stringResource(R.string.title_settings)) },
                 navigationIcon = {
                     ToolbarBackIcon(onBackClick = { navController.popBackStack() })
                 }

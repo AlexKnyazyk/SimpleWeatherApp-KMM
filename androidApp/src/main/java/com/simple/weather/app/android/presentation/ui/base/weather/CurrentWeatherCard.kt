@@ -125,7 +125,7 @@ private fun WeatherCondition(model: CurrentWeatherUi) {
 
 @Preview
 @Composable
-fun CurrentWeatherCard_Preview() {
+private fun CurrentWeatherCard_Preview() {
     val model = CurrentWeatherUi(
         locationName = "Minsk",
         locationCountry = "Belarus",

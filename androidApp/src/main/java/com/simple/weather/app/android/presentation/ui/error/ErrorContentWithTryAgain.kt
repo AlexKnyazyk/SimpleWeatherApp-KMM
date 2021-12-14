@@ -1,4 +1,4 @@
-package com.simple.weather.app.android.presentation.ui.base
+package com.simple.weather.app.android.presentation.ui.error
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -29,14 +29,14 @@ fun ErrorContentWithTryAgain(
             modifier = Modifier.padding(all = 16.dp)
         ) {
             Text(
-                error.message ?: stringResource(R.string.error_unknown),
+                text = error.toUiErrorMessage(),
                 style = MaterialTheme.typography.body1,
                 textAlign = TextAlign.Center
             )
             Spacer(modifier = Modifier.height(24.dp))
             TextButton(onClick = tryAgainAction) {
                 Text(
-                    stringResource(R.string.action_try_again),
+                    text = stringResource(R.string.action_try_again),
                     style = MaterialTheme.typography.button
                 )
             }

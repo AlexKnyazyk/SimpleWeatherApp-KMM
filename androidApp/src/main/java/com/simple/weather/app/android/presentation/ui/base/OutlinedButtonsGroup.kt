@@ -24,33 +24,9 @@ fun OutlinedButtonsGroup(
 ) {
     Row(modifier) {
         for (index in 0..textList.lastIndex) {
-            val buttonModifier = Modifier.weight(1f)
             OutlinedButton(
-                modifier = when (index) {
-                    0 -> {
-                        if (selectedIndex == index) {
-                            buttonModifier
-                                .offset(0.dp, 0.dp)
-                                .zIndex(1f)
-                        } else {
-                            buttonModifier
-                                .offset(0.dp, 0.dp)
-                                .zIndex(0f)
-                        }
-                    }
-                    else -> {
-                        val offset = -1 * index
-                        if (selectedIndex == index) {
-                            buttonModifier
-                                .offset(offset.dp, 0.dp)
-                                .zIndex(1f)
-                        } else {
-                            buttonModifier
-                                .offset(offset.dp, 0.dp)
-                                .zIndex(0f)
-                        }
-                    }
-                },
+                modifier = Modifier.weight(1f)
+                    .offsetWithZIndexFor(selectedIndex, index),
                 colors = ButtonDefaults.outlinedButtonColors(
                     backgroundColor = if (index == selectedIndex) {
                         MaterialTheme.colors.primary.copy(alpha = 0.15f)
@@ -87,8 +63,34 @@ fun OutlinedButtonsGroup(
     }
 }
 
+private fun Modifier.offsetWithZIndexFor(selectedIndex: Int, index: Int): Modifier = when (index) {
+    0 -> {
+        if (selectedIndex == index) {
+            this
+                .offset(0.dp, 0.dp)
+                .zIndex(1f)
+        } else {
+            this
+                .offset(0.dp, 0.dp)
+                .zIndex(0f)
+        }
+    }
+    else -> {
+        val offset = -1 * index
+        if (selectedIndex == index) {
+            this
+                .offset(offset.dp, 0.dp)
+                .zIndex(1f)
+        } else {
+            this
+                .offset(offset.dp, 0.dp)
+                .zIndex(0f)
+        }
+    }
+}
+
 @Preview
 @Composable
-fun OutlinedButtonsGroup_Preview() {
+private fun OutlinedButtonsGroup_Preview() {
     OutlinedButtonsGroup(listOf("Daily", "Hourly", "Test"), 1, onSelected = { })
 }

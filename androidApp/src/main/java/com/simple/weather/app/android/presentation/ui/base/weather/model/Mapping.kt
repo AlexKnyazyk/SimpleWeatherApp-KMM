@@ -3,7 +3,7 @@ package com.simple.weather.app.android.presentation.ui.base.weather.model
 import com.simple.weather.app.domain.domain.model.SettingsUnitsModel
 import com.simple.weather.app.domain.domain.model.WeatherModel
 
-fun WeatherModel.toUi(settings: SettingsUnitsUi) = WeatherUi(
+fun WeatherModel.toUi(settings: SettingsUnitsUi) = WeatherModelUi(
     currentWeather = CurrentWeatherUi(
         locationName = this.locationName,
         locationCountry = this.locationCountry,
