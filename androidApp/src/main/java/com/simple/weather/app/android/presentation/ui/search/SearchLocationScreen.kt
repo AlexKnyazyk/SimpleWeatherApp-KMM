@@ -2,11 +2,7 @@ package com.simple.weather.app.android.presentation.ui.search
 
 import android.widget.Toast
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.text.KeyboardActions
@@ -56,7 +52,7 @@ fun SearchLocationScreen(navController: NavHostController) {
         )
 
         when (searchLocationState) {
-            SearchLocationUiState.Idle ->{
+            SearchLocationUiState.Idle -> {
                 // no views
             }
             is SearchLocationUiState.Data -> {
@@ -185,11 +181,17 @@ private fun EmptySearchResultsContent() {
 
 @Composable
 private fun SearchErrorMessageContent(error: Throwable) {
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(start = 16.dp, end = 16.dp, top = 50.dp),
+        contentAlignment = Alignment.TopCenter
+    ) {
         Text(
             text = error.toUiErrorMessage(),
             style = MaterialTheme.typography.body1,
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
+            color = MaterialTheme.colors.onBackground
         )
     }
 }
