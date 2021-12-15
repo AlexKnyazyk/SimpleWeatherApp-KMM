@@ -15,13 +15,13 @@ struct FavoriteLocationsView: View {
     var body: some View {
         NavigationView {
             List {
-                NavigationLink(destination: WeatherDetailsView()) {
+                NavigationLink(destination: LocationWeatherView()) {
                     FavoriteLocationItemView()
                 }
-                NavigationLink(destination: WeatherDetailsView()) {
+                NavigationLink(destination: LocationWeatherView()) {
                     FavoriteLocationItemView()
                 }
-                NavigationLink(destination: WeatherDetailsView()) {
+                NavigationLink(destination: LocationWeatherView()) {
                     FavoriteLocationItemView()
                 }
                 

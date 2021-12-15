@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct WeatherDetailsView: View {
+struct LocationWeatherView: View {
 
     var body: some View {
         WeatherView()
@@ -19,6 +19,6 @@ struct WeatherDetailsView: View {
 
 struct WeatherDetailsView_Previews: PreviewProvider {
     static var previews: some View {
-        WeatherDetailsView()
+        LocationWeatherView()
     }
 }

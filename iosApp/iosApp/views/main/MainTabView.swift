@@ -19,12 +19,12 @@ struct MainTabView: View {
                     HomeWeatherView(rootNavigation: $rootNavigation)
                         .tabItem {
                             Image(systemName: "house.fill")
-                            Text("Home")
+                            Text("title_home")
                         }
                     FavoriteLocationsView(rootNavigation: $rootNavigation)
                         .tabItem {
                             Image(systemName: "star.fill")
-                            Text("Favorites")
+                            Text("title_favorites")
                         }
                 }.navigationBarHidden(true)
                 

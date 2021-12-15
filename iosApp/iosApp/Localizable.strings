@@ -1,0 +1,49 @@
+/* 
+  Localizable.strings
+  iosApp
+
+  Created by a.knyazuk on 15.12.21.
+  Copyright © 2021 orgName. All rights reserved.
+*/
+
+"title_home" = "Home";
+"title_favorites" = "Favorites";
+
+"last_update_format %@" = "Last update: %@";
+"feels_like_format %@" = "Feels like %@";
+"temperature_c_format %@" = "%@°C";
+"temperature_f_format %@" = "%@°F";
+"kmh_format %@" = "%@ km/h";
+"km_format %@" = "%@ km";
+"mph_format %@" = "%@ m/h";
+"miles_format %@" = "%@ miles";
+"pressure_mbar_format %@" = "%@ mbar";
+
+"hourly" = "Hourly";
+"daily" = "Daily";
+
+"wind" = "Wind";
+"humidity" = "Humidity";
+"pressure" = "Pressure";
+"visibility" = "Visibility";
+"index_uv" = "Index UV";
+
+"error_network" = "Please check your internet connection or enable WiFi/mobile data.";
+"error_generic_format code %@ message %@" = "An error has occurred for the following reason:\n Code: %@. %@";
+"error_unknown" = "An unknown error has occurred";
+"action_try_again" = "Try Again";
+"today" = "Today";
+
+"favorites_empty_hint" = "No added favorites.\nPress + to search and add new one";
+
+"search_hint" = "Search";
+"location_already_added_to_favorites" = "This location has already added to favorites";
+"no_search_results" = "No Search Results";
+
+"title_settings" = "Settings";
+"settings_temperature_units" = "Temperature Units";
+"settings_speed_or_distance_units" = "Speed/Distance Units";
+"settings_temperature_c" = "°C";
+"settings_temperature_f" = "°F";
+"settings_distance_km" = "kilometers";
+"settings_distance_miles" = "miles";

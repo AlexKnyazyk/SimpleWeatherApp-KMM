@@ -10,9 +10,10 @@ import SwiftUI
 
 struct WeatherView: View {
     
-    @State private var isShowing = false
+    @ObservedObject var viewModel: WeatherViewModel
     
-    init() {
+    init(viewModel: WeatherViewModel) {
+        self.viewModel = viewModel
         UITableView.appearance().sectionFooterHeight = 0
     }
     
@@ -29,19 +30,15 @@ struct WeatherView: View {
                 WeatherDetailedView()
             }
         }.listStyle(InsetGroupedListStyle())
-        .pullToRefresh(isShowing: $isShowing) {
-            print("pullToRefresh")
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                print("now + 3")
-                self.isShowing = false
-            }
+            .pullToRefresh(isShowing: $viewModel.isRefreshing) {
+                viewModel.getWeather()
         }
-        .onChange(of: self.isShowing) { _ in }
+        .onChange(of: viewModel.isRefreshing) { _ in }
     }
 }
 
-struct WeatherView_Previews: PreviewProvider {
-    static var previews: some View {
-        WeatherView()
-    }
-}
+//struct WeatherView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        WeatherView()
+//    }
+//}
