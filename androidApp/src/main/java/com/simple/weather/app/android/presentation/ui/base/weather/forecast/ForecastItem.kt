@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
 import com.simple.weather.app.android.R
 import com.simple.weather.app.android.presentation.ui.base.weather.model.SettingsUnitsUi
-import com.simple.weather.app.domain.domain.model.ForecastModel
+import com.simple.weather.app.domain.model.ForecastModel
 import java.util.Date
 
 @Composable

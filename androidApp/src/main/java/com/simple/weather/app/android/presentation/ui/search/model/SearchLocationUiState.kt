@@ -1,6 +1,6 @@
 package com.simple.weather.app.android.presentation.ui.search.model
 
-import com.simple.weather.app.domain.domain.model.SearchLocationModel
+import com.simple.weather.app.domain.model.SearchLocationModel
 
 sealed class SearchLocationUiState {
 

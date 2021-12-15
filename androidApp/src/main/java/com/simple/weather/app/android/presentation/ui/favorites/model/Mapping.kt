@@ -1,6 +1,6 @@
 package com.simple.weather.app.android.presentation.ui.favorites.model
 
-import com.simple.weather.app.domain.domain.model.FavoriteLocationModel
+import com.simple.weather.app.domain.model.FavoriteLocationModel
 
 fun FavoriteLocationModel.toUi(isTempMetric: Boolean) = FavoriteLocationItemUi(
     id = id,

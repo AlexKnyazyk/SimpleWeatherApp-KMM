@@ -32,7 +32,7 @@ import androidx.navigation.NavHostController
 import com.simple.weather.app.android.R
 import com.simple.weather.app.android.presentation.ui.error.toUiErrorMessage
 import com.simple.weather.app.android.presentation.ui.search.model.SearchLocationUiState
-import com.simple.weather.app.domain.domain.model.SearchLocationModel
+import com.simple.weather.app.domain.model.SearchLocationModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.getViewModel

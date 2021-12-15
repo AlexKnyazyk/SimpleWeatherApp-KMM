@@ -4,10 +4,10 @@ import com.simple.weather.app.data.repository.location.DeviceLocationRepositoryI
 import com.simple.weather.app.data.repository.location.FavoriteLocationsRepositoryImpl
 import com.simple.weather.app.data.repository.settings.SettingsRepositoryImpl
 import com.simple.weather.app.data.repository.weather.WeatherRepositoryImpl
-import com.simple.weather.app.domain.domain.repository.DeviceLocationRepository
-import com.simple.weather.app.domain.domain.repository.FavoriteLocationsRepository
-import com.simple.weather.app.domain.domain.repository.SettingsRepository
-import com.simple.weather.app.domain.domain.repository.WeatherRepository
+import com.simple.weather.app.domain.repository.DeviceLocationRepository
+import com.simple.weather.app.domain.repository.FavoriteLocationsRepository
+import com.simple.weather.app.domain.repository.SettingsRepository
+import com.simple.weather.app.domain.repository.WeatherRepository
 import org.koin.dsl.module
 
 internal val repositoriesModule = module {

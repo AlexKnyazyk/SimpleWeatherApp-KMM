@@ -3,9 +3,9 @@ package com.simple.weather.app.android.presentation.ui.search
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.simple.weather.app.android.presentation.ui.search.model.SearchLocationUiState
-import com.simple.weather.app.domain.domain.model.SearchLocationModel
-import com.simple.weather.app.domain.domain.usecase.search.IAddSearchLocationToFavoritesUseCase
-import com.simple.weather.app.domain.domain.usecase.search.ISearchLocationUseCase
+import com.simple.weather.app.domain.model.SearchLocationModel
+import com.simple.weather.app.domain.usecase.search.IAddSearchLocationToFavoritesUseCase
+import com.simple.weather.app.domain.usecase.search.ISearchLocationUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted

@@ -3,8 +3,8 @@ package com.simple.weather.app.android.presentation.ui.error
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.simple.weather.app.android.R
-import com.simple.weather.app.domain.domain.model.errors.NoInternetConnectionError
-import com.simple.weather.app.domain.domain.model.errors.ServerError
+import com.simple.weather.app.domain.model.errors.NoInternetConnectionError
+import com.simple.weather.app.domain.model.errors.ServerError
 
 @Composable
 fun Throwable?.toUiErrorMessage() = when (this) {

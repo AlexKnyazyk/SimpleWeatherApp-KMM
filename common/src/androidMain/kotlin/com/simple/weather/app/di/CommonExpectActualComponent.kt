@@ -8,9 +8,9 @@ import com.simple.weather.app.data.repository.location.DeviceLocationRepositoryI
 import com.simple.weather.app.domain.repository.DeviceLocationRepository
 import com.squareup.sqldelight.android.AndroidSqliteDriver
 import com.squareup.sqldelight.db.SqlDriver
-import io.ktor.client.engine.HttpClientEngineFactory
-import io.ktor.client.engine.android.Android
-import io.ktor.client.features.logging.Logger
+import io.ktor.client.engine.*
+import io.ktor.client.engine.android.*
+import io.ktor.client.features.logging.*
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
@@ -18,7 +18,7 @@ internal actual val commonExpectActualModule = module {
     factory { PreferencesManager(androidContext()) }
     factory { HttpClientEngineFactoryProvider() }
     factory { SqliteDriverFactory(androidContext()) }
-    single<DeviceLocationRepository> { DeviceLocationRepositoryImpl(androidContext()) }
+    single<DeviceLocationRepository> { DeviceLocationRepositoryImpl(get()) }
 }
 
 internal actual class HttpClientEngineFactoryProvider {

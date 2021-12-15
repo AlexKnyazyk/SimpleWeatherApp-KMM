@@ -1,7 +1,7 @@
 package com.simple.weather.app.android.presentation.ui.base.weather.model
 
-import com.simple.weather.app.domain.domain.model.SettingsUnitsModel
-import com.simple.weather.app.domain.domain.model.WeatherModel
+import com.simple.weather.app.domain.model.SettingsUnitsModel
+import com.simple.weather.app.domain.model.WeatherModel
 
 fun WeatherModel.toUi(settings: SettingsUnitsUi) = WeatherModelUi(
     currentWeather = CurrentWeatherUi(

@@ -9,8 +9,8 @@ import com.simple.weather.app.android.presentation.ui.base.weather.model.Setting
 import com.simple.weather.app.android.presentation.ui.base.weather.model.WeatherModelUi
 import com.simple.weather.app.android.presentation.ui.base.weather.model.toUi
 import com.simple.weather.app.data.model.request.WeatherRequest
-import com.simple.weather.app.domain.domain.repository.SettingsRepository
-import com.simple.weather.app.domain.domain.usecase.weather.IGetWeatherUseCase
+import com.simple.weather.app.domain.repository.SettingsRepository
+import com.simple.weather.app.domain.usecase.weather.IGetWeatherUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow

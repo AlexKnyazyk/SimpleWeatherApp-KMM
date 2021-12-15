@@ -4,9 +4,9 @@ import androidx.lifecycle.viewModelScope
 import com.simple.weather.app.android.presentation.ui.base.weather.BaseWeatherViewModel
 import com.simple.weather.app.data.model.LocationResult
 import com.simple.weather.app.data.model.request.WeatherRequest
-import com.simple.weather.app.domain.domain.repository.DeviceLocationRepository
-import com.simple.weather.app.domain.domain.repository.SettingsRepository
-import com.simple.weather.app.domain.domain.usecase.weather.IGetWeatherUseCase
+import com.simple.weather.app.domain.repository.DeviceLocationRepository
+import com.simple.weather.app.domain.repository.SettingsRepository
+import com.simple.weather.app.domain.usecase.weather.IGetWeatherUseCase
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
