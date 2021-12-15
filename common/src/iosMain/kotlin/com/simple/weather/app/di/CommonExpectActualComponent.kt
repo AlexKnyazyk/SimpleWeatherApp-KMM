@@ -2,8 +2,8 @@ package com.simple.weather.app.di
 
 import com.simple.weather.app.data.PreferencesManager
 import com.simple.weather.app.data.db.AppDatabase
-import com.simple.weather.app.data.repository.location.DeviceLocationRepositoryImpl
-import com.simple.weather.app.domain.repository.DeviceLocationRepository
+import com.simple.weather.app.utils.DeviceLocationManager
+import com.simple.weather.app.utils.IosDeviceLocationManager
 import com.squareup.sqldelight.db.SqlDriver
 import com.squareup.sqldelight.drivers.native.NativeSqliteDriver
 import io.ktor.client.engine.HttpClientEngineFactory
@@ -16,7 +16,7 @@ internal actual val commonExpectActualModule = module {
     factory { PreferencesManager() }
     factory { HttpClientEngineFactoryProvider() }
     factory { SqliteDriverFactory() }
-    single<DeviceLocationRepository> { DeviceLocationRepositoryImpl() }
+    factory<DeviceLocationManager> { IosDeviceLocationManager() }
 }
 
 internal actual class HttpClientEngineFactoryProvider {

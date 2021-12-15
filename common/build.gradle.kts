@@ -24,18 +24,13 @@ kotlin {
     }
 
     sourceSets {
-        val ktorVersion = "1.6.2"
+        val ktorVersion = "1.6.3"
         val coroutinesVersion = "1.5.2"
         val sqldelightVersion = "1.5.3"
         val koinVersion = "3.1.4"
         val commonMain by getting {
             dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutinesVersion}-native-mt") {
-                    version {
-                        strictly("${coroutinesVersion}-native-mt")
-                    }
-                }
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.0")
                 implementation("io.ktor:ktor-client-core:$ktorVersion")
                 implementation("io.ktor:ktor-client-serialization:$ktorVersion")
                 implementation("io.ktor:ktor-client-logging:$ktorVersion")
@@ -52,6 +47,7 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
+                implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutinesVersion}")
                 implementation("io.ktor:ktor-client-android:$ktorVersion")
                 implementation("com.squareup.sqldelight:android-driver:$sqldelightVersion")
                 implementation("io.insert-koin:koin-android:$koinVersion")
@@ -65,6 +61,11 @@ kotlin {
         }
         val iosMain by getting {
             dependencies {
+                implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutinesVersion}-native-mt"){
+                    version {
+                        strictly("${coroutinesVersion}-native-mt")
+                    }
+                }
                 implementation("io.ktor:ktor-client-ios:$ktorVersion")
                 implementation("com.squareup.sqldelight:native-driver:$sqldelightVersion")
             }

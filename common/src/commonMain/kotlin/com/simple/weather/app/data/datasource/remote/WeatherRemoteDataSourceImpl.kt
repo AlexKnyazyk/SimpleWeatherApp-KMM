@@ -13,8 +13,8 @@ import io.ktor.client.statement.*
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
-import java.net.SocketTimeoutException
-import java.net.UnknownHostException
+//import java.net.SocketTimeoutException
+//import java.net.UnknownHostException
 
 internal class WeatherRemoteDataSourceImpl(
     private val httpClient: HttpClient,
@@ -69,10 +69,11 @@ internal class WeatherRemoteDataSourceImpl(
     private suspend inline fun <T, R> T.runRequestCatching(block: T.() -> R): CResult<R> {
         return try {
             CResult.success(block())
-        } catch (e: UnknownHostException) {
-            CResult.failure(NoInternetConnectionError())
-        } catch (e: SocketTimeoutException) {
-            CResult.failure(NoInternetConnectionError())
+            //TODO add separate error parser
+//        } catch (e: UnknownHostException) {
+//            CResult.failure(NoInternetConnectionError())
+//        } catch (e: SocketTimeoutException) {
+//            CResult.failure(NoInternetConnectionError())
         } catch (e: HttpRequestTimeoutException) {
             CResult.failure(NoInternetConnectionError())
         } catch (e: ClientRequestException) {

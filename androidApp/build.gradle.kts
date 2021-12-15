@@ -1,9 +1,6 @@
 plugins {
     id("com.android.application")
     kotlin("android")
-    kotlin("plugin.serialization") version "1.5.31"
-    kotlin("kapt")
-    id("com.squareup.sqldelight")
 }
 
 android {
