@@ -62,8 +62,8 @@ fun SearchLocationScreen(navController: NavHostController) {
                 })
             }
             is SearchLocationUiState.Error -> {
-                SearchErrorMessageContent(
-                    error = (searchLocationState as SearchLocationUiState.Error).error
+                SearchMessageContent(
+                    message = (searchLocationState as SearchLocationUiState.Error).error.toUiErrorMessage()
                 )
             }
         }
@@ -149,7 +149,7 @@ private fun SearchResultsContent(
     onItemClick: (SearchLocationModel) -> Unit
 ) {
     if (searchLocationData.itemModels.isEmpty()) {
-        EmptySearchResultsContent()
+        SearchMessageContent(message = stringResource(R.string.no_search_results))
     } else {
         val items = searchLocationData.itemModels
         LazyColumn {
@@ -169,18 +169,7 @@ private fun SearchResultsContent(
 }
 
 @Composable
-private fun EmptySearchResultsContent() {
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        Text(
-            text = stringResource(R.string.no_search_results),
-            style = MaterialTheme.typography.body1,
-            textAlign = TextAlign.Center
-        )
-    }
-}
-
-@Composable
-private fun SearchErrorMessageContent(error: Throwable) {
+private fun SearchMessageContent(message: String) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -188,7 +177,7 @@ private fun SearchErrorMessageContent(error: Throwable) {
         contentAlignment = Alignment.TopCenter
     ) {
         Text(
-            text = error.toUiErrorMessage(),
+            text = message,
             style = MaterialTheme.typography.body1,
             textAlign = TextAlign.Center,
             color = MaterialTheme.colors.onBackground

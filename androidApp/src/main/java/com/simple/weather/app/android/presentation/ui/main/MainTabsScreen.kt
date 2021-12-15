@@ -4,15 +4,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.BottomNavigation
-import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
@@ -37,9 +29,7 @@ import com.simple.weather.app.android.presentation.ui.base.ToolbarBackIcon
 import com.simple.weather.app.android.presentation.ui.details.LocationWeatherScreen
 import com.simple.weather.app.android.presentation.ui.favorites.FavoriteLocationsListScreen
 import com.simple.weather.app.android.presentation.ui.home.HomeWeatherScreen
-import java.lang.IllegalArgumentException
 
-@ExperimentalMaterialApi
 @Composable
 fun MainTabsScreen(rootNavController: NavHostController) {
     val navController = rememberNavController()

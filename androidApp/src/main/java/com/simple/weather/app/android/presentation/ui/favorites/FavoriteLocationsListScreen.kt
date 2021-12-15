@@ -1,36 +1,21 @@
 package com.simple.weather.app.android.presentation.ui.favorites
 
-import androidx.compose.foundation.Image
+import androidx.compose.animation.*
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.DismissDirection
-import androidx.compose.material.DismissValue
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.FloatingActionButton
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.SwipeToDismiss
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.rememberDismissState
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -38,9 +23,9 @@ import androidx.navigation.NavHostController
 import com.simple.weather.app.android.R
 import com.simple.weather.app.android.presentation.navigation.Routes
 import com.simple.weather.app.android.presentation.ui.favorites.model.FavoriteLocationItemUi
+import kotlinx.coroutines.delay
 import org.koin.androidx.compose.getViewModel
 
-@ExperimentalMaterialApi
 @Composable
 fun FavoriteLocationsListScreen(
     rootNavController: NavHostController,
@@ -116,38 +101,54 @@ private fun EmptyFavoritesHintContent() {
     }
 }
 
-@ExperimentalMaterialApi
+@OptIn(ExperimentalMaterialApi::class, ExperimentalAnimationApi::class)
 @Composable
 private fun FavoriteLocationRemovableItemContent(
     item: FavoriteLocationItemUi,
     onDeleteItem: (FavoriteLocationItemUi) -> Unit,
     onItemClick: (FavoriteLocationItemUi) -> Unit
 ) {
+    var isDismissedEvent by remember { mutableStateOf(false) }
     val dismissedValues = setOf(DismissValue.DismissedToEnd, DismissValue.DismissedToStart)
     val dismissState = rememberDismissState(
         confirmStateChange = { value ->
             if (value in dismissedValues) {
-                onDeleteItem(item)
+                isDismissedEvent = true
             }
             value !in dismissedValues
         }
     )
 
-    SwipeToDismiss(
-        state = dismissState,
-        background = {
-            val direction = dismissState.dismissDirection ?: return@SwipeToDismiss
-            FavoriteDismissBackgroundContent(direction)
-        },
+    if (isDismissedEvent) {
+        LaunchedEffect(Unit) {
+            delay(300)
+            onDeleteItem(item)
+        }
+    }
+
+    AnimatedVisibility(
+        visible = !isDismissedEvent,
+        exit = shrinkVertically(
+            animationSpec = tween(
+                durationMillis = 300,
+            ),
+        ),
     ) {
-        FavoriteLocationItemContent(
-            item = item,
-            modifier = Modifier.clickable { onItemClick(item) }
-        )
+        SwipeToDismiss(
+            state = dismissState,
+            background = {
+                val direction = dismissState.dismissDirection ?: return@SwipeToDismiss
+                FavoriteDismissBackgroundContent(direction)
+            },
+        ) {
+            FavoriteLocationItemContent(
+                item = item,
+                modifier = Modifier.clickable { onItemClick(item) }
+            )
+        }
     }
 }
 
-@ExperimentalMaterialApi
 @Composable
 private fun FavoriteDismissBackgroundContent(direction: DismissDirection) {
     val alignment = when (direction) {
