@@ -34,7 +34,7 @@ internal fun WeatherData.toDomain(): WeatherModel {
 private fun Forecast.toDailyForecastDomain(): List<ForecastModel.Day> {
     return this.forecastday.map {
         ForecastModel.Day(
-            date = it.dateEpoch * 1000,
+            dateMillis = it.dateEpoch * 1000,
             temperatureC = round(it.day.avgtempC).toInt(),
             temperatureF = round(it.day.avgtempF).toInt(),
             temperatureMaxC = round(it.day.maxtempC).toInt(),
@@ -51,7 +51,7 @@ private fun Forecast.toDailyForecastDomain(): List<ForecastModel.Day> {
 private fun Forecast.toHourlyForecastDomain(): List<ForecastModel.Hour> {
     return this.forecastday.firstOrNull()?.hour?.map {
         ForecastModel.Hour(
-            date = it.timeEpoch * 1000,
+            dateMillis = it.timeEpoch * 1000,
             temperatureC = round(it.tempC).toInt(),
             temperatureF = round(it.tempF).toInt(),
             iconUrl = "https:${it.condition.icon}",

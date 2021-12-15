@@ -39,7 +39,7 @@ fun ForecastItem(item: ForecastModel, settings: SettingsUnitsUi) {
 
 @Composable
 private fun ForecastDateTime(item: ForecastModel) {
-    val date = Date(item.date)
+    val date = Date(item.dateMillis)
     val context = LocalContext.current
     Text(
         text = when (item) {
@@ -118,7 +118,7 @@ private fun ForecastWind(item: ForecastModel, settings: SettingsUnitsUi) {
 @Composable
 private fun ForecastItem_Preview() {
     val item = ForecastModel.Day(
-        date = Date().time,
+        dateMillis = Date().time,
         temperatureC = 8,
         temperatureF = 8,
         temperatureMaxC = 10,

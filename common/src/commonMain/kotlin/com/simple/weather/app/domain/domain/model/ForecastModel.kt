@@ -1,7 +1,7 @@
 package com.simple.weather.app.domain.domain.model
 
 sealed class ForecastModel(
-    val date: Long,
+    val dateMillis: Long,
     val temperatureC: Int,
     val temperatureF: Int,
     val iconUrl: String,
@@ -9,7 +9,7 @@ sealed class ForecastModel(
     val windSpeedMph: Double,
 ) {
     class Day(
-        date: Long,
+        dateMillis: Long,
         temperatureC: Int,
         temperatureF: Int,
         val temperatureMaxC: Int,
@@ -19,15 +19,15 @@ sealed class ForecastModel(
         iconUrl: String,
         windSpeedKph: Double,
         windSpeedMph: Double,
-    ) : ForecastModel(date, temperatureC, temperatureF, iconUrl, windSpeedKph, windSpeedMph)
+    ) : ForecastModel(dateMillis, temperatureC, temperatureF, iconUrl, windSpeedKph, windSpeedMph)
 
     class Hour(
-        date: Long,
+        dateMillis: Long,
         temperatureC: Int,
         temperatureF: Int,
         iconUrl: String,
         windSpeedKph: Double,
         windSpeedMph: Double,
         val windDir: String
-    ) : ForecastModel(date, temperatureC, temperatureF, iconUrl, windSpeedKph, windSpeedMph)
+    ) : ForecastModel(dateMillis, temperatureC, temperatureF, iconUrl, windSpeedKph, windSpeedMph)
 }
