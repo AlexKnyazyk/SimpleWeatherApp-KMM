@@ -3,8 +3,8 @@ package com.simple.weather.app.data.repository.location
 import com.simple.weather.app.data.datasource.local.FavoriteLocationsLocalDataSource
 import com.simple.weather.app.data.mapper.toDb
 import com.simple.weather.app.data.mapper.toDomain
-import com.simple.weather.app.domain.domain.model.FavoriteLocationModel
-import com.simple.weather.app.domain.domain.repository.FavoriteLocationsRepository
+import com.simple.weather.app.domain.model.FavoriteLocationModel
+import com.simple.weather.app.domain.repository.FavoriteLocationsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map

@@ -1,8 +1,8 @@
 package com.simple.weather.app.data.repository.settings
 
 import com.simple.weather.app.data.datasource.local.SettingsLocalDataSource
-import com.simple.weather.app.domain.domain.model.SettingsUnitsModel
-import com.simple.weather.app.domain.domain.repository.SettingsRepository
+import com.simple.weather.app.domain.model.SettingsUnitsModel
+import com.simple.weather.app.domain.repository.SettingsRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 
 internal class SettingsRepositoryImpl(

@@ -2,8 +2,8 @@ package com.simple.weather.app.data.mapper
 
 import com.simple.weather.app.data.model.response.Forecast
 import com.simple.weather.app.data.model.response.WeatherData
-import com.simple.weather.app.domain.domain.model.ForecastModel
-import com.simple.weather.app.domain.domain.model.WeatherModel
+import com.simple.weather.app.domain.model.ForecastModel
+import com.simple.weather.app.domain.model.WeatherModel
 import kotlin.math.round
 
 internal fun WeatherData.toDomain(): WeatherModel {

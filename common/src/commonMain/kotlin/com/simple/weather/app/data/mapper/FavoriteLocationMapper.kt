@@ -1,7 +1,7 @@
 package com.simple.weather.app.data.mapper
 
 import com.simple.weather.app.data.FavoriteLocationDb
-import com.simple.weather.app.domain.domain.model.FavoriteLocationModel
+import com.simple.weather.app.domain.model.FavoriteLocationModel
 import com.simple.weather.app.utils.time
 import com.simple.weather.app.utils.toDateTimestamp
 

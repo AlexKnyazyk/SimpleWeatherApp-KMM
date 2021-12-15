@@ -1,11 +1,13 @@
 package com.simple.weather.app.di
 
-import io.ktor.client.*
-import io.ktor.client.features.*
-import io.ktor.client.features.json.*
-import io.ktor.client.features.json.serializer.*
-import io.ktor.client.features.logging.*
-import io.ktor.client.request.*
+import io.ktor.client.HttpClient
+import io.ktor.client.features.HttpTimeout
+import io.ktor.client.features.defaultRequest
+import io.ktor.client.features.json.JsonFeature
+import io.ktor.client.features.json.serializer.KotlinxSerializer
+import io.ktor.client.features.logging.LogLevel
+import io.ktor.client.features.logging.Logging
+import io.ktor.client.request.parameter
 import org.koin.dsl.module
 
 internal val networkModule = module {

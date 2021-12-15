@@ -1,8 +1,8 @@
 package com.simple.weather.app.di
 
 import com.squareup.sqldelight.db.SqlDriver
-import io.ktor.client.engine.*
-import io.ktor.client.features.logging.*
+import io.ktor.client.engine.HttpClientEngineFactory
+import io.ktor.client.features.logging.Logger
 import org.koin.core.module.Module
 
 internal expect val commonExpectActualModule: Module
