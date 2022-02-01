@@ -34,7 +34,7 @@ struct MainTabView: View {
                 NavigationLink(destination: SearchLocationView(), tag: "SearchLocation", selection: $rootNavigation) {
                     EmptyView()
                 }
-            }
+            }.navigationBarHidden(true)
         }
     }
 }

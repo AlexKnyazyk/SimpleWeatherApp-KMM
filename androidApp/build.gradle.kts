@@ -30,7 +30,6 @@ android {
 
     composeOptions.kotlinCompilerExtensionVersion = "1.0.5"
 
-    buildFeatures.viewBinding = true
     buildFeatures.compose = true
 }
 
@@ -45,7 +44,7 @@ dependencies {
     implementation("androidx.activity:activity-compose:1.4.0")
     implementation("androidx.compose.material:material:1.0.5")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.4.0")
-    implementation("androidx.navigation:navigation-compose:2.4.0-beta02")
+    implementation("androidx.navigation:navigation-compose:2.4.0-rc01")
     implementation("io.coil-kt:coil-compose:1.4.0")
     implementation("com.google.accompanist:accompanist-swiperefresh:0.19.0")
 

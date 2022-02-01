@@ -10,8 +10,13 @@ import SwiftUI
 
 struct LocationWeatherView: View {
 
+    private let viewModel: WeatherViewModel = WeatherViewModel(
+        getWeatherUseCase: iOSApp.di.getWeatherUseCase(),
+        settingsRepository: iOSApp.di.getSettingsRepository()
+    )
+    
     var body: some View {
-        WeatherView()
+        WeatherView(viewModel: viewModel)
             .navigationTitle("Minsk")
             .navigationBarTitleDisplayMode(.inline)
     }

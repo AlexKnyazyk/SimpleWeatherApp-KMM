@@ -15,6 +15,11 @@ sealed class CResult<T> {
         }
     }
 
+    inline fun resolve(
+        onSuccess: (value: T) -> Unit,
+        onFailure: (exception: Throwable) -> Unit
+    ) = fold(onSuccess, onFailure)
+
     fun getOrNull(): T? = (this as? Success)?.value
 
     inline fun onSuccess(onSuccessAction: (T) -> Unit): CResult<T> {

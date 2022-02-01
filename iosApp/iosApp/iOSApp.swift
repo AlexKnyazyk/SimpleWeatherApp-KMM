@@ -4,10 +4,10 @@ import common
 @main
 struct iOSApp: App {
     
-    private let di = DiContainer()
+    static let di = DiContainer()
     
     init() {
-        di.doInit()
+        iOSApp.di.doInit()
     }
     
 	var body: some Scene {

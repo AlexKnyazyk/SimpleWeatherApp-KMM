@@ -18,27 +18,46 @@ struct WeatherView: View {
     }
     
     var body: some View {
-        List {
-            Section {
-                CurrentWeatherView()
+        viewForState(uiState: viewModel.uiState)
+        
+    }
+    
+    @ViewBuilder
+    func viewForState(uiState: UiState<WeatherModelUi>) -> some View {
+        switch uiState {
+        case .loading:
+            VStack {
+                ProgressView()
+                    .progressViewStyle(CircularProgressViewStyle())
             }
-            Section {
-                WeatherForecasetView()
-                    .listRowInsets(EdgeInsets())
-            }
-            Section {
-                WeatherDetailedView()
-            }
-        }.listStyle(InsetGroupedListStyle())
-            .pullToRefresh(isShowing: $viewModel.isRefreshing) {
-                viewModel.getWeather()
+            
+        case .data(let model):
+            
+            List {
+                Section {
+                    CurrentWeatherView(currentWeather: model.currentWeather, settingsUnits: model.settingsUnits)
+                }
+                Section {
+                    WeatherForecasetView()
+                        .listRowInsets(EdgeInsets())
+                }
+                Section {
+                    WeatherDetailedView()
+                }
+            }.listStyle(InsetGroupedListStyle())
+                .pullToRefresh(isShowing: $viewModel.isRefreshing) {
+                    viewModel.getWeather(pullToRefresh: true)
+                }
+                .onChange(of: viewModel.isRefreshing) { _ in }
+            
+        case .error:
+            EmptyView()
         }
-        .onChange(of: viewModel.isRefreshing) { _ in }
     }
 }
-
-//struct WeatherView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        WeatherView()
-//    }
-//}
+    
+    //struct WeatherView_Previews: PreviewProvider {
+    //    static var previews: some View {
+    //        WeatherView()
+    //    }
+    //}
