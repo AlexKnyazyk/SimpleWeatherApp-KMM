@@ -11,7 +11,7 @@ import common
 
 struct WeatherModelUi {
     let currentWeather: CurrentWeatherUi
-//        let forecastWeather: ForecastWeatherUi
+    let forecastWeather: ForecastWeatherUi
     let detailedWeather: DetailedWeatherUi
     let settingsUnits: SettingsUnitsUi
     
@@ -27,6 +27,7 @@ struct WeatherModelUi {
             weatherCondition: weatherModel.weatherCondition,
             weatherConditionIconUrl: weatherModel.weatherConditionIconUrl
         )
+        self.forecastWeather = ForecastWeatherUi(daily: weatherModel.forecastDaily, hourly: weatherModel.forecastHourly)
         self.detailedWeather = DetailedWeatherUi(
             windKph: Double(weatherModel.windKph),
             windMph: Double(weatherModel.windMph),

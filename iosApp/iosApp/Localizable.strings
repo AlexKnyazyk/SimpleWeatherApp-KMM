@@ -10,9 +10,9 @@
 "title_favorites" = "Favorites";
 
 "last_update_format %@" = "Last update: %@";
-"feels_like_format %@" = "Feels like %@";
-"temperature_c_format %@" = "%@°C";
-"temperature_f_format %@" = "%@°F";
+"feels_like" = "Feels like";
+"temperature_c_format %lld" = "%lld°C";
+"temperature_f_format %lld" = "%lld°F";
 "kmh_format %@" = "%@ km/h";
 "km_format %@" = "%@ km";
 "mph_format %@" = "%@ m/h";

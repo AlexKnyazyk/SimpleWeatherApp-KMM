@@ -17,12 +17,13 @@ struct CurrentWeatherView: View {
         VStack(alignment: .leading) {
             HStack {
                 Image(systemName: "location.circle")
+                
                 Text(currentWeather.locationName)
             }
-            Text(currentWeather.lastUpdated).font(.caption)
+            Text("last_update_format \(currentWeather.lastUpdated)").font(.caption)
                 .foregroundColor(.gray)
             HStack {
-                Text("temperature_c_format \(currentWeather.tempC)")
+                Text(settingsUnits.isTempMetric ? "temperature_c_format \(currentWeather.tempC)" : "temperature_f_format \(currentWeather.tempF)")
                     .font(.largeTitle)
                     .fontWeight(.bold)
                 Spacer()
@@ -30,8 +31,12 @@ struct CurrentWeatherView: View {
                     .frame(width: 60, height: 60)
             }.padding(.top, 10)
                 .padding(.bottom, 10)
-            Text("feels_like_format \(currentWeather.tempFeelsLikeC)").font(.subheadline)
-                .padding(.bottom, 2)
+            HStack {
+                Text("feels_like").font(.subheadline)
+                Text(settingsUnits.isTempMetric ? "temperature_c_format \(currentWeather.tempFeelsLikeC)" : "temperature_f_format \(currentWeather.tempFeelsLikeF)")
+                    .font(.subheadline)
+            }.padding(.bottom, 2)
+            
             Text(currentWeather.weatherCondition).font(.headline)
         }.padding(8)
     }

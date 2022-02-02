@@ -15,13 +15,9 @@ class WeatherViewModel : ObservableObject {
     private let getWeatherUseCase: IGetWeatherUseCase
     private let settingsRepository: SettingsRepository
     
-    
-    @State
     var isRefreshing: Bool = false
-    @State
     var forecastMode: ForecastModeUi = .hourly
-    @State
-    var uiState: UiState<WeatherModelUi> = .loading
+    @Published var uiState: UiState<WeatherModelUi> = .loading
     
     init(
         getWeatherUseCase: IGetWeatherUseCase,
@@ -42,17 +38,19 @@ class WeatherViewModel : ObservableObject {
         print("getWeather: \(pullToRefresh)")
         getWeatherUseCase.invoke(request: WeatherRequest.AutoIPAddress(), completionHandler: { [weak self] result, error in
             
+            guard let self = self else { return }
+            
             let model: WeatherModel? = result?.getOrNull()
             print("result: \(model)")
             print("self: \(self)")
             if model != nil {
-                self?.uiState = UiState.data(data: WeatherModelUi(weatherModel: model!, settingsUnitsModel: SettingsUnitsModel(isTempMetric: true, isDistanceMetric: true)))
+                self.uiState = UiState.data(data: WeatherModelUi(weatherModel: model!, settingsUnitsModel: SettingsUnitsModel(isTempMetric: true, isDistanceMetric: true)))
             } else {
-                self?.uiState = UiState.error
+                self.uiState = UiState.error
             }
             
-            print("uiState: \(self?.uiState)")
-            self?.isRefreshing = false
+            print("uiState: \(self.uiState)")
+            self.isRefreshing = false
         })
     }
 }
