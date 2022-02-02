@@ -48,5 +48,5 @@ dependencies {
     implementation("io.coil-kt:coil-compose:1.4.0")
     implementation("com.google.accompanist:accompanist-swiperefresh:0.19.0")
 
-    implementation("androidx.appcompat:appcompat:1.4.0")
+    implementation("androidx.appcompat:appcompat:1.5.0")
 }
