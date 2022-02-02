@@ -10,10 +10,7 @@ import SwiftUI
 
 struct HomeWeatherView: View {
     
-    private let viewModel: WeatherViewModel = WeatherViewModel(
-        getWeatherUseCase: iOSApp.di.getWeatherUseCase(),
-        settingsRepository: iOSApp.di.getSettingsRepository()
-    )
+    @EnvironmentObject var viewModel: WeatherViewModel
     
     @State private var isShowing = false
     

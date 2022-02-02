@@ -10,10 +10,7 @@ import SwiftUI
 
 struct LocationWeatherView: View {
 
-    private let viewModel: WeatherViewModel = WeatherViewModel(
-        getWeatherUseCase: iOSApp.di.getWeatherUseCase(),
-        settingsRepository: iOSApp.di.getSettingsRepository()
-    )
+    @EnvironmentObject var viewModel: WeatherViewModel
     
     var body: some View {
         WeatherView(viewModel: viewModel)
