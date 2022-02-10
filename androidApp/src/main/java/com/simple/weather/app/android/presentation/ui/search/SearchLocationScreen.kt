@@ -53,7 +53,7 @@ fun SearchLocationScreen(navController: NavHostController) {
     Column(
         modifier = Modifier
             .fillMaxHeight()
-            .background(MaterialTheme.colors.primarySurface)
+            .background(MaterialTheme.colors.surface)
     ) {
         SearchTextField(
             modifier = Modifier.focusRequester(focusRequester),
