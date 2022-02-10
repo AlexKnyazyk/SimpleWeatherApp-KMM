@@ -1,4 +1,4 @@
-package com.simple.weather.app.android.utils.location
+package com.simple.weather.app.android.presentation.ui.utils
 
 import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.ExperimentalAnimationApi

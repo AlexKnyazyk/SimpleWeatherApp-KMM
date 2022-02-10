@@ -14,7 +14,10 @@ import com.simple.weather.app.android.presentation.navigation.Routes
 import com.simple.weather.app.android.presentation.ui.main.MainTabsScreen
 import com.simple.weather.app.android.presentation.ui.search.SearchLocationScreen
 import com.simple.weather.app.android.presentation.ui.settings.SettingsScreen
-import com.simple.weather.app.android.utils.location.*
+import com.simple.weather.app.android.presentation.ui.utils.slideInLeft
+import com.simple.weather.app.android.presentation.ui.utils.slideInRight
+import com.simple.weather.app.android.presentation.ui.utils.slideOutLeft
+import com.simple.weather.app.android.presentation.ui.utils.slideOutRight
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
@@ -39,8 +42,8 @@ fun MainContentScreen() {
 
         composable(
             route = Routes.SEARCH_LOCATION,
-            enterTransition = { expandIn(animationSpec = tween(ANIM_TRANSITION_DURATION), expandFrom = Alignment.Center) },
-            popExitTransition = { shrinkOut(animationSpec = tween(ANIM_TRANSITION_DURATION), shrinkTowards = Alignment.Center) }
+            enterTransition = { expandIn(animationSpec = tween(400), expandFrom = Alignment.Center) },
+            popExitTransition = { shrinkOut(animationSpec = tween(400), shrinkTowards = Alignment.Center) }
         ) { SearchLocationScreen(navController) }
 
         composable(

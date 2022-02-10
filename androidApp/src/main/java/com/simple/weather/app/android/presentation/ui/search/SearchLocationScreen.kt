@@ -2,6 +2,7 @@ package com.simple.weather.app.android.presentation.ui.search
 
 import android.widget.Toast
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -32,6 +33,7 @@ import com.simple.weather.app.android.R
 import com.simple.weather.app.android.presentation.ui.error.toUiErrorMessage
 import com.simple.weather.app.android.presentation.ui.search.model.SearchLocationUiState
 import com.simple.weather.app.domain.model.SearchLocationModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.getViewModel
@@ -48,7 +50,11 @@ fun SearchLocationScreen(navController: NavHostController) {
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusRequester = FocusRequester.Default
 
-    Column(modifier = Modifier.fillMaxHeight()) {
+    Column(
+        modifier = Modifier
+            .fillMaxHeight()
+            .background(MaterialTheme.colors.primarySurface)
+    ) {
         SearchTextField(
             modifier = Modifier.focusRequester(focusRequester),
             query = viewModel.searchQuery,
@@ -75,6 +81,7 @@ fun SearchLocationScreen(navController: NavHostController) {
     }
 
     LaunchedEffect(key1 = Unit) {
+        delay(600)
         focusRequester.requestFocus()
         keyboardController?.show()
     }
@@ -108,7 +115,11 @@ private fun CollectSearchScreenEvents(
 }
 
 @Composable
-private fun SearchTextField(modifier: Modifier = Modifier, query: String, onTextChanged: (String) -> Unit) {
+private fun SearchTextField(
+    modifier: Modifier = Modifier,
+    query: String,
+    onTextChanged: (String) -> Unit
+) {
     Box(
         modifier = Modifier
             .fillMaxWidth()

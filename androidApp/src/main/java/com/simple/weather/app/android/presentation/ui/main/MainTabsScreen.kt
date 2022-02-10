@@ -30,10 +30,10 @@ import com.simple.weather.app.android.presentation.ui.base.ToolbarBackIcon
 import com.simple.weather.app.android.presentation.ui.details.LocationWeatherScreen
 import com.simple.weather.app.android.presentation.ui.favorites.FavoriteLocationsListScreen
 import com.simple.weather.app.android.presentation.ui.home.HomeWeatherScreen
-import com.simple.weather.app.android.utils.location.slideInLeft
-import com.simple.weather.app.android.utils.location.slideInRight
-import com.simple.weather.app.android.utils.location.slideOutLeft
-import com.simple.weather.app.android.utils.location.slideOutRight
+import com.simple.weather.app.android.presentation.ui.utils.slideInLeft
+import com.simple.weather.app.android.presentation.ui.utils.slideInRight
+import com.simple.weather.app.android.presentation.ui.utils.slideOutLeft
+import com.simple.weather.app.android.presentation.ui.utils.slideOutRight
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
