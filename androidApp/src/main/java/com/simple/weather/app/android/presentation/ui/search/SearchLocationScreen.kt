@@ -48,7 +48,7 @@ fun SearchLocationScreen(navController: NavHostController) {
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusRequester = FocusRequester.Default
 
-    Column {
+    Column(modifier = Modifier.fillMaxHeight()) {
         SearchTextField(
             modifier = Modifier.focusRequester(focusRequester),
             query = viewModel.searchQuery,

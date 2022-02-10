@@ -2,6 +2,7 @@ package com.simple.weather.app.android.presentation.ui.main
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
@@ -18,21 +19,26 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.google.accompanist.navigation.animation.AnimatedNavHost
+import com.google.accompanist.navigation.animation.composable
+import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.simple.weather.app.android.R
 import com.simple.weather.app.android.presentation.navigation.Routes
 import com.simple.weather.app.android.presentation.ui.base.ToolbarBackIcon
 import com.simple.weather.app.android.presentation.ui.details.LocationWeatherScreen
 import com.simple.weather.app.android.presentation.ui.favorites.FavoriteLocationsListScreen
 import com.simple.weather.app.android.presentation.ui.home.HomeWeatherScreen
+import com.simple.weather.app.android.utils.location.slideInLeft
+import com.simple.weather.app.android.utils.location.slideInRight
+import com.simple.weather.app.android.utils.location.slideOutLeft
+import com.simple.weather.app.android.utils.location.slideOutRight
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun MainTabsScreen(rootNavController: NavHostController) {
-    val navController = rememberNavController()
+    val navController = rememberAnimatedNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
     Scaffold(
@@ -51,16 +57,33 @@ fun MainTabsScreen(rootNavController: NavHostController) {
             }
         }
     ) { innerPadding ->
-        NavHost(navController, startDestination = Routes.HOME, Modifier.padding(innerPadding)) {
-            composable(Routes.HOME) { HomeWeatherScreen() }
-            composable(Routes.FAVORITES) {
+        AnimatedNavHost(navController, startDestination = Routes.HOME, Modifier.padding(innerPadding)) {
+            composable(route = Routes.HOME) { HomeWeatherScreen() }
+            composable(
+                route = Routes.FAVORITES,
+                exitTransition = {
+                    when (targetState.destination.route) {
+                        Routes.LocationWeather.ROUTE -> slideOutLeft()
+                        else -> null
+                    }
+                },
+                popEnterTransition = {
+                    when (targetState.destination.route) {
+                        Routes.FAVORITES -> slideInRight()
+                        else -> null
+                    }
+                },
+
+                ) {
                 FavoriteLocationsListScreen(rootNavController, navController)
             }
             composable(
-                Routes.LocationWeather.NAME,
+                route = Routes.LocationWeather.ROUTE,
                 arguments = listOf(
                     navArgument(Routes.LocationWeather.LOCATION_ID) { type = NavType.IntType }
-                )
+                ),
+                enterTransition = { slideInLeft() },
+                popExitTransition = { slideOutRight() },
             ) { backStackEntry ->
                 LocationWeatherScreen(
                     locationId = backStackEntry.arguments?.getInt(Routes.LocationWeather.LOCATION_ID)
