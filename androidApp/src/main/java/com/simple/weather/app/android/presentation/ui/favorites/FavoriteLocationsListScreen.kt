@@ -1,7 +1,6 @@
 package com.simple.weather.app.android.presentation.ui.favorites
 
-import androidx.compose.animation.*
-import androidx.compose.animation.core.tween
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -12,7 +11,9 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -23,9 +24,9 @@ import androidx.navigation.NavHostController
 import com.simple.weather.app.android.R
 import com.simple.weather.app.android.presentation.navigation.Routes
 import com.simple.weather.app.android.presentation.ui.favorites.model.FavoriteLocationItemUi
-import kotlinx.coroutines.delay
 import org.koin.androidx.compose.getViewModel
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun FavoriteLocationsListScreen(
     rootNavController: NavHostController,
@@ -47,11 +48,10 @@ fun FavoriteLocationsListScreen(
                     favoriteLocations,
                     key = { _, item -> item.id }
                 ) { index, item ->
-                    //TODO wait items animation like recycler https://twitter.com/CatalinGhita4/status/1455500904690552836?s=20
-                    // `Modifier.animateItemPlacement()`
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
+                            .animateItemPlacement()
                             .padding(bottom = (if (index != favoriteLocations.lastIndex) 16.dp else 0.dp))
                     ) {
                         FavoriteLocationRemovableItemContent(
@@ -101,51 +101,34 @@ private fun EmptyFavoritesHintContent() {
     }
 }
 
-@OptIn(ExperimentalMaterialApi::class, ExperimentalAnimationApi::class)
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun FavoriteLocationRemovableItemContent(
     item: FavoriteLocationItemUi,
     onDeleteItem: (FavoriteLocationItemUi) -> Unit,
     onItemClick: (FavoriteLocationItemUi) -> Unit
 ) {
-    var isDismissedEvent by remember { mutableStateOf(false) }
     val dismissedValues = setOf(DismissValue.DismissedToEnd, DismissValue.DismissedToStart)
     val dismissState = rememberDismissState(
         confirmStateChange = { value ->
             if (value in dismissedValues) {
-                isDismissedEvent = true
+                onDeleteItem(item)
             }
             value !in dismissedValues
         }
     )
 
-    if (isDismissedEvent) {
-        LaunchedEffect(Unit) {
-            delay(300)
-            onDeleteItem(item)
-        }
-    }
-
-    AnimatedVisibility(
-        visible = !isDismissedEvent,
-        exit = shrinkVertically(
-            animationSpec = tween(
-                durationMillis = 300,
-            ),
-        ),
+    SwipeToDismiss(
+        state = dismissState,
+        background = {
+            val direction = dismissState.dismissDirection ?: return@SwipeToDismiss
+            FavoriteDismissBackgroundContent(direction)
+        },
     ) {
-        SwipeToDismiss(
-            state = dismissState,
-            background = {
-                val direction = dismissState.dismissDirection ?: return@SwipeToDismiss
-                FavoriteDismissBackgroundContent(direction)
-            },
-        ) {
-            FavoriteLocationItemContent(
-                item = item,
-                modifier = Modifier.clickable { onItemClick(item) }
-            )
-        }
+        FavoriteLocationItemContent(
+            item = item,
+            modifier = Modifier.clickable { onItemClick(item) }
+        )
     }
 }
 

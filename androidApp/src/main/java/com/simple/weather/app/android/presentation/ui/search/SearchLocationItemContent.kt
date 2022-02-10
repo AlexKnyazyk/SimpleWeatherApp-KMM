@@ -17,11 +17,13 @@ import com.simple.weather.app.domain.model.SearchLocationModel
 
 @Composable
 fun SearchLocationItemContent(
+    modifier: Modifier = Modifier,
     item: SearchLocationModel,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     TextButton(
-        onClick = onClick, Modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
+        onClick = onClick,
         colors = ButtonDefaults.buttonColors(
             backgroundColor = Color.Transparent,
             contentColor = MaterialTheme.colors.onBackground,
@@ -45,5 +47,5 @@ private fun SearchLocationItemContent_Preview() {
         "Minsk region",
         "Belarus"
     )
-    SearchLocationItemContent(item) {}
+    SearchLocationItemContent(item = item) {}
 }

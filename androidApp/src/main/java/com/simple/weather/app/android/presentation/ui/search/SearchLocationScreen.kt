@@ -7,21 +7,20 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Divider
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Text
-import androidx.compose.material.TextFieldDefaults
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
@@ -37,6 +36,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.getViewModel
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun SearchLocationScreen(navController: NavHostController) {
     val viewModel = getViewModel<SearchViewModel>()
@@ -45,8 +45,12 @@ fun SearchLocationScreen(navController: NavHostController) {
 
     CollectSearchScreenEvents(viewModel, navController)
 
+    val keyboardController = LocalSoftwareKeyboardController.current
+    val focusRequester = FocusRequester.Default
+
     Column {
         SearchTextField(
+            modifier = Modifier.focusRequester(focusRequester),
             query = viewModel.searchQuery,
             onTextChanged = { viewModel.searchQuery = it }
         )
@@ -58,6 +62,7 @@ fun SearchLocationScreen(navController: NavHostController) {
             is SearchLocationUiState.Data -> {
                 val searchLocationData = (searchLocationState as SearchLocationUiState.Data)
                 SearchResultsContent(searchLocationData, onItemClick = { item ->
+                    keyboardController?.hide()
                     viewModel.onItemClick(item)
                 })
             }
@@ -67,6 +72,11 @@ fun SearchLocationScreen(navController: NavHostController) {
                 )
             }
         }
+    }
+
+    LaunchedEffect(key1 = Unit) {
+        focusRequester.requestFocus()
+        keyboardController?.show()
     }
 }
 
@@ -98,7 +108,7 @@ private fun CollectSearchScreenEvents(
 }
 
 @Composable
-private fun SearchTextField(query: String, onTextChanged: (String) -> Unit) {
+private fun SearchTextField(modifier: Modifier = Modifier, query: String, onTextChanged: (String) -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -138,7 +148,7 @@ private fun SearchTextField(query: String, onTextChanged: (String) -> Unit) {
             keyboardActions = KeyboardActions(
                 onSearch = { focusManager.clearFocus() }
             ),
-            modifier = Modifier.fillMaxWidth()
+            modifier = modifier.fillMaxWidth()
         )
     }
 }
