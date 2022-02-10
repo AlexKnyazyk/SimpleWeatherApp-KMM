@@ -48,8 +48,10 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:2.5.0-alpha02")
     implementation("io.coil-kt:coil-compose:1.4.0")
 
-    implementation("com.google.accompanist:accompanist-swiperefresh:0.19.0")
-    implementation("com.google.accompanist:accompanist-insets-ui:0.24.1-alpha")
+    val accompanistVersion = "0.24.1-alpha"
+    implementation("com.google.accompanist:accompanist-swiperefresh:$accompanistVersion")
+    implementation("com.google.accompanist:accompanist-insets-ui:$accompanistVersion")
+    implementation("com.google.accompanist:accompanist-systemuicontroller:$accompanistVersion")
 
     implementation("androidx.appcompat:appcompat:1.4.1")
 }
