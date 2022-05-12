@@ -1,6 +1,5 @@
 package com.simple.weather.app.android.presentation.ui.favorites
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -23,6 +22,7 @@ import androidx.navigation.NavHostController
 import com.simple.weather.app.android.R
 import com.simple.weather.app.android.presentation.navigation.Routes
 import com.simple.weather.app.android.presentation.ui.favorites.model.FavoriteLocationItemUi
+import com.simple.weather.app.android.presentation.ui.utils.debouncedClickable
 import org.koin.androidx.compose.getViewModel
 
 @Composable
@@ -124,7 +124,7 @@ private fun FavoriteLocationRemovableItemContent(
     ) {
         FavoriteLocationItemContent(
             item = item,
-            modifier = Modifier.clickable { onItemClick(item) }
+            modifier = Modifier.debouncedClickable { onItemClick(item) }
         )
     }
 }

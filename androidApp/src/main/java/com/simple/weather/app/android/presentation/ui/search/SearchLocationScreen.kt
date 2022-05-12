@@ -31,6 +31,8 @@ import androidx.navigation.NavHostController
 import com.simple.weather.app.android.R
 import com.simple.weather.app.android.presentation.ui.error.toUiErrorMessage
 import com.simple.weather.app.android.presentation.ui.search.model.SearchLocationUiState
+import com.simple.weather.app.android.presentation.ui.utils.MultipleEventsDebouncer
+import com.simple.weather.app.android.presentation.ui.utils.get
 import com.simple.weather.app.domain.model.SearchLocationModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -166,6 +168,8 @@ private fun SearchResultsContent(
     searchLocationData: SearchLocationUiState.Data,
     onItemClick: (SearchLocationModel) -> Unit
 ) {
+    val multipleEventsDebouncer = remember { MultipleEventsDebouncer.get() }
+
     if (searchLocationData.itemModels.isEmpty()) {
         SearchMessageContent(message = stringResource(R.string.no_search_results))
     } else {
@@ -175,7 +179,7 @@ private fun SearchResultsContent(
                 SearchLocationItemContent(
                     item = item,
                     onClick = {
-                        onItemClick(item)
+                        multipleEventsDebouncer.processEvent { onItemClick(item) }
                     }
                 )
                 if (index != items.lastIndex) {
