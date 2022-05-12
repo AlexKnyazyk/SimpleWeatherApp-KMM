@@ -76,6 +76,7 @@ kotlin {
 }
 
 android {
+    namespace = "com.simple.weather.app"
     compileSdk = 31
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {

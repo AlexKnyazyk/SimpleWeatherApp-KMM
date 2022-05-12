@@ -4,6 +4,7 @@ plugins {
 }
 
 android {
+    namespace = "com.simple.weather.app.android"
     compileSdk = 31
     defaultConfig {
         applicationId = "com.simple.weather.app.android"
