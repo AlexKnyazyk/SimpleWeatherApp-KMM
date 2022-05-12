@@ -22,7 +22,7 @@ kotlin {
         val ktorVersion = "1.6.7"
         val coroutinesVersion = "1.6.0"
         val sqldelightVersion = "1.5.3"
-        val koinVersion = "3.2.0-beta-1"
+        val koinVersion = "3.2.0"
         val commonMain by getting {
             dependencies {
                 implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutinesVersion}")

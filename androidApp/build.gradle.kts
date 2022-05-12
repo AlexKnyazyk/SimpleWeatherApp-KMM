@@ -36,8 +36,7 @@ android {
 dependencies {
     implementation(project(":common"))
 
-    implementation("io.insert-koin:koin-android:3.1.5")
-    implementation("io.insert-koin:koin-androidx-compose:3.1.5")
+    implementation("io.insert-koin:koin-androidx-compose:3.2.0")
 
     val composeVersion = "1.1.0"
     implementation("androidx.compose.ui:ui:$composeVersion")

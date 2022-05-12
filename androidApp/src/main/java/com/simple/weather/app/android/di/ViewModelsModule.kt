@@ -6,12 +6,13 @@ import com.simple.weather.app.android.presentation.ui.home.HomeViewModel
 import com.simple.weather.app.android.presentation.ui.search.SearchViewModel
 import com.simple.weather.app.android.presentation.ui.settings.SettingsViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.dsl.module
 
 val viewModelsModule = module {
-    viewModel { HomeViewModel(get(), get(), get()) }
-    viewModel { FavoritesViewModel(get(), get(), get()) }
-    viewModel { SearchViewModel(get(), get()) }
+    viewModelOf(::HomeViewModel)
+    viewModelOf(::FavoritesViewModel)
+    viewModelOf(::SearchViewModel)
     viewModel { (id: Int) -> LocationWeatherViewModel(id, get(), get()) }
-    viewModel { SettingsViewModel(get()) }
+    viewModelOf(::SettingsViewModel)
 }

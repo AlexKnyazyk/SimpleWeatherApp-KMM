@@ -12,13 +12,15 @@ import io.ktor.client.engine.*
 import io.ktor.client.engine.android.*
 import io.ktor.client.features.logging.*
 import org.koin.android.ext.koin.androidContext
+import org.koin.core.module.dsl.singleOf
+import org.koin.dsl.bind
 import org.koin.dsl.module
 
 internal actual val commonExpectActualModule = module {
     factory { PreferencesManager(androidContext()) }
     factory { HttpClientEngineFactoryProvider() }
     factory { SqliteDriverFactory(androidContext()) }
-    single<DeviceLocationRepository> { DeviceLocationRepositoryImpl(get()) }
+    singleOf(::DeviceLocationRepositoryImpl) bind DeviceLocationRepository::class
 }
 
 internal actual class HttpClientEngineFactoryProvider {

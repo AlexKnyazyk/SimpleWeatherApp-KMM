@@ -8,11 +8,13 @@ import com.simple.weather.app.domain.repository.DeviceLocationRepository
 import com.simple.weather.app.domain.repository.FavoriteLocationsRepository
 import com.simple.weather.app.domain.repository.SettingsRepository
 import com.simple.weather.app.domain.repository.WeatherRepository
+import org.koin.dsl.bind
 import org.koin.dsl.module
+import org.koin.core.module.dsl.singleOf
 
 internal val repositoriesModule = module {
-    single<WeatherRepository> { WeatherRepositoryImpl(get()) }
-    single<DeviceLocationRepository> { DeviceLocationRepositoryImpl(get()) }
-    single<FavoriteLocationsRepository> { FavoriteLocationsRepositoryImpl(get()) }
-    single<SettingsRepository> { SettingsRepositoryImpl(get()) }
+    singleOf(::WeatherRepositoryImpl) bind WeatherRepository::class
+    singleOf(::DeviceLocationRepositoryImpl) bind DeviceLocationRepository::class
+    singleOf(::FavoriteLocationsRepositoryImpl) bind FavoriteLocationsRepository::class
+    singleOf(::SettingsRepositoryImpl) bind SettingsRepository::class
 }
