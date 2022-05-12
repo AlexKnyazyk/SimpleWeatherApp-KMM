@@ -1,6 +1,5 @@
 package com.simple.weather.app.android.presentation.ui.favorites
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -26,7 +25,6 @@ import com.simple.weather.app.android.presentation.navigation.Routes
 import com.simple.weather.app.android.presentation.ui.favorites.model.FavoriteLocationItemUi
 import org.koin.androidx.compose.getViewModel
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun FavoriteLocationsListScreen(
     rootNavController: NavHostController,
@@ -101,7 +99,6 @@ private fun EmptyFavoritesHintContent() {
     }
 }
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun FavoriteLocationRemovableItemContent(
     item: FavoriteLocationItemUi,

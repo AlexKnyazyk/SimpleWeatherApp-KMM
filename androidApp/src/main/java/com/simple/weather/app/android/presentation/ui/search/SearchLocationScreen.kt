@@ -13,7 +13,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -34,11 +33,9 @@ import com.simple.weather.app.android.presentation.ui.error.toUiErrorMessage
 import com.simple.weather.app.android.presentation.ui.search.model.SearchLocationUiState
 import com.simple.weather.app.domain.model.SearchLocationModel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.getViewModel
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun SearchLocationScreen(navController: NavHostController) {
     val viewModel = getViewModel<SearchViewModel>()

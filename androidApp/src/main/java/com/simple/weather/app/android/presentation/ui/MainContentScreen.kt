@@ -1,6 +1,5 @@
 package com.simple.weather.app.android.presentation.ui
 
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandIn
 import androidx.compose.animation.shrinkOut
@@ -19,7 +18,6 @@ import com.simple.weather.app.android.presentation.ui.utils.slideInRight
 import com.simple.weather.app.android.presentation.ui.utils.slideOutLeft
 import com.simple.weather.app.android.presentation.ui.utils.slideOutRight
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun MainContentScreen() {
     val navController = rememberAnimatedNavController()

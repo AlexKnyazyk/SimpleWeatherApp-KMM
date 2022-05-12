@@ -2,7 +2,6 @@ package com.simple.weather.app.android.presentation.ui.main
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
@@ -35,7 +34,6 @@ import com.simple.weather.app.android.presentation.ui.utils.slideInRight
 import com.simple.weather.app.android.presentation.ui.utils.slideOutLeft
 import com.simple.weather.app.android.presentation.ui.utils.slideOutRight
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun MainTabsScreen(rootNavController: NavHostController) {
     val navController = rememberAnimatedNavController()
