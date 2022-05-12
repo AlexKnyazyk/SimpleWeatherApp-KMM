@@ -41,6 +41,7 @@ fun FavoriteLocationsListScreen(
         } else {
             LazyColumn(
                 contentPadding = PaddingValues(all = 16.dp),
+                modifier = Modifier.fillMaxSize()
             ) {
                 itemsIndexed(
                     favoriteLocations,

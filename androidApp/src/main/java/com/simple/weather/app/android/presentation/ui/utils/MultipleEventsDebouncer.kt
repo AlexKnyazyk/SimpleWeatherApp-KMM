@@ -21,7 +21,7 @@ internal fun MultipleEventsDebouncer.Companion.get(
 
 private class MultipleEventsDebouncerImpl(
     private val deboundeTimeout: Long
-    ) : MultipleEventsDebouncer {
+) : MultipleEventsDebouncer {
     private val now: Long
         get() = System.currentTimeMillis()
 
