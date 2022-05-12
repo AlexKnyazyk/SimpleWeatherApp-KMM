@@ -4,8 +4,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -40,7 +43,15 @@ fun ForecastWeatherCard(
                     .padding(start = 16.dp, end = 16.dp, top = 16.dp)
             )
             Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxWidth()) {
-                LazyRow {
+                val forecastHourlyState = rememberLazyListState()
+                val forecastDailyState = rememberLazyListState()
+
+                LazyRow(
+                    state = when (mode) {
+                        ForecastModeUi.HOURLY -> forecastHourlyState
+                        ForecastModeUi.DAILY -> forecastDailyState
+                    }
+                ) {
                     val items = when (mode) {
                         ForecastModeUi.HOURLY -> model.forecastHourly
                         ForecastModeUi.DAILY -> model.forecastDaily
@@ -49,8 +60,27 @@ fun ForecastWeatherCard(
                         ForecastItem(items[index], settings)
                     }
                 }
+                LaunchedScrollToCurrentHour(mode, model, forecastHourlyState)
             }
         }
+    }
+}
+
+@Composable
+fun LaunchedScrollToCurrentHour(
+    mode: ForecastModeUi,
+    model: ForecastWeatherUi,
+    forecastHourlyState: LazyListState
+) {
+    val isLaunched = remember { mutableStateOf(false) }
+    if (!isLaunched.value) {
+        LaunchedEffect(key1 = Unit) {
+            if (mode == ForecastModeUi.HOURLY && model.forecastHourlyCurrent != null) {
+                val currentHourIndex = model.forecastHourly.indexOf(model.forecastHourlyCurrent)
+                forecastHourlyState.scrollToItem(currentHourIndex)
+            }
+        }
+        isLaunched.value = true
     }
 }
 
@@ -59,7 +89,8 @@ fun ForecastWeatherCard(
 private fun ForecastWeatherCard_Preview() {
     val model = ForecastWeatherUi(
         forecastHourly = emptyList(),
-        forecastDaily = emptyList()
+        forecastDaily = emptyList(),
+        forecastHourlyCurrent = null
     )
     val settings = SettingsUnitsUi()
     val mode = remember { mutableStateOf(ForecastModeUi.HOURLY) }

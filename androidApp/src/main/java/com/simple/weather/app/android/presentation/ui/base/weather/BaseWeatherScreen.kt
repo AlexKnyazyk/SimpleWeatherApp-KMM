@@ -1,10 +1,6 @@
 package com.simple.weather.app.android.presentation.ui.base.weather
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
@@ -17,9 +13,9 @@ import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.simple.weather.app.android.presentation.model.ForecastModeUi
 import com.simple.weather.app.android.presentation.model.UiState
-import com.simple.weather.app.android.presentation.ui.error.ErrorContentWithTryAgain
 import com.simple.weather.app.android.presentation.ui.base.weather.forecast.ForecastWeatherCard
 import com.simple.weather.app.android.presentation.ui.base.weather.model.WeatherModelUi
+import com.simple.weather.app.android.presentation.ui.error.ErrorContentWithTryAgain
 
 @Composable
 fun BaseWeatherScreen(viewModel: BaseWeatherViewModel) {
@@ -56,7 +52,11 @@ fun BaseWeatherScreen(viewModel: BaseWeatherViewModel) {
 }
 
 @Composable
-fun WeatherContent(model: WeatherModelUi, forecastMode: ForecastModeUi, onModeSelected: (ForecastModeUi) -> Unit) {
+fun WeatherContent(
+    model: WeatherModelUi,
+    forecastMode: ForecastModeUi,
+    onModeSelected: (ForecastModeUi) -> Unit
+) {
     LazyColumn(
         contentPadding = PaddingValues(all = 16.dp),
     ) {

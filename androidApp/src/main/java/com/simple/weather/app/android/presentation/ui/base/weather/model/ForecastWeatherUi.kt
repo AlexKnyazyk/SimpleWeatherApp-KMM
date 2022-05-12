@@ -5,4 +5,5 @@ import com.simple.weather.app.domain.model.ForecastModel
 data class ForecastWeatherUi(
     val forecastDaily: List<ForecastModel.Day>,
     val forecastHourly: List<ForecastModel.Hour>,
+    val forecastHourlyCurrent: ForecastModel.Hour?
 )

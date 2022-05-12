@@ -2,6 +2,7 @@ package com.simple.weather.app.android.presentation.ui.base.weather.model
 
 import com.simple.weather.app.domain.model.SettingsUnitsModel
 import com.simple.weather.app.domain.model.WeatherModel
+import java.util.*
 
 fun WeatherModel.toUi(settings: SettingsUnitsUi) = WeatherModelUi(
     currentWeather = CurrentWeatherUi(
@@ -17,8 +18,13 @@ fun WeatherModel.toUi(settings: SettingsUnitsUi) = WeatherModelUi(
     ),
     forecastWeather = ForecastWeatherUi(
         forecastDaily = this.forecastDaily,
-        forecastHourly = this.forecastHourly
-    ),
+        forecastHourly = this.forecastHourly,
+        forecastHourlyCurrent = Calendar.getInstance().let { now ->
+            this.forecastHourly.find {
+                val calendar = Calendar.getInstance().apply { timeInMillis = it.dateMillis }
+                now.get(Calendar.HOUR_OF_DAY) == calendar.get(Calendar.HOUR_OF_DAY)
+            }
+        }),
     detailedWeather = DetailedWeatherUi(
         windKph = this.windKph,
         windMph = this.windMph,
