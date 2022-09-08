@@ -1,12 +1,7 @@
 package com.simple.weather.app.android.presentation.ui.favorites
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -15,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import coil.compose.rememberImagePainter
+import coil.compose.rememberAsyncImagePainter
 import com.simple.weather.app.android.R
 import com.simple.weather.app.android.presentation.ui.base.RoundedCard
 import com.simple.weather.app.android.presentation.ui.favorites.model.FavoriteLocationItemUi
@@ -48,7 +43,7 @@ fun FavoriteLocationItemContent(
             }
             if (item.weatherConditionIconUrl != null) {
                 Image(
-                    painter = rememberImagePainter(item.weatherConditionIconUrl),
+                    painter = rememberAsyncImagePainter(item.weatherConditionIconUrl),
                     contentDescription = null,
                     modifier = Modifier.size(60.dp)
                 )

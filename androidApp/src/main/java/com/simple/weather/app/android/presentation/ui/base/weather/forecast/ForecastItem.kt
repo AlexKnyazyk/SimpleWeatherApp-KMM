@@ -15,7 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import coil.compose.rememberImagePainter
+import coil.compose.rememberAsyncImagePainter
 import com.simple.weather.app.android.R
 import com.simple.weather.app.android.presentation.ui.base.weather.model.SettingsUnitsUi
 import com.simple.weather.app.domain.model.ForecastModel
@@ -93,7 +93,7 @@ private fun ForecastTemperatureMinMax(item: ForecastModel.Day, settings: Setting
 @Composable
 private fun ForecastConditionIcon(item: ForecastModel) {
     Image(
-        painter = rememberImagePainter(item.iconUrl),
+        painter = rememberAsyncImagePainter(item.iconUrl),
         contentDescription = null,
         modifier = Modifier.size(40.dp)
     )

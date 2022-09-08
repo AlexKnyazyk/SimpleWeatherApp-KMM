@@ -6,7 +6,9 @@ plugins {
 }
 
 kotlin {
-    android()
+    android {
+        publishLibraryVariants("release", "debug")
+    }
 
     listOf(
         iosX64(),
@@ -25,7 +27,7 @@ kotlin {
         val koinVersion = "3.2.0"
         val commonMain by getting {
             dependencies {
-                implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutinesVersion}")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutinesVersion}")
 
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
                 implementation("io.ktor:ktor-client-core:$ktorVersion")
@@ -45,7 +47,7 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
-                implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutinesVersion}")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutinesVersion}")
                 implementation("io.ktor:ktor-client-android:$ktorVersion")
                 implementation("com.squareup.sqldelight:android-driver:$sqldelightVersion")
                 implementation("io.insert-koin:koin-android:$koinVersion")
@@ -63,7 +65,7 @@ kotlin {
             iosSimulatorArm64Main.dependsOn(this)
 
             dependencies {
-                implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutinesVersion}-native-mt"){
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutinesVersion}-native-mt") {
                     version {
                         strictly("${coroutinesVersion}-native-mt")
                     }
@@ -77,11 +79,20 @@ kotlin {
 
 android {
     namespace = "com.simple.weather.app"
-    compileSdk = 31
+    compileSdk = 33
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
         minSdk = 21
-        targetSdk = 31
+        targetSdk = 33
+    }
+    compileOptions {
+        // Flag to enable support for the new language APIs
+        isCoreLibraryDesugaringEnabled = true
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
+    dependencies {
+        coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.2.2")
     }
 }
 

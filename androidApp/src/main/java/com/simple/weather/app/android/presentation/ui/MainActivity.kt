@@ -4,10 +4,12 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.primarySurface
 import androidx.compose.runtime.SideEffect
-import com.google.accompanist.insets.ProvideWindowInsets
+import androidx.compose.ui.Modifier
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.simple.weather.app.android.presentation.theme.DarkColorPalette
 import com.simple.weather.app.android.presentation.theme.LightColorPalette
@@ -21,7 +23,7 @@ class MainActivity : AppCompatActivity() {
             MaterialTheme(
                 colors = if (isSystemInDarkTheme()) DarkColorPalette else LightColorPalette
             ) {
-                ProvideWindowInsets(windowInsetsAnimationsEnabled = true) {
+                Box(Modifier.systemBarsPadding()) {
                     MainContentScreen()
                 }
 
