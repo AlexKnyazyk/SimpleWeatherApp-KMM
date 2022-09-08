@@ -22,7 +22,7 @@ kotlin {
 
     sourceSets {
         val ktorVersion = "1.6.7"
-        val coroutinesVersion = "1.6.0"
+        val coroutinesVersion = "1.6.4"
         val sqldelightVersion = "1.5.3"
         val koinVersion = "3.2.0"
         val commonMain by getting {

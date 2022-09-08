@@ -10,7 +10,6 @@ import io.ktor.client.*
 import io.ktor.client.features.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
-import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 //import java.net.SocketTimeoutException
@@ -65,7 +64,6 @@ internal class WeatherRemoteDataSourceImpl(
         }
     }
 
-    @OptIn(ExperimentalSerializationApi::class)
     private suspend inline fun <T, R> T.runRequestCatching(block: T.() -> R): CResult<R> {
         return try {
             CResult.success(block())
