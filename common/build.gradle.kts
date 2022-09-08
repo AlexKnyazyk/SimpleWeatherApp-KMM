@@ -21,7 +21,7 @@ kotlin {
     }
 
     sourceSets {
-        val ktorVersion = "1.6.7"
+        val ktorVersion = "2.1.1"
         val coroutinesVersion = "1.6.4"
         val sqldelightVersion = "1.5.3"
         val koinVersion = "3.2.0"
@@ -31,7 +31,8 @@ kotlin {
 
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.0")
                 implementation("io.ktor:ktor-client-core:$ktorVersion")
-                implementation("io.ktor:ktor-client-serialization:$ktorVersion")
+                implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
+                implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
                 implementation("io.ktor:ktor-client-logging:$ktorVersion")
 
                 implementation("com.squareup.sqldelight:runtime:$sqldelightVersion")

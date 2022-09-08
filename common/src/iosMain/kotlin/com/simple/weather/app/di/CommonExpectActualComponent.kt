@@ -8,7 +8,7 @@ import com.squareup.sqldelight.db.SqlDriver
 import com.squareup.sqldelight.drivers.native.NativeSqliteDriver
 import io.ktor.client.engine.HttpClientEngineFactory
 import io.ktor.client.engine.ios.Ios
-import io.ktor.client.features.logging.Logger
+import io.ktor.client.plugins.logging.*
 import org.koin.dsl.module
 import platform.Foundation.NSLog
 

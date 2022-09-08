@@ -10,7 +10,7 @@ import com.squareup.sqldelight.android.AndroidSqliteDriver
 import com.squareup.sqldelight.db.SqlDriver
 import io.ktor.client.engine.*
 import io.ktor.client.engine.android.*
-import io.ktor.client.features.logging.*
+import io.ktor.client.plugins.logging.*
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind

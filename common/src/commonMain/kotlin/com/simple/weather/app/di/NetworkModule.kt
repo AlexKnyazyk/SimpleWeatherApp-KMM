@@ -1,13 +1,11 @@
 package com.simple.weather.app.di
 
 import io.ktor.client.HttpClient
-import io.ktor.client.features.HttpTimeout
-import io.ktor.client.features.defaultRequest
-import io.ktor.client.features.json.JsonFeature
-import io.ktor.client.features.json.serializer.KotlinxSerializer
-import io.ktor.client.features.logging.LogLevel
-import io.ktor.client.features.logging.Logging
-import io.ktor.client.request.parameter
+import io.ktor.client.plugins.*
+import io.ktor.client.plugins.contentnegotiation.*
+import io.ktor.client.plugins.logging.*
+import io.ktor.http.*
+import io.ktor.serialization.kotlinx.json.*
 import org.koin.dsl.module
 
 internal val networkModule = module {
@@ -23,16 +21,20 @@ private fun getHttpClient(factoryProvider: HttpClientEngineFactoryProvider): Htt
             logger = HttpClientLogger()
             level = LogLevel.BODY
         }
-        install(JsonFeature) {
-            val json = kotlinx.serialization.json.Json {
+        install(ContentNegotiation) {
+            json(kotlinx.serialization.json.Json {
                 ignoreUnknownKeys = true
                 coerceInputValues = true
-            }
-            serializer = KotlinxSerializer(json)
+                isLenient = true
+            })
         }
-
         defaultRequest {
-            parameter("key", "55e572ab7a5c4e0e908163124212208")
+            url {
+                protocol = URLProtocol.HTTPS
+                host = "api.weatherapi.com"
+                path("v1/")
+                parameters.append("key", "55e572ab7a5c4e0e908163124212208")
+            }
         }
     }
 }
